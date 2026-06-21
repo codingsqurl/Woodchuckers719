@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Woodchuckers">
+  <rect width="64" height="64" rx="14" fill="#14532d"/>
+  <rect x="29.5" y="42" width="5" height="13" rx="1" fill="#7c4a1e"/>
+  <path d="M32 9 L43 27 H37.5 L46 41 H18 L26.5 27 H21 Z" fill="#f59e0b"/>
+</svg>

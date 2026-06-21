@@ -1,0 +1,35 @@
+# fly.toml — Fly.io config for the Next.js port of woodchuckers.
+# Keep APP_BASE_URL in sync with the real URL (it builds OAuth redirect URIs,
+# invite links, OG tags, robots, and the sitemap).
+#
+# IMPORTANT: SQLite is single-writer on one volume, and the in-memory rate
+# limiter assumes one process — run exactly ONE machine. Do not scale to
+# multiple machines; they would each get a separate database AND a separate
+# rate-limit table.
+
+app = "woodchuckers-springs"
+primary_region = "dfw"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  APP_BASE_URL = "https://woodchuckers-springs.fly.dev"
+  DATABASE_URL = "/data/woodchuckers.db"
+
+# Persistent disk for the SQLite database. Without this the DB resets on deploy.
+[[mounts]]
+  source = "data"
+  destination = "/data"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+
+[[vm]]
+  size = "shared-cpu-1x"
+  # Node + Next needs more headroom than the Go binary's 256mb.
+  memory = "512mb"
