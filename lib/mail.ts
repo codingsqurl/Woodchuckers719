@@ -52,6 +52,32 @@ ${row('Name', e.name)}${row('Phone', e.phone)}${row('Email', e.email)}${row('Add
 ${details}`
 }
 
+// contractEmailHTML builds the owner notification for a contract climbing
+// request (the B2B path — a tree company booking the climber for a section).
+export function contractEmailHTML(o: {
+  company: string
+  contact: string
+  phone: string
+  email: string
+  location: string
+  tier: string
+  climb: string
+  size: string
+  when: string
+  ground: string
+  details: string
+  price: number
+}): string {
+  const row = (label: string, val: string): string =>
+    val === '' ? '' : `<p><strong>${label}:</strong> ${escapeHtml(val)}</p>`
+  const notes = o.details !== '' ? `<p><strong>Notes:</strong><br>${escapeHtml(o.details)}</p>` : ''
+  const rate = o.price > 0 ? `$${o.price}` : 'TBD'
+
+  return `<h2>New contract climbing request</h2>
+${row('Company', o.company)}${row('Contact', o.contact)}${row('Phone', o.phone)}${row('Email', o.email)}${row('Job location', o.location)}${row('Booking', o.tier)}${row('Climb', o.climb)}${row('Size', o.size)}${row('When', o.when)}${row('Ground support', o.ground)}<p><strong>Day rate:</strong> ${rate}</p>
+${notes}`
+}
+
 // inviteEmailHTML builds the body for a "sign in with Google" invite. The name
 // is escaped; the login URL is trusted (we build it).
 export function inviteEmailHTML(name: string, loginURL: string): string {

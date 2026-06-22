@@ -3,15 +3,10 @@
 // Server Action backing the estimate form (progressive enhancement — works
 // without JS). Port of handleEstimateSubmit: rate limit, trim/normalize,
 // summarize trees, clamp the client numbers, validate, store, best-effort email.
-import {
-  atoiClamp,
-  createEstimate,
-  summarizeTrees,
-  type NewEstimate,
-  type Estimate,
-} from '@/lib/estimates'
+import { atoiClamp, createEstimate, type NewEstimate, type Estimate } from '@/lib/estimates'
 import { estimateRL, clientIP } from '@/lib/ratelimit'
 import { estimateEmailHTML, sendMail, mailerConfigured } from '@/lib/mail'
+import { getDict, isLocale } from '@/lib/i18n'
 
 // leadsTo is where new estimate requests are emailed.
 const leadsTo = 'woodchuckerstrees719@gmail.com'
@@ -37,22 +32,18 @@ export async function submitEstimate(
 ): Promise<EstimateState> {
   const str = (k: string): string => (formData.get(k)?.toString() ?? '').trim()
 
+  // Localize the user-facing error strings to match the page the form was on.
+  const localeStr = formData.get('locale')?.toString() ?? 'en'
+  const tt = getDict(isLocale(localeStr) ? localeStr : 'en').estimate
+
   const name = str('name')
   const email = str('email').toLowerCase()
   const phone = str('phone')
   const address = str('address')
   const details = str('details')
   const source = str('source')
+  const service = str('service')
   const debris = formData.get('debris')?.toString() ?? ''
-
-  const { service, detail } = summarizeTrees({
-    service: formData.getAll('tree_service').map(String),
-    species: formData.getAll('tree_species').map(String),
-    height: formData.getAll('tree_height').map(String),
-    condition: formData.getAll('tree_condition').map(String),
-    near: formData.getAll('tree_near').map(String),
-    drop: formData.getAll('tree_drop').map(String),
-  })
 
   const e: NewEstimate = {
     name,
@@ -62,7 +53,7 @@ export async function submitEstimate(
     service,
     details,
     source,
-    removalInfo: detail,
+    removalInfo: '',
     // Never trust the client numbers — re-clamp server-side.
     estDays: atoiClamp(formData.get('est_days')?.toString() ?? '', 1, 2),
     cleanup: debris === 'cleanup',
@@ -77,14 +68,14 @@ export async function submitEstimate(
   // 429, so over-limit surfaces as the same inline message (the SSO GET routes
   // keep the literal 429). The lead is never saved when throttled.
   if (!estimateRL.allow(await clientIP())) {
-    return { status: 'error', error: 'Too many requests, slow down. Try again in a minute.', values: preserved }
+    return { status: 'error', error: tt.errRate, values: preserved }
   }
 
   // name + at least one way to reach them.
   if (name === '' || (email === '' && phone === '')) {
     return {
       status: 'error',
-      error: 'Please give your name and at least a phone number or email.',
+      error: tt.errMissing,
       values: preserved,
     }
   }
@@ -95,7 +86,7 @@ export async function submitEstimate(
     console.error('createEstimate:', err)
     return {
       status: 'error',
-      error: 'Something broke saving your request. Call or text instead and I’ll get you sorted.',
+      error: tt.errSave,
       values: preserved,
     }
   }

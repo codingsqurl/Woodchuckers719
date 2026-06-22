@@ -1,12 +1,11 @@
+import { headers } from 'next/headers'
 import { ErrorScreen } from './components/error-screen'
 
 // Themed 404 — the catch-all (and the admin "deny by vanishing" notFound()).
-export default function NotFound() {
-  return (
-    <ErrorScreen
-      code={404}
-      title="That branch doesn't exist"
-      message="The page you were after isn't here. Head back home, or call and I'll point you the right way."
-    />
-  )
+// Locale comes from the requested path that middleware stamps on x-pathname.
+export default async function NotFound() {
+  const h = await headers()
+  const p = h.get('x-pathname') ?? ''
+  const locale = p === '/es' || p.startsWith('/es/') ? 'es' : 'en'
+  return <ErrorScreen code={404} locale={locale} />
 }

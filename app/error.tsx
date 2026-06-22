@@ -2,13 +2,10 @@
 
 import { ErrorScreen } from './components/error-screen'
 
-// Themed 500 — the panic-recovery equivalent (recoverPanic in main.go).
+// Themed 500 — the panic-recovery equivalent (recoverPanic in main.go). Locale
+// from the URL: /es and /es/* are Spanish (guard against /estimate etc.).
 export default function Error() {
-  return (
-    <ErrorScreen
-      code={500}
-      title="Something broke"
-      message="Something went wrong on my end. Try again in a moment, or call and I'll sort it out."
-    />
-  )
+  const p = typeof window !== 'undefined' ? window.location.pathname : ''
+  const locale = p === '/es' || p.startsWith('/es/') ? 'es' : 'en'
+  return <ErrorScreen code={500} locale={locale} />
 }

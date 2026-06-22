@@ -1,9 +1,12 @@
-// Shared site chrome (header, call button, footer) for the public pages.
-// Server components — no client JS.
+// Shared site chrome (skip link, scroll-rope, header, language toggle, call
+// button, footer, mobile conversion bar) for every public page. Server
+// components — no client JS. Every link is locale-aware: English at root,
+// Spanish under /es, wired through localePath().
 import type { ReactNode } from 'react'
+import { type Locale, getDict, localePath } from '@/lib/i18n'
 
 // (719)&nbsp;756&#8209;2597 — nbsp + non-breaking hyphen, like the templates.
-export const PHONE_DISPLAY = '(719) 756‑2597'
+export const PHONE_DISPLAY = '(719) 756‑2597'
 export const PHONE_HREF = 'tel:+17197562597'
 export const EMAIL = 'woodchuckerstrees719@gmail.com'
 
@@ -24,36 +27,114 @@ export function CallButton() {
   )
 }
 
-type NavLink = { href: string; label: string }
-
-// SiteHeader renders the sticky topbar. `links` are the nav items shown for the
-// current page (each page omits its own link, matching the templates).
-export function SiteHeader({ links }: { links: NavLink[] }) {
+// Plain link to the same page in the other language (no JS). `path` is the clean
+// logical path with no locale prefix (e.g. "/", "/areas/monument").
+export function LangToggle({ locale, path }: { locale: Locale; path: string }) {
+  const t = getDict(locale)
+  const other: Locale = locale === 'en' ? 'es' : 'en'
   return (
-    <header className="topbar">
-      <a className="brand" href="/">
-        Woodchuckers
-      </a>
-      <nav className="topnav">
-        {links.map((l) => (
-          <a key={l.href} href={l.href}>
-            {l.label}
-          </a>
-        ))}
-      </nav>
-      <CallButton />
-    </header>
+    <a
+      className="lang-toggle"
+      href={localePath(other, path)}
+      aria-label={t.switchTo}
+      lang={other}
+      hrefLang={other}
+    >
+      {t.langName[other]}
+    </a>
   )
 }
 
-export function SiteFooter() {
+const NAV = [
+  { key: 'home', path: '/', label: (d: ReturnType<typeof getDict>) => d.nav.home },
+  { key: 'work', path: '/portfolio', label: (d: ReturnType<typeof getDict>) => d.nav.work },
+  { key: 'areas', path: '/areas', label: (d: ReturnType<typeof getDict>) => d.nav.areas },
+  { key: 'estimate', path: '/estimate', label: (d: ReturnType<typeof getDict>) => d.nav.estimate },
+] as const
+
+// SiteHeader: skip link, scroll-rope, sticky topbar. `current` is the nav key to
+// omit (the page you're on); `path` is the clean logical path for the toggle.
+export function SiteHeader({
+  locale,
+  path,
+  current,
+}: {
+  locale: Locale
+  path: string
+  current?: 'home' | 'work' | 'areas' | 'estimate'
+}) {
+  const d = getDict(locale)
+  return (
+    <>
+      <a className="skip-link" href="#main">
+        {d.skip}
+      </a>
+      <div className="scroll-rope" aria-hidden="true" />
+      <header className="topbar">
+        <a className="brand" href={localePath(locale, '/')}>
+          Woodchuckers
+        </a>
+        <nav className="topnav">
+          {NAV.filter((n) => n.key !== current).map((n) => (
+            <a key={n.key} href={localePath(locale, n.path)}>
+              {n.label(d)}
+            </a>
+          ))}
+          <LangToggle locale={locale} path={path} />
+        </nav>
+        <CallButton />
+      </header>
+    </>
+  )
+}
+
+export function SiteFooter({ locale }: { locale: Locale }) {
+  const d = getDict(locale)
   return (
     <footer className="foot">
       <span>© Woodchuckers</span>
+      <span className="foot-sep" aria-hidden="true">
+        ·
+      </span>
+      <a className="foot-link" href={localePath(locale, '/contract-climbing')}>
+        {d.footPro}
+      </a>
+      <span className="foot-sep" aria-hidden="true">
+        ·
+      </span>
+      <span>{d.seHabla}</span>
     </footer>
   )
 }
 
-export function Main({ children, id }: { children: ReactNode; id?: string }) {
+// Sticky conversion bar — phones only (CSS hides it ≥46rem). `variant` swaps the
+// second button: the marketing pages push the free estimate; the contract page
+// scrolls to its job form.
+export function MobileCTA({
+  locale,
+  variant = 'site',
+}: {
+  locale: Locale
+  variant?: 'site' | 'contract'
+}) {
+  const d = getDict(locale)
+  const cta =
+    variant === 'contract'
+      ? { href: '#job', label: d.bookDay }
+      : { href: localePath(locale, '/estimate'), label: d.freeEstimate }
+  return (
+    <div className="mobile-cta">
+      <a className="mcta mcta-call" href={PHONE_HREF}>
+        <PhoneIcon size={18} />
+        {d.callLabel}
+      </a>
+      <a className="mcta mcta-est" href={cta.href}>
+        {cta.label}
+      </a>
+    </div>
+  )
+}
+
+export function Main({ children, id = 'main' }: { children: ReactNode; id?: string }) {
   return <main id={id}>{children}</main>
 }

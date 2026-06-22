@@ -4,8 +4,9 @@
 // Port of links.js: degrades to an inert button if clipboard is unavailable.
 import { useState } from 'react'
 import type { BioLink } from '@/lib/links'
+import { type Locale, getDict } from '@/lib/i18n'
 
-function CopyButton({ link }: { link: BioLink }) {
+function CopyButton({ link, copied }: { link: BioLink; copied: (v: string) => string }) {
   const [sub, setSub] = useState(link.sub ?? '')
   return (
     <button
@@ -16,7 +17,7 @@ function CopyButton({ link }: { link: BioLink }) {
         if (!navigator.clipboard || !val) return
         navigator.clipboard.writeText(val).then(() => {
           const prev = link.sub ?? ''
-          setSub(`Copied ${val}`)
+          setSub(copied(val))
           setTimeout(() => setSub(prev), 1600)
         })
       }}
@@ -27,7 +28,8 @@ function CopyButton({ link }: { link: BioLink }) {
   )
 }
 
-export function LinkList({ links }: { links: BioLink[] }) {
+export function LinkList({ links, locale }: { links: BioLink[]; locale: Locale }) {
+  const copied = getDict(locale).links.copied
   return (
     <div className="link-list">
       {links.map((l) =>
@@ -42,7 +44,7 @@ export function LinkList({ links }: { links: BioLink[] }) {
             {l.sub ? <span className="link-sub">{l.sub}</span> : null}
           </a>
         ) : (
-          <CopyButton key={l.label} link={l} />
+          <CopyButton key={l.label} link={l} copied={copied} />
         ),
       )}
     </div>
