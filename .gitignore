@@ -34,3 +34,6 @@ yarn-error.log*
 
 # impeccable design-skill scratch — shelved (keep out of git)
 .impeccable/
+
+# generated email preview (regenerate with: npm run preview:email)
+lead-email-preview.html

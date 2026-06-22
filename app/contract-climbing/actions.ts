@@ -80,7 +80,7 @@ export async function submitContract(
     try {
       await sendMail(
         leadsTo,
-        `New contract climbing request — ${name}`,
+        `New website lead — ${name}`,
         contractEmailHTML({
           name,
           phone,
