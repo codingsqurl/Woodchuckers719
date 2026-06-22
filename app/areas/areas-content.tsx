@@ -17,7 +17,7 @@ export function AreasContent({ locale }: { locale: Locale }) {
 
   return (
     <>
-      <SiteHeader locale={locale} path="/areas" current="areas" />
+      <SiteHeader locale={locale} current="areas" />
       <main id="main">
         <PageHero
           eyebrow={t.eyebrow}
@@ -68,7 +68,7 @@ export function AreasContent({ locale }: { locale: Locale }) {
           </div>
         </section>
       </main>
-      <SiteFooter locale={locale} />
+      <SiteFooter locale={locale} path="/areas" />
       <MobileCTA locale={locale} />
     </>
   )

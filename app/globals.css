@@ -76,12 +76,20 @@ h3,
    (home, portfolio, areas, estimate, links, themed 404/500). Solid deep pine,
    industrial signage type, full-width ruled lists. No glass, no parallax.
    ═══════════════════════════════════════════════════════════════════════════ */
+/* sticky footer: the public page is a min-height flex column, so when content is
+   short the footer pins to the bottom edge of the viewport — flush, no gap, no
+   padding or margin below the bar. Tall pages just overflow and scroll as usual. */
 body.site {
   background: var(--green-900);
   color: var(--on-dark);
   font-family: var(--font-sans);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100svh;
 }
 body.site main {
+  flex: 1 0 auto;
   padding: 0;
   max-width: none;
   background: transparent;

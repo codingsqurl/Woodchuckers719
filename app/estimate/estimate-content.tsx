@@ -6,7 +6,7 @@ export function EstimateContent({ locale }: { locale: Locale }) {
   const d = getDict(locale)
   return (
     <>
-      <SiteHeader locale={locale} path="/estimate" current="estimate" />
+      <SiteHeader locale={locale} current="estimate" />
       <main id="main">
         <EstimateForm locale={locale} />
         <p className="pro-link-row">
@@ -15,7 +15,7 @@ export function EstimateContent({ locale }: { locale: Locale }) {
           </a>
         </p>
       </main>
-      <SiteFooter locale={locale} />
+      <SiteFooter locale={locale} path="/estimate" />
       <MobileCTA locale={locale} />
     </>
   )

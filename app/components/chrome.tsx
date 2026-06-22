@@ -53,14 +53,12 @@ const NAV = [
 ] as const
 
 // SiteHeader: skip link, scroll-rope, sticky topbar. `current` is the nav key to
-// omit (the page you're on); `path` is the clean logical path for the toggle.
+// omit (the page you're on). The language toggle lives in the footer now.
 export function SiteHeader({
   locale,
-  path,
   current,
 }: {
   locale: Locale
-  path: string
   current?: 'home' | 'work' | 'areas' | 'estimate'
 }) {
   const d = getDict(locale)
@@ -80,7 +78,6 @@ export function SiteHeader({
               {n.label(d)}
             </a>
           ))}
-          <LangToggle locale={locale} path={path} />
         </nav>
         <CallButton />
       </header>
@@ -134,7 +131,9 @@ export function PageHero({
   )
 }
 
-export function SiteFooter({ locale }: { locale: Locale }) {
+// SiteFooter: brand line, contract link, Spanish welcome, and the language toggle
+// (moved here from the header). `path` is the clean logical path for the toggle.
+export function SiteFooter({ locale, path }: { locale: Locale; path: string }) {
   const d = getDict(locale)
   return (
     <footer className="foot">
@@ -149,6 +148,10 @@ export function SiteFooter({ locale }: { locale: Locale }) {
         ·
       </span>
       <span>{d.seHabla}</span>
+      <span className="foot-sep" aria-hidden="true">
+        ·
+      </span>
+      <LangToggle locale={locale} path={path} />
     </footer>
   )
 }

@@ -11,7 +11,7 @@ export function ContractContent({ locale }: { locale: Locale }) {
   const t = tc.contract
   return (
     <>
-      <SiteHeader locale={locale} path="/contract-climbing" current="estimate" />
+      <SiteHeader locale={locale} current="estimate" />
       <main id="main">
         <PageHero
           eyebrow={t.kicker}
@@ -22,7 +22,7 @@ export function ContractContent({ locale }: { locale: Locale }) {
         />
         <ContractForm locale={locale} />
       </main>
-      <SiteFooter locale={locale} />
+      <SiteFooter locale={locale} path="/contract-climbing" />
       <MobileCTA locale={locale} variant="contract" />
     </>
   )

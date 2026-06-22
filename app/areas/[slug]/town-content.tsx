@@ -61,7 +61,7 @@ export function TownContent({ locale, town }: { locale: Locale; town: TownPage }
         dangerouslySetInnerHTML={{ __html: JSON.stringify(townJsonLd(locale, town)) }}
       />
 
-      <SiteHeader locale={locale} path={`/areas/${town.slug}`} />
+      <SiteHeader locale={locale} />
 
       <nav className="crumbs" aria-label="Breadcrumb">
         <a href={localePath(locale, '/')}>{tc.nav.home}</a>
@@ -145,7 +145,7 @@ export function TownContent({ locale, town }: { locale: Locale; town: TownPage }
           </div>
         </section>
       </main>
-      <SiteFooter locale={locale} />
+      <SiteFooter locale={locale} path={`/areas/${town.slug}`} />
       <MobileCTA locale={locale} />
     </>
   )

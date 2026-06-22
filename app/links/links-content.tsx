@@ -11,7 +11,7 @@ export function LinksContent({ locale }: { locale: Locale }) {
   const t = tc.links
   return (
     <>
-      <SiteHeader locale={locale} path="/links" />
+      <SiteHeader locale={locale} />
       <main id="main">
         <PageHero
           eyebrow={t.tagline}
@@ -37,7 +37,7 @@ export function LinksContent({ locale }: { locale: Locale }) {
           </div>
         </section>
       </main>
-      <SiteFooter locale={locale} />
+      <SiteFooter locale={locale} path="/links" />
     </>
   )
 }

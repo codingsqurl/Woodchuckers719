@@ -41,7 +41,7 @@ export function HomeContent({ locale }: { locale: Locale }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd()) }}
       />
 
-      <SiteHeader locale={locale} path="/" current="home" />
+      <SiteHeader locale={locale} current="home" />
 
       <main id="main">
         {/* ───── cinematic ascent hero ───── */}
@@ -138,7 +138,7 @@ export function HomeContent({ locale }: { locale: Locale }) {
         </section>
       </main>
 
-      <SiteFooter locale={locale} />
+      <SiteFooter locale={locale} path="/" />
       <MobileCTA locale={locale} />
     </>
   )

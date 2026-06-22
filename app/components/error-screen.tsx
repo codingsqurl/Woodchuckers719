@@ -11,7 +11,7 @@ export function ErrorScreen({ code, locale }: { code: number; locale: Locale }) 
   const message = code === 404 ? d.errpage.notFoundMsg : d.errpage.errorMsg
   return (
     <>
-      <SiteHeader locale={locale} path="/" />
+      <SiteHeader locale={locale} />
       <main id="main">
         <section className="thanks">
           <p className="eyebrow error-code">{code}</p>
@@ -27,7 +27,7 @@ export function ErrorScreen({ code, locale }: { code: number; locale: Locale }) 
           </div>
         </section>
       </main>
-      <SiteFooter locale={locale} />
+      <SiteFooter locale={locale} path="/" />
       <MobileCTA locale={locale} />
     </>
   )

@@ -15,7 +15,7 @@ export function PortfolioContent({ locale }: { locale: Locale }) {
 
   return (
     <>
-      <SiteHeader locale={locale} path="/portfolio" current="work" />
+      <SiteHeader locale={locale} current="work" />
       <main id="main">
         <PageHero
           eyebrow={t.eyebrow}
@@ -85,7 +85,7 @@ export function PortfolioContent({ locale }: { locale: Locale }) {
           </div>
         </section>
       </main>
-      <SiteFooter locale={locale} />
+      <SiteFooter locale={locale} path="/portfolio" />
       <MobileCTA locale={locale} />
     </>
   )
