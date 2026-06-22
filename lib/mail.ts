@@ -55,27 +55,20 @@ ${details}`
 // contractEmailHTML builds the owner notification for a contract climbing
 // request (the B2B path — a tree company booking the climber for a section).
 export function contractEmailHTML(o: {
-  company: string
-  contact: string
+  name: string
   phone: string
   email: string
-  location: string
-  tier: string
-  climb: string
-  size: string
-  when: string
-  ground: string
   details: string
-  price: number
+  low: number
+  high: number
 }): string {
   const row = (label: string, val: string): string =>
     val === '' ? '' : `<p><strong>${label}:</strong> ${escapeHtml(val)}</p>`
-  const notes = o.details !== '' ? `<p><strong>Notes:</strong><br>${escapeHtml(o.details)}</p>` : ''
-  const rate = o.price > 0 ? `$${o.price}` : 'TBD'
+  const job = o.details !== '' ? `<p><strong>Job:</strong><br>${escapeHtml(o.details)}</p>` : ''
 
   return `<h2>New contract climbing request</h2>
-${row('Company', o.company)}${row('Contact', o.contact)}${row('Phone', o.phone)}${row('Email', o.email)}${row('Job location', o.location)}${row('Booking', o.tier)}${row('Climb', o.climb)}${row('Size', o.size)}${row('When', o.when)}${row('Ground support', o.ground)}<p><strong>Day rate:</strong> ${rate}</p>
-${notes}`
+${row('Name', o.name)}${row('Phone', o.phone)}${row('Email', o.email)}<p><strong>Day rate:</strong> $${o.low}–$${o.high}</p>
+${job}`
 }
 
 // inviteEmailHTML builds the body for a "sign in with Google" invite. The name

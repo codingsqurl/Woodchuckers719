@@ -1,26 +1,25 @@
-import { SiteHeader, SiteFooter, MobileCTA, PHONE_DISPLAY, PHONE_HREF } from '../components/chrome'
+import { SiteHeader, SiteFooter, MobileCTA, PageHero } from '../components/chrome'
 import { type Locale, getDict } from '@/lib/i18n'
 import { ContractForm } from './contract-form'
 
-// The contract-climbing page (B2B): a tree company books the climber for a
-// section. Same pine chrome as the rest of the public site; peer-register copy,
-// day-rate tiers, quals, and a short job-intake form. The MobileCTA swaps its
-// second button to scroll to the form (#job) instead of the homeowner estimate.
+// The contract-climbing page: the site's single intake. Serves both homeowners
+// (removals, storm work) and tree companies booking a contract climber. Same pine
+// chrome as the rest of the public site; flat day-rate range, quals, and a short
+// job-intake form. The MobileCTA swaps its second button to scroll to the form (#job).
 export function ContractContent({ locale }: { locale: Locale }) {
-  const t = getDict(locale).contract
+  const tc = getDict(locale)
+  const t = tc.contract
   return (
     <>
-      <SiteHeader locale={locale} path="/contract-climbing" />
+      <SiteHeader locale={locale} path="/contract-climbing" current="estimate" />
       <main id="main">
-        <section className="contract-head">
-          <p className="eyebrow">{t.kicker}</p>
-          <h1>{t.headTitle}</h1>
-          <p className="lede">{t.headLede}</p>
-          <p className="book-line">
-            {t.bookLine}{' '}
-            <a href={PHONE_HREF}>{PHONE_DISPLAY}</a>
-          </p>
-        </section>
+        <PageHero
+          eyebrow={t.kicker}
+          title={t.heroTitle}
+          sub={t.headLede}
+          cta={{ href: '#job', label: tc.freeEstimate }}
+          callLabel={tc.callLabel}
+        />
         <ContractForm locale={locale} />
       </main>
       <SiteFooter locale={locale} />

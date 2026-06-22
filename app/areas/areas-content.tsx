@@ -1,4 +1,12 @@
-import { SiteHeader, SiteFooter, MobileCTA, PHONE_DISPLAY, PHONE_HREF, EMAIL } from '../components/chrome'
+import {
+  SiteHeader,
+  SiteFooter,
+  MobileCTA,
+  PageHero,
+  PHONE_DISPLAY,
+  PHONE_HREF,
+  EMAIL,
+} from '../components/chrome'
 import { type Locale, getDict, localePath } from '@/lib/i18n'
 import { areaList } from '@/lib/areas'
 
@@ -11,11 +19,13 @@ export function AreasContent({ locale }: { locale: Locale }) {
     <>
       <SiteHeader locale={locale} path="/areas" current="areas" />
       <main id="main">
-        <section className="estimate-head">
-          <p className="eyebrow">{t.eyebrow}</p>
-          <h1>{t.title}</h1>
-          <p>{t.lead}</p>
-        </section>
+        <PageHero
+          eyebrow={t.eyebrow}
+          title={t.heroTitle}
+          sub={t.lead}
+          cta={{ href: localePath(locale, '/contract-climbing'), label: tc.freeEstimate }}
+          callLabel={tc.callLabel}
+        />
 
         <section className="band services">
           <div className="band-inner">

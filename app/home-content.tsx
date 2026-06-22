@@ -30,7 +30,7 @@ function localBusinessJsonLd() {
 export function HomeContent({ locale }: { locale: Locale }) {
   const tc = getDict(locale)
   const t = tc.home
-  const estimateHref = localePath(locale, '/estimate')
+  const estimateHref = localePath(locale, '/contract-climbing')
   const workHref = localePath(locale, '/portfolio')
 
   return (

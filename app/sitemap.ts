@@ -14,8 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const corePaths = [
     { path: '/', priority: 1.0 },
-    { path: '/estimate', priority: 0.9 },
-    { path: '/contract-climbing', priority: 0.7 },
+    { path: '/contract-climbing', priority: 0.9 },
     { path: '/portfolio', priority: 0.8 },
     { path: '/areas', priority: 0.8 },
   ]

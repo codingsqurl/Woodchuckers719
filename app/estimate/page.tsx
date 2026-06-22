@@ -1,26 +1,7 @@
-import type { Metadata } from 'next'
-import { getDict, altLanguages } from '@/lib/i18n'
-import { EstimateContent } from './estimate-content'
+import { redirect } from 'next/navigation'
 
-const t = getDict('en').estimate
-
-export const metadata: Metadata = {
-  title: t.metaTitle,
-  description: t.metaDesc,
-  alternates: { canonical: '/estimate', languages: altLanguages('/estimate') },
-  openGraph: {
-    type: 'website',
-    siteName: 'Woodchuckers',
-    locale: 'en_US',
-    alternateLocale: ['es_US'],
-    title: 'Free Estimate | Woodchuckers Tree Service',
-    description: 'Day-rate tree work in Colorado Springs. Get a free ballpark and request an estimate.',
-    url: '/estimate',
-    images: ['/img/og.jpg'],
-  },
-  twitter: { card: 'summary_large_image' },
-}
-
+// The homeowner estimate flow folded into the single contract-climbing intake.
+// /estimate now redirects there; the old form code stays in the tree but unused.
 export default function EstimatePage() {
-  return <EstimateContent locale="en" />
+  redirect('/contract-climbing')
 }

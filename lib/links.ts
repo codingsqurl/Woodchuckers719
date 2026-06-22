@@ -22,7 +22,7 @@ export function bioLinks(locale: Locale): BioLink[] {
   const t = getDict(locale).links
   return [
     { label: t.website, sub: t.websiteSub, href: localePath(locale, '/') },
-    { label: t.estimate, sub: t.estimateSub, href: localePath(locale, '/estimate') },
+    { label: t.estimate, sub: t.estimateSub, href: localePath(locale, '/contract-climbing') },
     { label: t.callText, sub: '(719) 756-2597', href: 'tel:+17197562597' },
     {
       label: t.cashapp,

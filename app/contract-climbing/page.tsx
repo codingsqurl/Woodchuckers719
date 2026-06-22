@@ -13,9 +13,9 @@ export const metadata: Metadata = {
     siteName: 'Woodchuckers',
     locale: 'en_US',
     alternateLocale: ['es_US'],
-    title: 'Contract Tree Climber for Hire | Woodchuckers',
+    title: 'Tree Removal & Contract Climbing | Woodchuckers',
     description:
-      'Book a professional contract climber in Colorado Springs. Sectional removals, storm work, rigging-heavy takedowns. Insured, own gear.',
+      'Professional tree climber in Colorado Springs — removals, storm work, rigging-heavy takedowns for homeowners and tree companies. Insured, own gear.',
     url: '/contract-climbing',
     images: ['/img/og.jpg'],
   },

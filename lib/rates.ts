@@ -24,6 +24,6 @@ export const fullJob = {
 // Flat climber day-rate tiers: you + your gear on their job, they run the
 // ground and haul. PLACEHOLDER NUMBERS — set these to your real rates.
 export const contractClimbing = {
-  halfDay: 450, // up to ~4 hrs on the rope
-  fullDay: 800, // full day, your gear
+  dayLow: 175, // per-day floor
+  dayHigh: 350, // per-day ceiling
 } as const

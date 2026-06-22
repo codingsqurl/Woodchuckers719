@@ -31,3 +31,6 @@ yarn-debug.log*
 yarn-error.log*
 .vercel
 *.tsbuildinfo
+
+# impeccable design-skill scratch — shelved (keep out of git)
+.impeccable/

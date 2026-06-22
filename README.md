@@ -2,7 +2,7 @@
 
 Internal site + employee web app for Woodchuckers — a professional tree climber
 in Colorado Springs. Public marketing site (home, portfolio, service areas,
-links, estimate) plus a gated `/admin` staff app (login, portal, dashboard).
+links, contract climbing) plus a gated `/admin` staff app (login, portal, dashboard).
 
 This is the **Next.js port** of the original Go server — a behavior-preserving
 rewrite onto React Server Components + TypeScript, pointed at the **same SQLite
@@ -18,7 +18,7 @@ database** with the **same schema**. No data migration, no ORM.
 | Database           | ✅ Done   | SQLite via `better-sqlite3`, same `woodchuckers.db`         |
 | Migrations         | ✅ Done   | reused `db/migrations/*.sql`, baseline runner on first boot |
 | Public pages       | ✅ Done   | `/`, `/portfolio`, `/areas`, `/links` — RSC, near-zero JS   |
-| Estimate           | ✅ Done   | calculator + per-tree builder + Server Action submit        |
+| Intake / estimate  | ✅ Done   | one `/contract-climbing` form (homeowners + tree cos); `/estimate` redirects in |
 | Login / logout     | ✅ Done   | bcrypt + server-side sessions + HttpOnly cookie             |
 | Admin dashboard    | ✅ Done   | employees + last-50 estimates, create/invite/toggle         |
 | SSO                | ✅ Done   | Google OIDC + GitHub OAuth, pre-created accounts only        |

@@ -601,46 +601,19 @@ body.site .foot {
   }
 }
 
-/* ── form panels join the glass system: the calculator, the per-tree cards, and
-   the contract day-rate tiers go translucent + blurred too. Input FIELDS stay
-   opaque white below — you can't read text typed into frosted glass. ── */
-body.site .calc,
-body.site .tree-card,
-body.site .tier {
+/* ── the estimate calculator joins the glass system: translucent + blurred, with
+   a solid pine fallback when the user asks for less transparency. Input FIELDS
+   stay opaque white below — you can't read text typed into frosted glass. ── */
+body.site .calc {
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   backdrop-filter: blur(14px) saturate(140%);
-}
-body.site .calc {
   background: rgba(11, 42, 26, 0.6);
 }
-body.site .tree-card {
-  background: rgba(11, 42, 26, 0.5);
-}
-body.site .tier {
-  background: rgba(11, 42, 26, 0.5);
-}
-body.site .tier:hover {
-  background: rgba(20, 73, 44, 0.55);
-}
-body.site .tier.is-on {
-  background: rgba(20, 73, 44, 0.62);
-}
 @media (prefers-reduced-transparency: reduce) {
-  body.site .calc,
-  body.site .tree-card,
-  body.site .tier {
+  body.site .calc {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
-  }
-  body.site .calc,
-  body.site .tier {
     background: var(--green-800);
-  }
-  body.site .tree-card {
-    background: rgba(255, 255, 255, 0.03);
-  }
-  body.site .tier.is-on {
-    background: var(--green-700);
   }
 }
 .foot,
@@ -694,7 +667,7 @@ body.site .tier.is-on {
 }
 
 /* ═══════════════════════ HOME — cinematic ascent hero ═══════════════════════ */
-body.home .hero {
+body.site .hero {
   position: relative;
   display: flex;
   align-items: flex-end;
@@ -703,7 +676,12 @@ body.home .hero {
   padding: 2rem 1.25rem clamp(2.5rem, 7vw, 4rem);
   background: transparent;
 }
-body.home .hero-photo {
+/* inner pages: same cinematic glass hero + rising lines, shorter so the content
+   underneath stays reachable without a full-viewport scroll. Home keeps the splash. */
+body.site:not(.home) .hero {
+  min-height: clamp(19rem, 44svh, 28rem);
+}
+body.site .hero-photo {
   position: fixed;
   inset: 0;
   z-index: -2;
@@ -718,7 +696,7 @@ body.home .hero-photo {
 }
 @supports (animation-timeline: scroll()) {
   @media (prefers-reduced-motion: no-preference) {
-    body.home .hero-photo {
+    body.site .hero-photo {
       animation: heroPan linear both;
       animation-timeline: scroll(root block);
       animation-range: 0 90vh;
@@ -730,14 +708,14 @@ body.home .hero-photo {
     transform: translateY(3%) scale(1.23);
   }
 }
-body.home .hero-scrim {
+body.site .hero-scrim {
   position: fixed;
   inset: 0;
   z-index: -1;
   /* gentle page-wide darken so the pine-glass bands keep contrast over the photo */
   background: linear-gradient(180deg, rgba(6, 16, 10, 0.3) 0%, rgba(6, 16, 10, 0.42) 100%);
 }
-body.home .hero-inner {
+body.site .hero-inner {
   position: relative;
   max-width: 34rem;
   margin: 0;
@@ -757,12 +735,12 @@ body.home .hero-inner {
     inset 0 -1px 1px rgba(255, 255, 255, 0.06);
 }
 /* keep the text above the rim pseudo-element */
-body.home .hero-inner > * {
+body.site .hero-inner > * {
   position: relative;
   z-index: 1;
 }
 /* specular edge — a light-directional bright ring that reads as a glass bevel */
-body.home .hero-inner::before {
+body.site .hero-inner::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -785,20 +763,20 @@ body.home .hero-inner::before {
 }
 /* a11y: honor a request for less transparency with a solid pine panel */
 @media (prefers-reduced-transparency: reduce) {
-  body.home .hero-inner {
+  body.site .hero-inner {
     background: rgba(6, 16, 10, 0.88);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
-  body.home .hero-inner::before {
+  body.site .hero-inner::before {
     opacity: 0.4;
   }
 }
-body.home .hero .eyebrow {
+body.site .hero .eyebrow {
   margin: 0 0 0.9rem;
   animation: riseIn 0.7s 0.05s both;
 }
-body.home .hero-title {
+body.site .hero-title {
   margin: 0 0 1.1rem;
   font-size: clamp(2.4rem, 10.5vw, 4.75rem);
   line-height: 0.9;
@@ -806,26 +784,26 @@ body.home .hero-title {
   color: #fff;
   text-shadow: 0 2px 30px rgba(0, 0, 0, 0.45);
 }
-body.home .hero-title .line {
+body.site .hero-title .line {
   display: block;
   overflow: hidden;
   padding-bottom: 0.04em;
 }
-body.home .hero-title .line > span {
+body.site .hero-title .line > span {
   display: block;
   transform: translateY(106%);
   animation: lineRise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
-body.home .hero-title .line:nth-child(1) > span {
+body.site .hero-title .line:nth-child(1) > span {
   animation-delay: 0.08s;
 }
-body.home .hero-title .line:nth-child(2) > span {
+body.site .hero-title .line:nth-child(2) > span {
   animation-delay: 0.2s;
 }
-body.home .hero-title .line:nth-child(3) > span {
+body.site .hero-title .line:nth-child(3) > span {
   animation-delay: 0.34s;
 }
-body.home .hero-title .line.accent > span {
+body.site .hero-title .line.accent > span {
   color: var(--accent);
 }
 @keyframes lineRise {
@@ -833,7 +811,7 @@ body.home .hero-title .line.accent > span {
     transform: translateY(0);
   }
 }
-body.home .hero-sub {
+body.site .hero-sub {
   max-width: 32rem;
   margin: 0 0 1.8rem;
   color: #e7ede7;
@@ -842,7 +820,7 @@ body.home .hero-sub {
   text-shadow: 0 1px 14px rgba(0, 0, 0, 0.4);
   animation: riseIn 0.7s 0.52s both;
 }
-body.home .hero .hero-actions {
+body.site .hero .hero-actions {
   animation: riseIn 0.7s 0.64s both;
 }
 @keyframes riseIn {
@@ -1194,61 +1172,8 @@ body.home .hero .hero-actions {
 .estimate-form .note {
   color: var(--on-dark-mute);
 }
-.tree-add {
-  border: 1px solid var(--accent);
-  background: transparent;
-  color: var(--accent);
-  font-weight: 700;
-  padding: 0.5rem 0.9rem;
-  border-radius: 8px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-.tree-add:hover {
-  background: rgba(242, 96, 28, 0.14);
-}
-#trees {
-  display: grid;
-  gap: 0.85rem;
-}
-.tree-card {
-  display: grid;
-  gap: 0.85rem;
-  padding: 1rem 1.1rem;
-  border: 1px solid var(--on-dark-line);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.03);
-}
-.tree-card .row2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-.tree-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.tree-num {
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: 0.02em;
-}
-.tree-remove {
-  border: none;
-  background: transparent;
-  color: var(--on-dark-mute);
-  font-size: 1.5rem;
-  line-height: 1;
-  cursor: pointer;
-  padding: 0 0.3rem;
-}
-.tree-remove:hover {
-  color: #ef4444;
-}
 @media (max-width: 34rem) {
-  .estimate-form .row2,
-  .tree-card .row2 {
+  .estimate-form .row2 {
     grid-template-columns: 1fr;
   }
 }
@@ -1276,40 +1201,10 @@ body.home .hero .hero-actions {
 }
 
 /* ═══════════════════════ LINKS — link-in-bio ══════════════════════════════ */
-.link-page {
+.link-stack {
   max-width: 30rem;
   margin: 0 auto;
-  padding: 3.5rem 1.5rem 4rem;
   text-align: center;
-}
-.link-avatar {
-  width: 6rem;
-  height: 6rem;
-  border-radius: 50%;
-  margin: 0 auto 1rem;
-  border: 3px solid var(--accent);
-  background: var(--green-800);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-.link-avatar img {
-  width: 64%;
-  height: 64%;
-}
-.link-name {
-  font-family: var(--font-display);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-size: 1.8rem;
-  font-weight: 800;
-  margin: 0 0 0.25rem;
-  color: #fff;
-}
-.link-tagline {
-  color: var(--on-dark-soft);
-  margin: 0 0 2rem;
 }
 .link-list {
   display: grid;
@@ -1381,98 +1276,27 @@ body.home .hero .hero-actions {
 }
 
 /* ═══════════════════════ contract climbing (B2B path) ═════════════════════ */
-.contract-head {
-  max-width: 46rem;
-  margin: 0 auto;
-  padding: clamp(2.5rem, 8vw, 4rem) 1.25rem 0.5rem;
-  text-align: center;
-}
-.contract-head h1 {
-  font-size: clamp(2rem, 7vw, 2.8rem);
-  margin: 0 0 0.8rem;
-  color: #fff;
-}
-.contract-head .lede {
-  color: var(--on-dark-soft);
-  font-size: 1.1rem;
-  line-height: 1.6;
-  margin: 0 auto 1rem;
-  max-width: 38rem;
-}
-.contract-head .book-line {
-  color: var(--on-dark-mute);
-  font-size: 0.95rem;
+/* the contract page's flat day-rate figure (sits in a glass band) */
+.rate-figure {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   margin: 0;
 }
-.contract-head .book-line a {
-  color: var(--accent);
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-/* day-rate tiers — gear-stamp panels */
-.rates {
-  max-width: 40rem;
-  margin: 1.75rem auto 0;
-  padding: 0 1.25rem;
-}
-.rates > h2,
-.quals > h2 {
-  font-size: 1.18rem;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  color: var(--on-dark);
-  margin: 0 0 0.9rem;
-}
-.tier-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.8rem;
-}
-.tier {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  text-align: left;
-  background: var(--green-800);
-  border: 1px solid var(--on-dark-line);
-  border-radius: 14px;
-  padding: 1.1rem 1.2rem;
-  cursor: pointer;
-  color: var(--on-dark);
-  font: inherit;
-  transition: border-color 0.15s, background 0.15s, transform 0.1s;
-}
-.tier:hover {
-  background: var(--green-700);
-}
-.tier:active {
-  transform: translateY(1px);
-}
-.tier.is-on {
-  border-color: var(--accent);
-  background: var(--green-700);
-}
-.tier:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-.tier-name {
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-size: 0.95rem;
-}
-.tier-price {
+.rate-amount {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(1.8rem, 6vw, 2.3rem);
+  font-size: clamp(2.2rem, 8vw, 3rem);
   line-height: 1;
   color: var(--accent);
 }
-.tier-note {
+.rate-unit {
   color: var(--on-dark-mute);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 .included {
   margin: 1rem 0 0;
@@ -1482,11 +1306,6 @@ body.home .hero .hero-actions {
 }
 
 /* quals — ruled list, not cards */
-.quals {
-  max-width: 40rem;
-  margin: 2rem auto 0;
-  padding: 0 1.25rem;
-}
 .qual-list {
   list-style: none;
   margin: 0;
@@ -1542,12 +1361,6 @@ body.home .hero .hero-actions {
   color: var(--accent);
 }
 
-@media (max-width: 30rem) {
-  .tier-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 /* ═══════════════════════ polish / micro-interactions ══════════════════════ */
 html {
   scroll-behavior: smooth;
@@ -1582,16 +1395,16 @@ html {
   html {
     scroll-behavior: auto;
   }
-  body.home .hero-photo {
+  body.site .hero-photo {
     transform: scale(1.14);
     animation: none;
   }
-  body.home .hero .eyebrow,
-  body.home .hero-sub,
-  body.home .hero .hero-actions {
+  body.site .hero .eyebrow,
+  body.site .hero-sub,
+  body.site .hero .hero-actions {
     animation: none;
   }
-  body.home .hero-title .line > span {
+  body.site .hero-title .line > span {
     transform: none;
     animation: none;
   }

@@ -49,7 +49,7 @@ const NAV = [
   { key: 'home', path: '/', label: (d: ReturnType<typeof getDict>) => d.nav.home },
   { key: 'work', path: '/portfolio', label: (d: ReturnType<typeof getDict>) => d.nav.work },
   { key: 'areas', path: '/areas', label: (d: ReturnType<typeof getDict>) => d.nav.areas },
-  { key: 'estimate', path: '/estimate', label: (d: ReturnType<typeof getDict>) => d.nav.estimate },
+  { key: 'estimate', path: '/contract-climbing', label: (d: ReturnType<typeof getDict>) => d.nav.estimate },
 ] as const
 
 // SiteHeader: skip link, scroll-rope, sticky topbar. `current` is the nav key to
@@ -88,6 +88,52 @@ export function SiteHeader({
   )
 }
 
+// PageHero: the shared cinematic hero (glass panel + rising title lines) for every
+// inner page, mirroring the home hero so the whole site reads as one piece. `title`
+// is three rising lines, the third in safety orange; `sub` is optional. `cta` is the
+// primary action (estimate, or an in-page #job anchor); the call button is the ghost.
+export function PageHero({
+  eyebrow,
+  title,
+  sub,
+  cta,
+  callLabel,
+}: {
+  eyebrow: string
+  title: string[]
+  sub?: string
+  cta: { href: string; label: string }
+  callLabel: string
+}) {
+  return (
+    <section className="hero" id="top">
+      <div className="hero-inner">
+        <p className="eyebrow">{eyebrow}</p>
+        <h1 className="hero-title">
+          <span className="line">
+            <span>{title[0]}</span>
+          </span>
+          <span className="line">
+            <span>{title[1]}</span>
+          </span>
+          <span className="line accent">
+            <span>{title[2]}</span>
+          </span>
+        </h1>
+        {sub ? <p className="hero-sub">{sub}</p> : null}
+        <div className="hero-actions">
+          <a className="cta cta-primary" href={cta.href}>
+            {cta.label}
+          </a>
+          <a className="cta cta-ghost" href={PHONE_HREF}>
+            {callLabel} {PHONE_DISPLAY}
+          </a>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export function SiteFooter({ locale }: { locale: Locale }) {
   const d = getDict(locale)
   return (
@@ -121,7 +167,7 @@ export function MobileCTA({
   const cta =
     variant === 'contract'
       ? { href: '#job', label: d.bookDay }
-      : { href: localePath(locale, '/estimate'), label: d.freeEstimate }
+      : { href: localePath(locale, '/contract-climbing'), label: d.freeEstimate }
   return (
     <div className="mobile-cta">
       <a className="mcta mcta-call" href={PHONE_HREF}>

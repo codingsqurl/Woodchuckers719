@@ -1,32 +1,23 @@
 'use server'
 
 // Server Action backing the contract-climbing form (progressive enhancement —
-// works without JS). Mirrors submitEstimate: rate limit, trim/normalize,
-// validate, store, best-effort email. v1 reuses the `estimates` table with NO
-// schema change — the lead is marked unmistakably in `service` and the B2B
-// specifics are packed into removal_info. A future `kind` column can split
-// homeowner vs contract leads in the admin inbox.
+// works without JS). The site's only intake form now. Reuses the `estimates`
+// table with NO schema change: the lead is marked in `service`, the day rate is
+// the flat $175–$350 range, and everything the requester typed lands in details.
 import { createEstimate, type NewEstimate } from '@/lib/estimates'
 import { estimateRL, clientIP } from '@/lib/ratelimit'
 import { contractEmailHTML, sendMail, mailerConfigured } from '@/lib/mail'
 import { getDict, isLocale } from '@/lib/i18n'
 import { contractClimbing } from '@/lib/rates'
 
-// leadsTo is where new requests are emailed (same inbox as homeowner estimates).
+// leadsTo is where new requests are emailed.
 const leadsTo = 'woodchuckerstrees719@gmail.com'
 
 export type ContractValues = {
-  company?: string
-  contact?: string
+  name?: string
   phone?: string
   email?: string
-  location?: string
-  climb?: string
-  size?: string
-  when?: string
-  ground?: string
   details?: string
-  tier?: string
 }
 
 export type ContractState =
@@ -44,72 +35,37 @@ export async function submitContract(
   const localeStr = formData.get('locale')?.toString() ?? 'en'
   const tt = getDict(isLocale(localeStr) ? localeStr : 'en').contract
 
-  const company = str('company')
-  const contact = str('contact')
+  const name = str('name')
   const email = str('email').toLowerCase()
   const phone = str('phone')
-  const location = str('location')
-  const climb = str('climb')
-  const size = str('size')
-  const when = str('when')
-  const ground = str('ground')
   const details = str('details')
-  const tier = str('tier')
 
-  // Resolve the picked tier to a flat day rate server-side — never trust the client.
-  const tierPrice =
-    tier === 'full' ? contractClimbing.fullDay : tier === 'half' ? contractClimbing.halfDay : 0
-  const tierLabel = tier === 'full' ? 'Full day' : tier === 'half' ? 'Half day' : 'Day rate TBD'
+  const preserved: ContractValues = { name, phone, email, details }
 
-  const preserved: ContractValues = {
-    company,
-    contact,
-    phone,
-    email,
-    location,
-    climb,
-    size,
-    when,
-    ground,
-    details,
-    tier,
-  }
-
-  // Spam throttle: 5/min/IP, shared with the homeowner estimate form.
+  // Spam throttle: 5/min/IP, shared with the (now redirected) estimate form.
   if (!estimateRL.allow(await clientIP())) {
     return { status: 'error', error: tt.errRate, values: preserved }
   }
 
-  // company + a name + at least one way to reach them.
-  if (company === '' || contact === '' || (email === '' && phone === '')) {
+  // name + at least one way to reach them.
+  if (name === '' || (email === '' && phone === '')) {
     return { status: 'error', error: tt.errMissing, values: preserved }
   }
 
-  // Pack the B2B specifics into one summary string stored in removal_info.
-  const summary = [
-    company && `Company: ${company}`,
-    climb && `Climb: ${climb}`,
-    size && `Size: ${size}`,
-    when && `When: ${when}`,
-    ground && `Ground: ${ground}`,
-  ]
-    .filter(Boolean)
-    .join(' | ')
-
   const e: NewEstimate = {
-    name: contact,
+    name,
     email,
     phone,
-    address: location,
-    service: `Contract climbing — ${tierLabel}`,
+    address: '',
+    service: 'Contract climbing',
     details,
     source: 'contract',
-    removalInfo: summary,
+    removalInfo: '',
     estDays: 1,
     cleanup: false,
     debrisRemoval: false,
-    estLow: tierPrice,
-    estHigh: tierPrice,
+    estLow: contractClimbing.dayLow,
+    estHigh: contractClimbing.dayHigh,
   }
 
   try {
@@ -124,20 +80,14 @@ export async function submitContract(
     try {
       await sendMail(
         leadsTo,
-        `New contract climbing request — ${company || contact}`,
+        `New contract climbing request — ${name}`,
         contractEmailHTML({
-          company,
-          contact,
+          name,
           phone,
           email,
-          location,
-          tier: tierLabel,
-          climb,
-          size,
-          when,
-          ground,
           details,
-          price: tierPrice,
+          low: contractClimbing.dayLow,
+          high: contractClimbing.dayHigh,
         }),
       )
     } catch (err) {
@@ -145,5 +95,5 @@ export async function submitContract(
     }
   }
 
-  return { status: 'sent', name: contact }
+  return { status: 'sent', name }
 }
