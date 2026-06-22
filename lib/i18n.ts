@@ -216,7 +216,7 @@ const en = {
   contract: {
     metaTitle: 'Tree Removal & Contract Climbing | Woodchuckers | Colorado Springs',
     metaDesc:
-      'Professional tree climber in Colorado Springs — removals, storm work, and rigging-heavy takedowns for homeowners and tree companies. Insured, own gear, free estimate.',
+      'Professional tree climber in Colorado Springs — removals, storm work, and rigging-heavy takedowns for homeowners and tree companies. Own gear, free estimate.',
     kicker: 'Colorado Springs',
     headTitle: 'I take down the tree nobody else will',
     heroTitle: ['I take down', 'the tree', 'nobody else will.'],
@@ -225,14 +225,13 @@ const en = {
     bookLine: 'Call or text for a free estimate:',
     ratesTitle: 'Day rate',
     rateUnit: 'per day',
-    included: 'Your crew runs the ground, I take the climb — the removal past your team, the rigging over the house, the section nobody wants. Experienced contract climber, own gear, fully insured.',
+    included: 'Your crew runs the ground, I take the climb — the removal past your team, the rigging over the house, the section nobody wants. A contract climber with my own gear.',
     qualsTitle: 'What you’re getting',
     quals: [
-      '[X] years climbing professionally',
-      'Fully insured — general liability',
-      'Own saddle, ropes, and rigging gear',
+      'Second year climbing professionally',
+      'Owner-operated, no subcontractors',
+      'My own climbing gear, plus some rigging gear',
       'Removals, sectional takedowns, storm damage, rigging over structures',
-      '[Certs / ISA — fill in or delete]',
     ],
     formTitle: 'Short a climber? Send me the job.',
     fName: 'Your name *',
@@ -457,7 +456,7 @@ const es: Dict = {
   contract: {
     metaTitle: 'Remoción de Árboles y Escalada por Contrato | Woodchuckers | Colorado Springs',
     metaDesc:
-      'Escalador profesional de árboles en Colorado Springs — remociones, daño por tormenta y desmontes con aparejo para dueños de casa y empresas. Asegurado, equipo propio, presupuesto gratis.',
+      'Escalador profesional de árboles en Colorado Springs — remociones, daño por tormenta y desmontes con aparejo para dueños de casa y empresas. Equipo propio, presupuesto gratis.',
     kicker: 'Colorado Springs',
     headTitle: 'Bajo el árbol que nadie más quiere',
     heroTitle: ['Bajo el árbol', 'que nadie', 'más quiere.'],
@@ -467,14 +466,13 @@ const es: Dict = {
     ratesTitle: 'Tarifa por día',
     rateUnit: 'por día',
     included:
-      'Su cuadrilla maneja el suelo, yo me encargo de la escalada — la remoción que su equipo no alcanza, el aparejo sobre la casa, la sección que nadie quiere. Escalador por contrato con experiencia, equipo propio, totalmente asegurado.',
+      'Su cuadrilla maneja el suelo, yo me encargo de la escalada — la remoción que su equipo no alcanza, el aparejo sobre la casa, la sección que nadie quiere. Escalador por contrato con mi propio equipo.',
     qualsTitle: 'Lo que recibe',
     quals: [
-      '[X] años escalando profesionalmente',
-      'Totalmente asegurado — responsabilidad civil',
-      'Arnés, cuerdas y equipo de aparejo propios',
+      'Segundo año escalando profesionalmente',
+      'Dueño y operador, sin subcontratistas',
+      'Equipo de escalada propio y algo de equipo de aparejo',
       'Tala y remoción, secciones, daño por tormenta, aparejo sobre estructuras',
-      '[Certificaciones / ISA — complete o borre]',
     ],
     formTitle: '¿Le falta un escalador? Envíeme el trabajo.',
     fName: 'Su nombre *',

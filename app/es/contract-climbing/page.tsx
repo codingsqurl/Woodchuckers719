@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     alternateLocale: ['en_US'],
     title: 'Remoción de Árboles y Escalada por Contrato | Woodchuckers',
     description:
-      'Escalador profesional de árboles en Colorado Springs — remociones, daño por tormenta y desmontes con aparejo para dueños de casa y empresas. Asegurado, equipo propio.',
+      'Escalador profesional de árboles en Colorado Springs — remociones, daño por tormenta y desmontes con aparejo para dueños de casa y empresas. Equipo propio.',
     url: '/es/contract-climbing',
     images: ['/img/og.jpg'],
   },
