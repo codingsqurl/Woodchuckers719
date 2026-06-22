@@ -1,4 +1,12 @@
-import { SiteHeader, SiteFooter, MobileCTA, PHONE_DISPLAY, PHONE_HREF, EMAIL } from './components/chrome'
+import {
+  SiteHeader,
+  SiteFooter,
+  MobileCTA,
+  PHONE_DISPLAY,
+  PHONE_HREF,
+  EMAIL,
+  smsHref,
+} from './components/chrome'
 import { type Locale, getDict, localePath } from '@/lib/i18n'
 import { appBaseURL } from '@/lib/env'
 import { areaList } from '@/lib/areas'
@@ -32,6 +40,7 @@ export function HomeContent({ locale }: { locale: Locale }) {
   const t = tc.home
   const estimateHref = localePath(locale, '/contract-climbing')
   const workHref = localePath(locale, '/portfolio')
+  const sms = smsHref(t.smsBody)
 
   return (
     <>
@@ -68,6 +77,9 @@ export function HomeContent({ locale }: { locale: Locale }) {
                 {tc.callLabel} {PHONE_DISPLAY}
               </a>
             </div>
+            <p className="sms-note">
+              {t.smsNote} <a href={sms}>{t.smsCta}</a>
+            </p>
           </div>
         </section>
 
@@ -78,6 +90,25 @@ export function HomeContent({ locale }: { locale: Locale }) {
               <li key={item}>{item}</li>
             ))}
           </ul>
+        </section>
+
+        {/* ───── proof: the one decisive rope-work shot ───── */}
+        <section className="band proof">
+          <div className="band-inner">
+            <h2 className="section-title">{t.proofTitle}</h2>
+            <p className="band-lead">{t.proofLead}</p>
+            <figure className="proof-media">
+              <img
+                src="/img/powerline.jpg"
+                width={900}
+                height={1199}
+                loading="lazy"
+                decoding="async"
+                alt={t.proofAlt}
+              />
+              <figcaption>{t.proofCaption}</figcaption>
+            </figure>
+          </div>
         </section>
 
         {/* ───── what I take on ───── */}
@@ -95,6 +126,26 @@ export function HomeContent({ locale }: { locale: Locale }) {
             <a className="cta cta-primary" href={workHref}>
               {t.seeWork}
             </a>
+          </div>
+        </section>
+
+        {/* ───── how it works ───── */}
+        <section className="band steps">
+          <div className="band-inner">
+            <h2 className="section-title">{t.stepsTitle}</h2>
+            <ol className="step-list">
+              {t.steps.map((s) => (
+                <li key={s.n}>
+                  <span className="step-num" aria-hidden="true">
+                    {s.n}
+                  </span>
+                  <div className="step-body">
+                    <h3>{s.title}</h3>
+                    <p>{s.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
         </section>
 
@@ -122,11 +173,31 @@ export function HomeContent({ locale }: { locale: Locale }) {
           </div>
         </section>
 
+        {/* ───── objection FAQ ───── */}
+        <section className="band faq">
+          <div className="band-inner">
+            <h2 className="section-title">{t.faqTitle}</h2>
+            <div className="faq-list">
+              {t.faqs.map((f, i) => (
+                <details key={f.q} className="faq-item" open={i === 0}>
+                  <summary>{f.q}</summary>
+                  <p>{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* ───── final CTA ───── */}
         <section className="band contact" id="contact">
           <div className="contact-inner">
             <h2 className="section-title">{t.contactTitle}</h2>
             <p className="contact-sub">{tc.callOrText}</p>
+            <p className="contact-cta">
+              <a className="cta cta-primary" href={sms}>
+                {t.smsButton}
+              </a>
+            </p>
             <p className="contact-lines">
               <a href={PHONE_HREF}>{PHONE_DISPLAY}</a>
               <a href={`mailto:${EMAIL}`}>{EMAIL}</a>

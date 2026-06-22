@@ -76,6 +76,34 @@ const en = {
     aboutLead:
       'Years in the trees and trained on rope and rigging. No subcontractors, no rotating crews. The person who quotes your job is the same one climbing it, careful with your property, fast on the clock, and straight with you about what it actually needs.',
     contactTitle: 'Free estimates, straight answers',
+    // fast text-a-photo quote (SMS deep link)
+    smsBody: "Hi, here's a photo of my tree:",
+    smsCta: 'text a photo of the tree →',
+    smsNote: 'In a hurry? Skip the form —',
+    smsButton: 'Text a photo',
+    // proof band — the one decisive shot of real rope work
+    proofTitle: 'Real rope work, not stock photos',
+    proofLead:
+      'That’s me on an actual job, roped into the canopy above the power lines — rigged and lowered by hand, careful with everything underneath.',
+    proofAlt:
+      'Climber roped high in a pine above power lines, rigging a limb down by hand on a Colorado Springs job.',
+    proofCaption: 'Rigging a limb down clear of the power lines.',
+    // how it works
+    stepsTitle: 'How it works',
+    steps: [
+      { n: '1', title: 'Call or text', body: 'Tell me about the tree — or text a photo. You get a straight, free number back, usually same day.' },
+      { n: '2', title: 'I climb and rig it down', body: 'Roped and lowered in controlled pieces, careful around the house, the fence, and the power lines.' },
+      { n: '3', title: 'Keep the wood, or I haul it', body: 'Wood and brush piled where you want it for free, or hauled off your property for a flat fee.' },
+    ],
+    // objection FAQ
+    faqTitle: 'Straight answers',
+    faqs: [
+      { q: 'How fast can you come out?', a: 'Usually a same-day quote. Storm damage and hazard limbs over the house jump the line.' },
+      { q: 'Do you haul the wood away?', a: 'Your call. I’ll pile the wood and brush in one spot for $100, or haul it all off your property for $150.' },
+      { q: 'What areas do you cover?', a: 'Colorado Springs and the surrounding El Paso County towns. Not sure you’re in range? Just ask.' },
+      { q: 'Storm or hazard tree?', a: 'Call right away. Broken tops, hung limbs, and leaners get made safe first, before they come down on their own.' },
+      { q: 'Who actually does the work?', a: 'Me. One climber, start to finish — the person who quotes your tree is the one up in it. No subcontractors.' },
+    ],
   },
 
   // portfolio
@@ -321,6 +349,30 @@ const es: Dict = {
     aboutLead:
       'Años en los árboles y entrenado en cuerda y aparejo. Sin subcontratistas, sin cuadrillas rotativas. La persona que cotiza su trabajo es la misma que lo escala, cuidadoso con su propiedad, rápido en el reloj y honesto sobre lo que de verdad necesita.',
     contactTitle: 'Presupuestos gratis, respuestas claras',
+    smsBody: 'Hola, aquí está la foto de mi árbol:',
+    smsCta: 'envíe una foto del árbol →',
+    smsNote: '¿Con prisa? Sáltese el formulario —',
+    smsButton: 'Enviar una foto',
+    proofTitle: 'Trabajo real con cuerda, no fotos de archivo',
+    proofLead:
+      'Ese soy yo en un trabajo real, con cuerda en la copa por encima de los cables — aparejado y bajado a mano, con cuidado de todo lo que está debajo.',
+    proofAlt:
+      'Escalador con cuerda en lo alto de un pino sobre cables eléctricos, bajando una rama a mano en un trabajo de Colorado Springs.',
+    proofCaption: 'Bajando una rama lejos de los cables eléctricos.',
+    stepsTitle: 'Cómo funciona',
+    steps: [
+      { n: '1', title: 'Llame o escriba', body: 'Cuénteme del árbol — o envíe una foto. Le devuelvo un número claro y gratis, normalmente el mismo día.' },
+      { n: '2', title: 'Lo escalo y lo bajo con aparejo', body: 'Con cuerda y bajado en piezas controladas, con cuidado de la casa, la cerca y los cables.' },
+      { n: '3', title: 'Quédese la madera, o yo la llevo', body: 'Madera y maleza apiladas donde usted quiera gratis, o retiradas de su propiedad por una tarifa fija.' },
+    ],
+    faqTitle: 'Respuestas claras',
+    faqs: [
+      { q: '¿Qué tan rápido puede venir?', a: 'Normalmente un presupuesto el mismo día. El daño por tormenta y las ramas peligrosas sobre la casa pasan primero.' },
+      { q: '¿Se lleva la madera?', a: 'Usted decide. Apilo la madera y la maleza en un lugar por $100, o me lo llevo todo de su propiedad por $150.' },
+      { q: '¿Qué zonas cubre?', a: 'Colorado Springs y los pueblos vecinos del condado de El Paso. ¿No sabe si llega a su zona? Pregunte.' },
+      { q: '¿Árbol caído o peligroso por tormenta?', a: 'Llame de inmediato. Copas rotas, ramas atoradas e inclinados se aseguran primero, antes de que caigan solos.' },
+      { q: '¿Quién hace el trabajo?', a: 'Yo. Un escalador, de principio a fin — quien cotiza su árbol es quien lo escala. Sin subcontratistas.' },
+    ],
   },
 
   work: {

@@ -11,7 +11,7 @@ colors:
   ink: "#0e1411"
   on-pine: "#eef2ec"
   on-pine-soft: "#c8d2c8"
-  on-pine-mute: "#9fad9f"
+  on-pine-mute: "#bec7be"
   paper: "#ffffff"
   admin-body: "#3b4453"
   admin-muted: "#6b7280"
@@ -140,7 +140,7 @@ A committed two-color system: the forest the work happens in, and the one signal
 - **Pine Bright** (#1d6b41): The lightest pine, reserved for accents in the green family where orange would be too loud.
 - **On Pine** (#eef2ec): Primary text on pine. Bumped toward white for sun readability; clears AA comfortably on Pine Deep.
 - **On Pine Soft** (#c8d2c8): Secondary text — leads, captions, field labels, body copy in bands.
-- **On Pine Mute** (#9fad9f): Tertiary only — hints, footer, fine print. Never primary reading copy.
+- **On Pine Mute** (#bec7be): Tertiary only — hints, footer, fine print. Never primary reading copy. Lightened from #9fad9f so fine print still clears AA 4.5:1 over the lightest glass band.
 - **Ink** (#0e1411): Near-black text, used on orange surfaces and inside white form fields.
 - **Paper** (#ffffff): White, used only inside form fields and the constrained admin app. The public site never goes white.
 - **Hairline** (#e5e7eb): 1px dividers in light contexts (admin tables, form-field borders). On pine, dividers are `rgba(255,255,255,0.1)` instead.

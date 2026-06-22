@@ -8,7 +8,13 @@ import { type Locale, getDict, localePath } from '@/lib/i18n'
 // (719)&nbsp;756&#8209;2597 — nbsp + non-breaking hyphen, like the templates.
 export const PHONE_DISPLAY = '(719) 756‑2597'
 export const PHONE_HREF = 'tel:+17197562597'
+export const SMS_NUMBER = '+17197562597'
 export const EMAIL = 'woodchuckerstrees719@gmail.com'
+
+// smsHref builds a pre-filled text-message deep link. `?&body=` is the form that
+// fires the compose sheet with the body pre-filled on both iOS and Android.
+export const smsHref = (body: string): string =>
+  `sms:${SMS_NUMBER}?&body=${encodeURIComponent(body)}`
 
 export function PhoneIcon({ size = 16 }: { size?: number }) {
   return (
