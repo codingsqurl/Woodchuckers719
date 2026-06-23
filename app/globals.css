@@ -366,6 +366,11 @@ body.site .topbar {
 /* ───── content bands — the spine of every page ───── */
 .band {
   padding: clamp(3rem, 9vw, 5.5rem) 1.25rem;
+  /* CWV: don't paint a band (or run its backdrop-filter blur) until it scrolls
+     near the viewport, and hold the scroll position stable for the ones not yet
+     rendered. The hero and trust strip sit above the fold and stay eager. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 34rem;
 }
 .band.services {
   background: var(--green-900);
@@ -537,7 +542,17 @@ body.site .site-backdrop {
   position: fixed;
   inset: 0;
   z-index: -2;
+  /* WebP backdrop (~half the bytes) with a JPEG fallback for older engines. The
+     shorthand paints the JPEG + position/size; image-set upgrades it to WebP. */
   background: url("/img/background.jpg") center / cover no-repeat;
+  background-image: -webkit-image-set(
+    url("/img/background.webp") type("image/webp"),
+    url("/img/background.jpg") type("image/jpeg")
+  );
+  background-image: image-set(
+    url("/img/background.webp") type("image/webp"),
+    url("/img/background.jpg") type("image/jpeg")
+  );
   transform: scale(1.06);
 }
 body.site .site-backdrop-scrim {
