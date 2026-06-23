@@ -146,7 +146,7 @@ A committed two-color system: the forest the work happens in, and the one signal
 - **Hairline** (#e5e7eb): 1px dividers in light contexts (admin tables, form-field borders). On pine, dividers are `rgba(255,255,255,0.1)` instead.
 
 ### Named Rules
-**The One Signal Rule.** Safety orange is the only saturated color in the system, and it is reserved for what converts: call, estimate, the live total, focus. If a second thing on screen is orange that should not be, the page has diluted its own signal. Pine carries the brand; orange carries the action.
+**The One Signal Rule.** Safety orange is the only saturated color in the system, and it is reserved for what converts: call, estimate, the live total, focus. If a second thing on screen is orange that should not be, the page has diluted its own signal. Pine carries the brand; orange carries the action. (Owner decision: orange **text** is reserved for the hero accent line and the day-rate figure only — small accent labels, links, and markers render in the neutral light ink, not orange. See the "de-orange small text" layer in `globals.css`.)
 
 **The No-White Rule.** Public pages never use a white or near-white background. White exists only inside form fields and the internal admin app. "Warmth" and brand feeling come from the pine and the orange, never from a tinted off-white body.
 

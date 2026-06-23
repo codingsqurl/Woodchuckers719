@@ -863,9 +863,21 @@ body.site .hero .hero-actions {
 /* ═══════════════════════ PORTFOLIO — proof gallery + ruled work list ═══════ */
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  grid-template-columns: 1fr;
   gap: 1.25rem;
   margin-top: 2rem;
+}
+/* first shot is the lead proof image — full width and taller; second untouched */
+@media (min-width: 40rem) {
+  .gallery {
+    grid-template-columns: 1fr 1fr;
+  }
+  .gallery .shot:first-child {
+    grid-column: 1 / -1;
+  }
+}
+.gallery .shot:first-child img {
+  height: clamp(24rem, 60vh, 40rem);
 }
 .shot {
   margin: 0;
@@ -1522,6 +1534,34 @@ body.site .hero .hero-actions {
 /* text-a-photo primary CTA in the final contact band */
 .contact-cta {
   margin: 0 0 1.4rem;
+}
+
+/* ═══════════════════════ owner pref: de-orange small text ═════════════════
+   Owner decision: small accent text reads as neutral, not safety orange.
+   Orange now stays only on real signals — buttons, the hero accent line, and
+   the day-rate figure. On the dark pine bands the readable "neutral" is the
+   light ink, not black. Layered last so it wins by source order. */
+.eyebrow,
+.svc-list h3,
+.area-note-tag,
+.link-sub,
+.error-code,
+.pro-link,
+.sms-note a,
+.thanks a,
+.contact-lines a:hover,
+.crumbs a:hover,
+.foot-link:hover,
+.pro-link:hover,
+.link-btn:hover,
+.lang-toggle:hover,
+.area-grid a:hover {
+  color: var(--on-dark);
+}
+.area-grid a::after,
+.qual-list li::before,
+.faq-item summary::after {
+  color: var(--on-dark-soft);
 }
 
 /* ═══════════════════════ polish / micro-interactions ══════════════════════ */
