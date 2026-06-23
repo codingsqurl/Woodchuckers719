@@ -37,10 +37,10 @@ export const SE_HABLA = 'Se habla español'
 
 const en = {
   // chrome
-  nav: { home: 'Home', work: 'My Work', areas: 'Areas', estimate: 'Estimate' },
+  nav: { home: 'Home', work: 'My Work', areas: 'Areas', estimate: 'Hire me' },
   skip: 'Skip to content',
   callLabel: 'Call',
-  freeEstimate: 'Free estimate',
+  freeEstimate: 'Get a day rate',
   bookDay: 'Book a day',
   footPro: 'Climber for hire',
   proLink: 'Run a tree company? I climb contract →',
@@ -48,7 +48,7 @@ const en = {
   langName: { en: 'English', es: 'Español' },
   switchTo: 'Ver en español',
   servingArea: 'Serving the Colorado Springs area',
-  callOrText: 'Call or text to talk through your trees, no obligation.',
+  callOrText: 'Call or text about the climb, no obligation.',
 
   // home
   home: {
@@ -108,65 +108,63 @@ const en = {
 
   // portfolio
   work: {
-    metaTitle: 'My Work | Woodchuckers Tree Service | Colorado Springs',
+    metaTitle: 'My Work | Woodchuckers Contract Tree Climber | Colorado Springs',
     metaDesc:
-      'Real tree work in Colorado Springs. Climbing, rigging, and removals done by hand. No stock photos, no subcontractors. Se habla español.',
+      'Real contract climbing in Colorado Springs — sectional takedowns, storm leaders, and rigging done by hand for tree companies. No stock photos. Se habla español.',
     eyebrow: 'My Work',
     heroTitle: ['Real climbs.', 'Real results.', 'No stock photos.'],
     title: 'Real climbs, real results',
-    lead: 'No subcontractors and no stock photos. That’s me up in the tree on every job, roped in and doing it right.',
-    cap1: 'Roped into the canopy for a controlled trim.',
-    cap2: 'Big residential pines, taken down piece by piece.',
-    doTitle: 'What I do',
+    lead: 'No stock photos, no fluff. That’s me up in the tree on every job, roped in — the technical climb your crew hands off.',
+    cap1: 'Roped into the canopy, working the climb.',
+    cap2: 'Big pines brought down piece by piece.',
+    doTitle: 'What I climb',
     doLead:
-      'I’m a professional tree climber. I bring my climbing and rigging gear and get the tree down or trimmed. I don’t haul debris off-site, so you keep the wood or your hauler takes it.',
+      'I’m a contract climber for tree companies. You bring the crew and the chipper; I bring my gear, take the technical piece, and bring it down. The ground, haul, and cleanup stay with your team.',
     list: [
-      { title: 'Tree removal', body: 'Hazardous, dead, or just in the way. Taken down piece by piece, roped and lowered right up against the house when it has to be.' },
-      { title: 'Trimming & pruning', body: 'Clear deadwood, shape the canopy, raise limbs off your roof, and keep branches clear of the power lines.' },
-      { title: 'Technical & sectional removals', body: 'Tight backyards, fence lines, and over structures where a bucket truck can’t reach. Climbed and rigged down by hand.' },
-      { title: 'Storm-damaged trees', body: 'Hung-up limbs, broken tops, and leaners made safe and brought down before they do more damage.' },
-      { title: 'Contract climbing', body: 'Running a crew and need a climber? Bring me in for the technical climb and rigging while your team works the ground.' },
-      { title: 'On-site cleanup', body: 'For a flat $100 I’ll cut it down and pile the wood and brush in one spot. Hauling it away is on you or your hauler.' },
-      { title: 'Full debris removal', body: 'Want it gone completely? For a flat $150 I can organize full debris removal and have the wood and brush hauled off your property.' },
+      { title: 'Sectional takedowns', body: 'Big removals brought down in pieces, roped and lowered, when there’s no room to fell it.' },
+      { title: 'Storm-damaged leaders', body: 'Hung-up limbs, broken tops, and leaners made safe up in the canopy before they do more damage.' },
+      { title: 'Rigging over structures', body: 'Tight lots, fence lines, and limbs over the house or the lines — climbed and rigged down by hand.' },
+      { title: 'The climb past your crew', body: 'The technical piece your team can’t reach or doesn’t want. I climb it; you run the ground.' },
+      { title: 'A climber for the day', body: 'Short-handed or stacked up? Bring me in by the day to keep your crew moving.' },
     ],
     contactTitle: 'Like what you see?',
   },
 
   // areas
   areas: {
-    metaTitle: 'Service Areas | Woodchuckers Tree Climber | Colorado Springs',
+    metaTitle: 'Coverage Area | Woodchuckers Contract Tree Climber | Colorado Springs',
     metaDesc:
-      'Towns served by Woodchuckers, a professional tree climber based in Colorado Springs. Tap your town for details. Se habla español.',
-    eyebrow: 'Service Areas',
-    heroTitle: ['Front Range trees,', 'town by town,', 'climbed by hand.'],
-    title: 'Where I work',
-    lead: 'A professional tree climber working across Colorado Springs and the surrounding El Paso County communities.',
-    townsTitle: 'Towns I serve',
+      'Where Woodchuckers climbs contract — Colorado Springs and the El Paso County towns. Tree companies: I’ll travel for the right climb. Se habla español.',
+    eyebrow: 'Coverage',
+    heroTitle: ['Front Range crews,', 'town by town —', 'I travel to climb.'],
+    title: 'Where I climb',
+    lead: 'A contract climber for tree companies across Colorado Springs and El Paso County. Got a job outside it? Ask — I’ll travel for the right climb.',
+    townsTitle: 'Towns I cover',
     expansionTag: 'Coming September 2027',
     expansionBody:
-      'The Great Expansion Project. I am taking Woodchuckers beyond Colorado to also serve Washington, Oregon, and California.',
-    contactTitle: 'In my area? Let’s talk.',
+      'The Great Expansion Project. Taking Woodchuckers contract climbing beyond Colorado — Washington, Oregon, and California next.',
+    contactTitle: 'Crew in the area? Let’s talk.',
   },
 
   // per-town page
   town: {
-    serviceArea: 'Service Area',
-    titleFor: (name: string) => `Tree service in ${name}, Colorado`,
-    metaTitleFor: (name: string) => `Tree Service in ${name}, CO | Woodchuckers`,
+    serviceArea: 'Coverage',
+    titleFor: (name: string) => `Contract tree climber in ${name}, Colorado`,
+    metaTitleFor: (name: string) => `Contract Tree Climber in ${name}, CO | Woodchuckers`,
     metaDescFor: (name: string) =>
-      `Tree removal and trimming in ${name}, Colorado. Owner operated climber, roped and rigged by hand, careful around the house and power lines. Free estimates. Se habla español.`,
-    doInTitle: (name: string) => `What I do in ${name}`,
-    localTitle: 'Local trees, handled local',
-    mapTitleFor: (name: string) => `Map of the ${name}, CO tree service area`,
-    contactTitleFor: (name: string) => `In ${name}? Let’s talk.`,
-    servingFor: (name: string) => `Serving ${name} and the Colorado Springs area`,
+      `Contract tree climber for hire by tree companies in ${name}, Colorado. I bring my own gear, climb the piece past your crew, and bring it down. Day rate. Se habla español.`,
+    doInTitle: (name: string) => `Climbs I take in ${name}`,
+    localTitle: 'An extra climber, on call',
+    mapTitleFor: (name: string) => `Map of the ${name}, CO area`,
+    contactTitleFor: (name: string) => `Crew in ${name}? Let’s talk.`,
+    servingFor: (name: string) => `Contract climbing in ${name} and the Colorado Springs area`,
     core: [
-      { title: 'Removals', body: 'Whole trees taken down in pieces, roped and lowered, no damage to what’s underneath.' },
-      { title: 'Trimming & pruning', body: 'Clearance, deadwood, and shape, cut for the tree’s health, not just the look.' },
-      { title: 'Technical take-downs', body: 'Tight spots near the house, fence, or power lines, rigged down by hand.' },
-      { title: 'Storm & hazard work', body: 'Broken limbs and leaners made safe, fast, before they come down on their own.' },
+      { title: 'Sectional takedowns', body: 'Big removals brought down in pieces, roped and lowered, when there’s no room to fell it.' },
+      { title: 'Storm-damaged leaders', body: 'Broken tops, hung limbs, and leaners — made safe up in the canopy.' },
+      { title: 'Rigging over structures', body: 'Limbs and wood lowered over the house, the fence, or the lines, off your crew’s plate.' },
+      { title: 'The climb nobody wants', body: 'The technical piece past your team — I climb it, you run the ground.' },
     ],
-    breadcrumbAreas: 'Service Areas',
+    breadcrumbAreas: 'Coverage',
   },
 
   // estimate
@@ -242,15 +240,15 @@ const en = {
 
   // contract climbing (B2B — climber for hire)
   contract: {
-    metaTitle: 'Tree Removal & Contract Climbing | Woodchuckers | Colorado Springs',
+    metaTitle: 'Contract Tree Climber for Hire | Woodchuckers | Colorado Springs',
     metaDesc:
-      'Professional tree climber in Colorado Springs — removals, storm work, and rigging-heavy takedowns for homeowners and tree companies. Own gear, free estimate.',
+      'Contract tree climber for hire in Colorado Springs. Tree companies and crews: I bring my own gear, climb the piece past your team, and bring it down. Sectional takedowns, storm work, rigging. Se habla español.',
     kicker: 'Colorado Springs',
-    headTitle: 'I take down the tree nobody else will',
-    heroTitle: ['I take down', 'the tree', 'nobody else will.'],
+    headTitle: 'I climb the tree your crew won’t',
+    heroTitle: ['I climb', 'the tree', 'your crew won’t.'],
     headLede:
-      'A dead pine over your house, or a section your crew can’t reach — I climb it, rope it, and bring it down clean. Homeowners and tree companies both.',
-    bookLine: 'Call or text for a free estimate:',
+      'The section your crew can’t reach, the removal past your team — I climb it, rope it, and bring it down clean. You run the ground.',
+    bookLine: 'Call or text for a day rate:',
     ratesTitle: 'Day rate',
     rateUnit: 'per day',
     included: 'Your crew runs the ground, I take the climb — the removal past your team, the rigging over the house, the section nobody wants. A contract climber with my own gear.',
@@ -285,8 +283,8 @@ const en = {
     heroTitle: ['Every way', 'to reach', 'Woodchuckers.'],
     website: 'Visit the website',
     websiteSub: 'woodchuckertrees.com',
-    estimate: 'Get a free estimate',
-    estimateSub: 'Fast day-rate quote',
+    estimate: 'Get a day rate',
+    estimateSub: 'For tree companies',
     callText: 'Call or text',
     cashapp: 'Pay with CashApp',
     zelle: 'Pay with Zelle',
@@ -311,10 +309,10 @@ const en = {
 type Dict = typeof en
 
 const es: Dict = {
-  nav: { home: 'Inicio', work: 'Mi Trabajo', areas: 'Zonas', estimate: 'Presupuesto' },
+  nav: { home: 'Inicio', work: 'Mi Trabajo', areas: 'Zonas', estimate: 'Contráteme' },
   skip: 'Saltar al contenido',
   callLabel: 'Llamar',
-  freeEstimate: 'Presupuesto gratis',
+  freeEstimate: 'Ver tarifa por día',
   bookDay: 'Reservar un día',
   footPro: 'Escalador por contrato',
   proLink: '¿Tiene empresa de árboles? Escalo por contrato →',
@@ -322,7 +320,7 @@ const es: Dict = {
   langName: { en: 'English', es: 'Español' },
   switchTo: 'View in English',
   servingArea: 'Sirviendo el área de Colorado Springs',
-  callOrText: 'Llame o escriba para hablar de sus árboles, sin compromiso.',
+  callOrText: 'Llame o escriba sobre la escalada, sin compromiso.',
 
   home: {
     metaTitle: 'Woodchuckers | Escalador de Árboles por Contrato | Colorado Springs',
@@ -376,63 +374,61 @@ const es: Dict = {
   },
 
   work: {
-    metaTitle: 'Mi Trabajo | Woodchuckers Servicio de Árboles | Colorado Springs',
+    metaTitle: 'Mi Trabajo | Woodchuckers Escalador por Contrato | Colorado Springs',
     metaDesc:
-      'Trabajo real de árboles en Colorado Springs. Escalada, aparejo y remociones hechos a mano. Sin fotos de archivo, sin subcontratistas. Se habla español.',
+      'Escalada por contrato real en Colorado Springs — remociones por secciones, líderes por tormenta y aparejo a mano para empresas de árboles. Sin fotos de archivo. Se habla español.',
     eyebrow: 'Mi Trabajo',
     heroTitle: ['Escaladas reales.', 'Resultados reales.', 'Sin fotos de archivo.'],
     title: 'Escaladas reales, resultados reales',
-    lead: 'Sin subcontratistas y sin fotos de archivo. Ese soy yo arriba del árbol en cada trabajo, con la cuerda y haciéndolo bien.',
-    cap1: 'Con cuerda en la copa para una poda controlada.',
-    cap2: 'Pinos grandes de casa, bajados pieza por pieza.',
-    doTitle: 'Lo que hago',
+    lead: 'Sin fotos de archivo y sin relleno. Ese soy yo arriba del árbol en cada trabajo, con la cuerda — la escalada técnica que su cuadrilla delega.',
+    cap1: 'Con cuerda en la copa, en plena escalada.',
+    cap2: 'Pinos grandes bajados pieza por pieza.',
+    doTitle: 'Lo que escalo',
     doLead:
-      'Soy escalador profesional de árboles. Traigo mi equipo de escalada y aparejo y bajo o podo el árbol. No me llevo los restos del sitio, así que usted se queda la madera o su transportista la recoge.',
+      'Soy escalador por contrato para empresas de árboles. Usted pone la cuadrilla y la astilladora; yo traigo mi equipo, tomo la pieza técnica y la bajo. El suelo, el acarreo y la limpieza quedan con su equipo.',
     list: [
-      { title: 'Remoción de árboles', body: 'Peligrosos, secos o simplemente en el camino. Bajados pieza por pieza, con cuerda, pegados a la casa cuando hace falta.' },
-      { title: 'Poda y mantenimiento', body: 'Limpiar ramas secas, dar forma a la copa, levantar ramas del techo y despejar de los cables.' },
-      { title: 'Remociones técnicas y por secciones', body: 'Patios estrechos, cercas y sobre estructuras donde un camión grúa no llega. Escalado y bajado a mano con aparejo.' },
-      { title: 'Árboles dañados por tormenta', body: 'Ramas atoradas, copas rotas e inclinados, asegurados y bajados antes de que causen más daño.' },
-      { title: 'Escalada por contrato', body: '¿Tiene una cuadrilla y necesita un escalador? Llámeme para la escalada técnica y el aparejo mientras su equipo trabaja en el suelo.' },
-      { title: 'Limpieza en sitio', body: 'Por $100 fijos lo corto y amontono la madera y la maleza en un solo lugar. Llevárselo es cosa suya o de su transportista.' },
-      { title: 'Retiro completo de restos', body: '¿Lo quiere fuera por completo? Por $150 fijos organizo el retiro completo y hago que se lleven la madera y la maleza de su propiedad.' },
+      { title: 'Remociones por secciones', body: 'Remociones grandes bajadas en piezas, con cuerda, cuando no hay espacio para tumbarlo.' },
+      { title: 'Líderes dañados por tormenta', body: 'Ramas atoradas, copas rotas e inclinados, asegurados arriba en la copa antes de que causen más daño.' },
+      { title: 'Aparejo sobre estructuras', body: 'Terrenos estrechos, cercas y ramas sobre la casa o los cables — escalado y bajado a mano.' },
+      { title: 'La escalada más allá de su cuadrilla', body: 'La pieza técnica que su equipo no alcanza o no quiere. Yo la escalo; usted maneja el suelo.' },
+      { title: 'Un escalador por el día', body: '¿Con poco personal o saturados? Llámeme por el día para mantener su cuadrilla avanzando.' },
     ],
     contactTitle: '¿Le gusta lo que ve?',
   },
 
   areas: {
-    metaTitle: 'Zonas de Servicio | Woodchuckers Escalador de Árboles | Colorado Springs',
+    metaTitle: 'Zona de Cobertura | Woodchuckers Escalador por Contrato | Colorado Springs',
     metaDesc:
-      'Pueblos que atiende Woodchuckers, escalador profesional de árboles en Colorado Springs. Toque su pueblo para más detalles. Se habla español.',
-    eyebrow: 'Zonas de Servicio',
-    heroTitle: ['Árboles del Front Range,', 'pueblo por pueblo,', 'escalados a mano.'],
-    title: 'Dónde trabajo',
-    lead: 'Un escalador profesional de árboles que trabaja en Colorado Springs y las comunidades vecinas del condado de El Paso.',
-    townsTitle: 'Pueblos que atiendo',
+      'Dónde escala por contrato Woodchuckers — Colorado Springs y los pueblos del condado de El Paso. Empresas de árboles: viajo por la escalada correcta. Se habla español.',
+    eyebrow: 'Cobertura',
+    heroTitle: ['Cuadrillas del Front Range,', 'pueblo por pueblo —', 'viajo a escalar.'],
+    title: 'Dónde escalo',
+    lead: 'Un escalador por contrato para empresas de árboles en Colorado Springs y el condado de El Paso. ¿Un trabajo fuera de la zona? Pregunte — viajo por la escalada correcta.',
+    townsTitle: 'Pueblos que cubro',
     expansionTag: 'Llega en septiembre de 2027',
     expansionBody:
-      'El Gran Proyecto de Expansión. Estoy llevando Woodchuckers más allá de Colorado para atender también Washington, Oregón y California.',
-    contactTitle: '¿En mi zona? Hablemos.',
+      'El Gran Proyecto de Expansión. Llevando la escalada por contrato de Woodchuckers más allá de Colorado — Washington, Oregón y California.',
+    contactTitle: '¿Cuadrilla en la zona? Hablemos.',
   },
 
   town: {
-    serviceArea: 'Zona de Servicio',
-    titleFor: (name: string) => `Servicio de árboles en ${name}, Colorado`,
-    metaTitleFor: (name: string) => `Servicio de Árboles en ${name}, CO | Woodchuckers`,
+    serviceArea: 'Cobertura',
+    titleFor: (name: string) => `Escalador de árboles por contrato en ${name}, Colorado`,
+    metaTitleFor: (name: string) => `Escalador de Árboles por Contrato en ${name}, CO | Woodchuckers`,
     metaDescFor: (name: string) =>
-      `Remoción y poda de árboles en ${name}, Colorado. Escalador dueño y operador, con cuerda y aparejo a mano, cuidadoso cerca de la casa y los cables. Presupuestos gratis. Se habla español.`,
-    doInTitle: (name: string) => `Lo que hago en ${name}`,
-    localTitle: 'Árboles locales, atendidos local',
-    mapTitleFor: (name: string) => `Mapa de la zona de servicio de ${name}, CO`,
-    contactTitleFor: (name: string) => `¿En ${name}? Hablemos.`,
-    servingFor: (name: string) => `Sirviendo ${name} y el área de Colorado Springs`,
+      `Escalador de árboles por contrato para empresas en ${name}, Colorado. Traigo mi propio equipo, escalo la pieza que su cuadrilla no alcanza y la bajo. Tarifa por día. Se habla español.`,
+    doInTitle: (name: string) => `Escaladas que tomo en ${name}`,
+    localTitle: 'Un escalador extra, disponible',
+    mapTitleFor: (name: string) => `Mapa de la zona de ${name}, CO`,
+    contactTitleFor: (name: string) => `¿Cuadrilla en ${name}? Hablemos.`,
+    servingFor: (name: string) => `Escalada por contrato en ${name} y el área de Colorado Springs`,
     core: [
-      { title: 'Remociones', body: 'Árboles completos bajados en piezas, con cuerda y sin dañar lo que está debajo.' },
-      { title: 'Poda y mantenimiento', body: 'Despeje, ramas secas y forma, cortado por la salud del árbol, no solo por la apariencia.' },
-      { title: 'Derribos técnicos', body: 'Lugares estrechos cerca de la casa, la cerca o los cables, bajados a mano con aparejo.' },
-      { title: 'Daños por tormenta', body: 'Ramas rotas e inclinadas, aseguradas rápido antes de que caigan solas.' },
+      { title: 'Remociones por secciones', body: 'Remociones grandes bajadas en piezas, con cuerda, cuando no hay espacio para tumbarlo.' },
+      { title: 'Líderes dañados por tormenta', body: 'Copas rotas, ramas atoradas e inclinados — asegurados arriba en la copa.' },
+      { title: 'Aparejo sobre estructuras', body: 'Ramas y madera bajadas sobre la casa, la cerca o los cables, fuera del plato de su cuadrilla.' },
+      { title: 'La escalada que nadie quiere', body: 'La pieza técnica más allá de su equipo — yo la escalo, usted maneja el suelo.' },
     ],
-    breadcrumbAreas: 'Zonas de Servicio',
+    breadcrumbAreas: 'Cobertura',
   },
 
   estimate: {
@@ -506,15 +502,15 @@ const es: Dict = {
   },
 
   contract: {
-    metaTitle: 'Remoción de Árboles y Escalada por Contrato | Woodchuckers | Colorado Springs',
+    metaTitle: 'Escalador de Árboles por Contrato | Woodchuckers | Colorado Springs',
     metaDesc:
-      'Escalador profesional de árboles en Colorado Springs — remociones, daño por tormenta y desmontes con aparejo para dueños de casa y empresas. Equipo propio, presupuesto gratis.',
+      'Escalador de árboles por contrato en Colorado Springs. Empresas y cuadrillas: traigo mi propio equipo, escalo la pieza que su equipo no alcanza y la bajo. Remociones por secciones, daño por tormenta, aparejo. Se habla español.',
     kicker: 'Colorado Springs',
-    headTitle: 'Bajo el árbol que nadie más quiere',
-    heroTitle: ['Bajo el árbol', 'que nadie', 'más quiere.'],
+    headTitle: 'Escalo el árbol que su cuadrilla no quiere',
+    heroTitle: ['Escalo el árbol', 'que su cuadrilla', 'no quiere.'],
     headLede:
-      'Un pino muerto sobre su casa, o una sección que su cuadrilla no alcanza — lo escalo, lo aparejo y lo bajo limpio. Dueños de casa y empresas, por igual.',
-    bookLine: 'Llame o escriba para un presupuesto gratis:',
+      'La sección que su cuadrilla no alcanza, la remoción más allá de su equipo — lo escalo, lo aparejo y lo bajo limpio. Usted maneja el suelo.',
+    bookLine: 'Llame o escriba para una tarifa por día:',
     ratesTitle: 'Tarifa por día',
     rateUnit: 'por día',
     included:
@@ -549,8 +545,8 @@ const es: Dict = {
     heroTitle: ['Todas las formas', 'de contactar a', 'Woodchuckers.'],
     website: 'Visitar el sitio web',
     websiteSub: 'woodchuckertrees.com',
-    estimate: 'Reciba un presupuesto gratis',
-    estimateSub: 'Cotización rápida por día',
+    estimate: 'Ver la tarifa por día',
+    estimateSub: 'Para empresas de árboles',
     callText: 'Llame o escriba',
     cashapp: 'Pagar con CashApp',
     zelle: 'Pagar con Zelle',

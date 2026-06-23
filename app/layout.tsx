@@ -26,6 +26,18 @@ export const metadata: Metadata = {
     icon: [{ url: '/img/favicon.svg', type: 'image/svg+xml' }],
     apple: '/img/apple-touch-icon.png',
   },
+  // Sitewide OG/Twitter image default (1200×630). Pages that set their own
+  // openGraph.images override this; pages that don't (e.g. /links) inherit it.
+  openGraph: {
+    images: [
+      {
+        url: '/img/og.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Woodchuckers — contract tree climber, Colorado Springs',
+      },
+    ],
+  },
 }
 
 export const viewport: Viewport = {

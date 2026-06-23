@@ -163,7 +163,7 @@ export function SiteFooter({ locale, path }: { locale: Locale; path: string }) {
 }
 
 // Sticky conversion bar — phones only (CSS hides it ≥46rem). `variant` swaps the
-// second button: the marketing pages push the free estimate; the contract page
+// second button: the marketing pages push the day rate; the contract page
 // scrolls to its job form.
 export function MobileCTA({
   locale,

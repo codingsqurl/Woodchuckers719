@@ -23,7 +23,7 @@ function townJsonLd(locale: Locale, town: TownPage) {
         '@type': 'LocalBusiness',
         '@id': `${base}/#business`,
         name: 'Woodchuckers Tree Service',
-        description: `Professional tree climber serving ${town.name}, CO: removals, trimming, and technical climbing, roped and rigged by hand. Owner-operated. Se habla español.`,
+        description: `Contract tree climber for hire by tree companies in ${town.name}, CO: sectional takedowns, storm work, and rigging. Own gear, owner-operated. Se habla español.`,
         url,
         telephone: '+1-719-756-2597',
         email: EMAIL,

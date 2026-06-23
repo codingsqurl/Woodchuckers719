@@ -6,10 +6,7 @@ export const serviceAreas: string[] = [
   'Colorado Springs',
   'Monument',
   'Black Forest',
-  'Falcon',
-  'Peyton',
   'Fountain',
-  'Security-Widefield',
   'Cimarron Hills',
   'Manitou Springs',
   'Woodland Park',
@@ -45,10 +42,11 @@ export function areaList(): Area[] {
 
 // ── Per-town landing-page content ───────────────────────────────────────────
 // TODO(king): the intro/localNote below are PLACEHOLDER copy — true and readable,
-// but templated. Replace each town's `localNote` with real local detail (the
-// trees you see there, common hazards, neighborhoods) before leaning on these
-// pages for SEO. Near-duplicate town pages read as the "cheap local-SEO template"
-// the brand rejects; a few true sentences per town is what makes them legit.
+// but templated, now aimed at the tree companies you're prospecting in each city.
+// Replace each town's `localNote` with real local detail (the crews there, the
+// trees, common hazards) before leaning on these pages for SEO. Near-duplicate
+// town pages read as the "cheap local-SEO template" the brand rejects; a few true
+// sentences per town is what makes them legit.
 
 export type TownPage = Area & {
   intro: string
@@ -61,16 +59,16 @@ type Loc = 'en' | 'es'
 // Rotating true Front Range angles so the placeholder pages aren't byte-identical.
 const LOCAL_ANGLES: Record<Loc, string[]> = {
   en: [
-    'Front Range ponderosa and pinyon pine grow tall and heavy here, and they rarely fall where you want them to.',
-    'Heavy spring snow and summer storms leave hung-up limbs and leaners that need to come down before they come down on their own.',
-    'Fire-mitigation pruning and deadwood clearing matter on these lots, especially close to the house and the property line.',
-    'Big trees tight against the roof, the fence, or the power lines are exactly the technical climbs this work is built for.',
+    'Front Range ponderosa and pinyon grow tall and heavy — the kind of removal that’s safer climbed and rigged than felled.',
+    'Heavy spring snow and summer storms leave hung-up limbs and leaners that a crew often wants a dedicated climber for.',
+    'Tight lots against structures, fences, and power lines are exactly the technical climbs to hand off.',
+    'When the wood is big and the drop zone is small, a climber on the rope beats forcing the fell.',
   ],
   es: [
-    'Los pinos ponderosa y piñoneros del Front Range crecen altos y pesados, y rara vez caen donde uno quisiera.',
-    'La nieve fuerte de primavera y las tormentas de verano dejan ramas atoradas e inclinadas que hay que bajar antes de que caigan solas.',
-    'La poda para mitigación de incendios y la limpieza de ramas secas importan en estos terrenos, sobre todo cerca de la casa y del lindero.',
-    'Los árboles grandes pegados al techo, la cerca o los cables son justo las escaladas técnicas para las que está hecho este trabajo.',
+    'Los pinos ponderosa y piñoneros del Front Range crecen altos y pesados — el tipo de remoción más segura escalada y aparejada que tumbada.',
+    'La nieve fuerte de primavera y las tormentas de verano dejan ramas atoradas e inclinadas para las que una cuadrilla suele querer un escalador dedicado.',
+    'Los terrenos estrechos contra estructuras, cercas y cables son justo las escaladas técnicas para delegar.',
+    'Cuando la madera es grande y la zona de caída es pequeña, un escalador en la cuerda gana a forzar la tala.',
   ],
 }
 
@@ -79,12 +77,12 @@ function buildTown(name: string, index: number, locale: Loc): TownPage {
   const angle = LOCAL_ANGLES[locale][index % LOCAL_ANGLES[locale].length]
   const intro =
     locale === 'es'
-      ? `Woodchuckers es un escalador de árboles entrenado, dueño y operador, que atiende ${name}, Colorado. Remociones, podas y derribos técnicos, con cuerda y aparejo, bajados a mano. La persona que cotiza su árbol es la que sube a él.`
-      : `Woodchuckers is a trained, owner-operated tree climber serving ${name}, Colorado. Removals, trimming, and technical take-downs, roped and rigged and lowered by hand. The person who quotes your tree is the one who climbs it.`
+      ? `Woodchuckers es un escalador de árboles por contrato, dueño y operador, para empresas en ${name}, Colorado. Traigo mi propio equipo de escalada y aparejo, escalo la pieza que su cuadrilla no alcanza y la bajo. Usted maneja el suelo.`
+      : `Woodchuckers is an owner-operated contract tree climber for hire by tree companies in ${name}, Colorado. I bring my own climbing and rigging gear, climb the piece past your crew, and bring it down. You run the ground.`
   const localNote =
     locale === 'es'
-      ? `${angle} Lo que sea que necesiten sus árboles en ${name}, yo lo escalo, lo aparejo y lo bajo en piezas controladas, cuidadoso con su propiedad y honesto con usted sobre el costo.`
-      : `${angle} Whatever your trees in ${name} need, I climb it, rig it, and bring it down in controlled pieces, careful with your property and straight with you about the cost.`
+      ? `${angle} Sea cual sea la escalada en ${name}, llego con mi equipo, tomo la pieza técnica y la bajo — su cuadrilla se queda con el suelo, el acarreo y la limpieza.`
+      : `${angle} Whatever the climb in ${name}, I show up with my gear, take the technical piece, and bring it down — your crew keeps the ground, the haul, and the cleanup.`
   return { ...base, intro, localNote, placeholder: true }
 }
 

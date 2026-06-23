@@ -32,7 +32,7 @@ export function AreasContent({ locale }: { locale: Locale }) {
             <div className="map-embed">
               <iframe
                 src="https://maps.google.com/maps?q=Colorado+Springs,+CO&z=10&output=embed"
-                title="Map of the Colorado Springs tree service area"
+                title="Map of the Colorado Springs coverage area"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />

@@ -11,27 +11,70 @@ import { type Locale, getDict, localePath } from '@/lib/i18n'
 import { appBaseURL } from '@/lib/env'
 import { areaList } from '@/lib/areas'
 
-function localBusinessJsonLd() {
+// Home structured data: the LocalBusiness (B2B contract climbing) plus a FAQPage
+// built from the visible FAQ band, in one @graph. Honest only — no Review /
+// AggregateRating (no reviews to cite; faking them violates Google's guidelines).
+function homeJsonLd(locale: Locale) {
   const base = appBaseURL()
+  const t = getDict(locale).home
   return {
     '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    name: 'Woodchuckers Tree Service',
-    description:
-      'Professional tree climber in Colorado Springs: removals, trimming, and technical climbing, roped and rigged by hand. Owner-operated. Se habla español.',
-    url: `${base}/`,
-    image: `${base}/img/background.jpg`,
-    telephone: '+1-719-756-2597',
-    email: EMAIL,
-    areaServed: areaList().map((a) => ({ '@type': 'City', name: `${a.name}, CO` })),
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Colorado Springs',
-      addressRegion: 'CO',
-      addressCountry: 'US',
-    },
-    geo: { '@type': 'GeoCoordinates', latitude: 38.8339, longitude: -104.8214 },
-    priceRange: '$175–$350/day',
+    '@graph': [
+      {
+        '@type': 'LocalBusiness',
+        '@id': `${base}/#business`,
+        name: 'Woodchuckers Tree Service',
+        description:
+          'Contract tree climber for hire by tree companies in Colorado Springs: sectional takedowns, storm-damaged leaders, and rigging over structures. Own gear, owner-operated. Se habla español.',
+        url: `${base}/`,
+        image: `${base}/img/og.jpg`,
+        telephone: '+1-719-756-2597',
+        email: EMAIL,
+        priceRange: '$175–$350/day',
+        knowsLanguage: ['en', 'es'],
+        areaServed: areaList().map((a) => ({ '@type': 'City', name: `${a.name}, CO` })),
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: 'Colorado Springs',
+          addressRegion: 'CO',
+          addressCountry: 'US',
+        },
+        geo: { '@type': 'GeoCoordinates', latitude: 38.8339, longitude: -104.8214 },
+        contactPoint: {
+          '@type': 'ContactPoint',
+          telephone: '+1-719-756-2597',
+          contactType: 'sales',
+          areaServed: 'US-CO',
+          availableLanguage: ['English', 'Spanish'],
+        },
+        makesOffer: {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Contract tree climbing',
+            serviceType: 'Contract tree climbing for tree companies',
+            description:
+              'A climber for hire by tree companies — sectional takedowns, storm-damaged leaders, and rigging over structures. I bring my own gear and climb the piece past your crew; your team runs the ground.',
+          },
+          priceSpecification: {
+            '@type': 'PriceSpecification',
+            priceCurrency: 'USD',
+            minPrice: 175,
+            maxPrice: 350,
+            unitText: 'DAY',
+          },
+        },
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${base}${localePath(locale, '/')}#faq`,
+        mainEntity: t.faqs.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      },
+    ],
   }
 }
 
@@ -47,7 +90,7 @@ export function HomeContent({ locale }: { locale: Locale }) {
       {/* LocalBusiness schema — a data block, exempt from script-src CSP. */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd()) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeJsonLd(locale)) }}
       />
 
       <SiteHeader locale={locale} current="home" />

@@ -13,8 +13,9 @@ export const metadata: Metadata = {
     siteName: 'Woodchuckers',
     locale: 'en_US',
     alternateLocale: ['es_US'],
-    title: 'My Work | Woodchuckers Tree Service',
-    description: 'Real climbs, real results. Tree removal and trimming in Colorado Springs.',
+    title: 'My Work | Woodchuckers Contract Tree Climber',
+    description:
+      'Real climbs, real results. Contract tree climbing in Colorado Springs — sectional takedowns, storm work, and rigging for tree companies.',
     url: '/portfolio',
     images: ['/img/og.jpg'],
   },
