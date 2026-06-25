@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     alternateLocale: ['es_US'],
     title: 'Contract Tree Climber for Hire | Woodchuckers',
     description:
-      'Contract tree climber for hire in Colorado Springs — sectional takedowns, storm work, and rigging for tree companies. Own gear.',
+      'Contract tree climber for hire in Colorado Springs. Sectional takedowns, storm work, and rigging for tree companies. Own gear.',
     url: '/contract-climbing',
     images: ['/img/og.jpg'],
   },

@@ -15,7 +15,7 @@ function contractJsonLd() {
     serviceType: 'Contract tree climbing',
     name: 'Contract tree climber for hire',
     description:
-      'A contract climber for tree companies and crews in Colorado Springs — sectional takedowns, storm-damaged leaders, and rigging over structures. Own gear; your crew runs the ground.',
+      'A contract climber for tree companies and crews in Colorado Springs. Sectional takedowns, storm-damaged leaders, and rigging over structures. Own gear; your crew runs the ground.',
     provider: {
       '@type': 'LocalBusiness',
       '@id': `${base}/#business`,

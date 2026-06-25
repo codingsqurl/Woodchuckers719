@@ -54,7 +54,7 @@ function homeJsonLd(locale: Locale) {
             name: 'Contract tree climbing',
             serviceType: 'Contract tree climbing for tree companies',
             description:
-              'A climber for hire by tree companies — sectional takedowns, storm-damaged leaders, and rigging over structures. I bring my own gear and climb the piece past your crew; your team runs the ground.',
+              'A climber for hire by tree companies. Sectional takedowns, storm-damaged leaders, and rigging over structures. I bring my own gear and climb the piece past your crew; your team runs the ground.',
           },
           priceSpecification: {
             '@type': 'PriceSpecification',
@@ -133,25 +133,6 @@ export function HomeContent({ locale }: { locale: Locale }) {
               <li key={item}>{item}</li>
             ))}
           </ul>
-        </section>
-
-        {/* ───── proof: the one decisive rope-work shot ───── */}
-        <section className="band proof">
-          <div className="band-inner">
-            <h2 className="section-title">{t.proofTitle}</h2>
-            <p className="band-lead">{t.proofLead}</p>
-            <figure className="proof-media">
-              <img
-                src="/img/powerline.jpg"
-                width={900}
-                height={1199}
-                loading="lazy"
-                decoding="async"
-                alt={t.proofAlt}
-              />
-              <figcaption>{t.proofCaption}</figcaption>
-            </figure>
-          </div>
         </section>
 
         {/* ───── what I take on ───── */}

@@ -26,6 +26,15 @@ export const metadata: Metadata = {
     icon: [{ url: '/img/favicon.svg', type: 'image/svg+xml' }],
     apple: '/img/apple-touch-icon.png',
   },
+  // Added to the iPhone home screen, the staff app launches standalone (no
+  // Safari chrome). These three tags are what iOS reads; the manifest covers
+  // Android. title is the home-screen label; 'default' keeps a normal status
+  // bar so content never slides under the notch.
+  appleWebApp: {
+    capable: true,
+    title: 'Woodchuckers',
+    statusBarStyle: 'default',
+  },
   // Sitewide OG/Twitter image default (1200×630). Pages that set their own
   // openGraph.images override this; pages that don't (e.g. /links) inherit it.
   openGraph: {
@@ -34,7 +43,7 @@ export const metadata: Metadata = {
         url: '/img/og.jpg',
         width: 1200,
         height: 630,
-        alt: 'Woodchuckers — contract tree climber, Colorado Springs',
+        alt: 'Woodchuckers contract tree climber, Colorado Springs',
       },
     ],
   },

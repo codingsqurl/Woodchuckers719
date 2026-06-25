@@ -30,26 +30,46 @@ export function PortfolioContent({ locale }: { locale: Locale }) {
           <div className="band-inner">
             <div className="gallery">
               <figure className="shot">
-                <img
-                  src="/img/layingback.jpg"
-                  width={900}
-                  height={1199}
-                  loading="lazy"
-                  decoding="async"
-                  alt="Climber roped into a leafy cottonwood, running a chainsaw mid-canopy for a controlled trim"
-                />
+                <picture>
+                  <source srcSet="/img/layingback.webp" type="image/webp" />
+                  <img
+                    src="/img/layingback.jpg"
+                    width={900}
+                    height={1199}
+                    loading="lazy"
+                    decoding="async"
+                    alt="Climber roped into a leafy cottonwood, running a chainsaw mid-canopy for a controlled trim"
+                  />
+                </picture>
                 <figcaption>{t.cap1}</figcaption>
               </figure>
               <figure className="shot">
-                <img
-                  src="/img/uphigh.jpg"
-                  width={900}
-                  height={1199}
-                  loading="lazy"
-                  decoding="async"
-                  alt="Towering pines rising over a Colorado Springs home, a climber barely visible in the crown, rigged and lowered by hand"
-                />
+                <picture>
+                  <source srcSet="/img/uphigh.webp" type="image/webp" />
+                  <img
+                    src="/img/uphigh.jpg"
+                    width={900}
+                    height={1199}
+                    loading="lazy"
+                    decoding="async"
+                    alt="Towering pines rising over a Colorado Springs home, a climber barely visible in the crown, rigged and lowered by hand"
+                  />
+                </picture>
                 <figcaption>{t.cap2}</figcaption>
+              </figure>
+              <figure className="shot">
+                <picture>
+                  <source srcSet="/img/powerline.webp" type="image/webp" />
+                  <img
+                    src="/img/powerline.jpg"
+                    width={900}
+                    height={1199}
+                    loading="lazy"
+                    decoding="async"
+                    alt="Climber roped high in a pine above power lines, rigging a limb down by hand on a Colorado Springs job"
+                  />
+                </picture>
+                <figcaption>{t.cap3}</figcaption>
               </figure>
             </div>
           </div>

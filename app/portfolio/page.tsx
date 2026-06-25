@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     alternateLocale: ['es_US'],
     title: 'My Work | Woodchuckers Contract Tree Climber',
     description:
-      'Real climbs, real results. Contract tree climbing in Colorado Springs — sectional takedowns, storm work, and rigging for tree companies.',
+      'Real climbs, real results. Contract tree climbing in Colorado Springs. Sectional takedowns, storm work, and rigging for tree companies.',
     url: '/portfolio',
     images: ['/img/og.jpg'],
   },

@@ -876,6 +876,11 @@ body.site .hero .hero-actions {
 }
 
 /* ═══════════════════════ PORTFOLIO — proof gallery + ruled work list ═══════ */
+/* <picture> is a selection-only wrapper — keep it out of layout so the <img>
+   styles below (and the grid) apply as if the img were a direct child. */
+picture {
+  display: contents;
+}
 .gallery {
   display: grid;
   grid-template-columns: 1fr;
