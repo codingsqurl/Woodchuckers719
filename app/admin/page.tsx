@@ -92,6 +92,7 @@ export default async function AdminPage({
                 <th>Name</th>
                 <th>Contact</th>
                 <th>Need</th>
+                <th>Source</th>
                 <th>Ballpark</th>
                 <th>Status</th>
                 <th>Notes</th>
@@ -112,6 +113,7 @@ export default async function AdminPage({
                       </>
                     ) : null}
                   </td>
+                  <td>{e.source || '—'}</td>
                   <td>
                     ${e.estLow}–${e.estHigh}
                   </td>
