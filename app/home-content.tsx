@@ -78,6 +78,16 @@ function homeJsonLd(locale: Locale) {
   }
 }
 
+// The home "what I take on" cards deep-link, in order, onto the /services pages
+// so the homepage threads into the service hub. English only — the /es service
+// mirror is a later chunk, so Spanish keeps plain cards (no broken links).
+const HOME_SERVICE_SLUGS = [
+  'technical-removals',
+  'storm-hazard-work',
+  'rigging-crane-assist',
+  'contract-climbing-for-companies',
+]
+
 export function HomeContent({ locale }: { locale: Locale }) {
   const tc = getDict(locale)
   const t = tc.home
@@ -140,16 +150,38 @@ export function HomeContent({ locale }: { locale: Locale }) {
           <div className="band-inner">
             <h2 className="section-title">{t.servicesTitle}</h2>
             <ul className="svc-list two-col">
-              {t.services.map((s) => (
-                <li key={s.title}>
-                  <h3>{s.title}</h3>
-                  <p>{s.body}</p>
-                </li>
-              ))}
+              {t.services.map((s, i) => {
+                const slug = HOME_SERVICE_SLUGS[i]
+                return (
+                  <li key={s.title}>
+                    <h3>
+                      {locale === 'en' && slug ? (
+                        <a href={localePath(locale, `/services/${slug}`)}>{s.title}</a>
+                      ) : (
+                        s.title
+                      )}
+                    </h3>
+                    <p>{s.body}</p>
+                  </li>
+                )
+              })}
             </ul>
-            <a className="cta cta-primary" href={workHref}>
-              {t.seeWork}
-            </a>
+            <div className="hero-actions">
+              {locale === 'en' ? (
+                <>
+                  <a className="cta cta-primary" href={localePath(locale, '/services')}>
+                    All services
+                  </a>
+                  <a className="cta cta-ghost cta-ghost-dark" href={workHref}>
+                    {t.seeWork}
+                  </a>
+                </>
+              ) : (
+                <a className="cta cta-primary" href={workHref}>
+                  {t.seeWork}
+                </a>
+              )}
+            </div>
           </div>
         </section>
 

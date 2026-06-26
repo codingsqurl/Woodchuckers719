@@ -47,6 +47,8 @@ export const metadata: Metadata = {
       },
     ],
   },
+  // Sitewide Twitter card default; pages inherit it unless they set their own.
+  twitter: { card: 'summary_large_image' },
 }
 
 export const viewport: Viewport = {

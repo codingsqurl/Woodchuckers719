@@ -9,6 +9,34 @@ import {
 } from '../components/chrome'
 import { type Locale, getDict, localePath } from '@/lib/i18n'
 import { areaList } from '@/lib/areas'
+import { appBaseURL } from '@/lib/env'
+import { contractClimbing } from '@/lib/rates'
+
+// LocalBusiness schema for the coverage page — the canonical NAP, single-sourced
+// via the #business @id, with the full served-area list. A data block, exempt
+// from the script-src CSP.
+function areasJsonLd(locale: Locale) {
+  const base = appBaseURL()
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    '@id': `${base}/#business`,
+    name: 'Woodchuckers Tree Service',
+    description:
+      'Contract tree climber for hire by tree companies across Colorado Springs and El Paso County.',
+    url: `${base}${localePath(locale, '/areas')}`,
+    telephone: '+1-719-756-2597',
+    email: EMAIL,
+    areaServed: areaList().map((a) => ({ '@type': 'City', name: `${a.name}, CO` })),
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Colorado Springs',
+      addressRegion: 'CO',
+      addressCountry: 'US',
+    },
+    priceRange: `$${contractClimbing.dayLow}–$${contractClimbing.dayHigh}/day`,
+  }
+}
 
 export function AreasContent({ locale }: { locale: Locale }) {
   const tc = getDict(locale)
@@ -17,6 +45,10 @@ export function AreasContent({ locale }: { locale: Locale }) {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(areasJsonLd(locale)) }}
+      />
       <SiteHeader locale={locale} current="areas" />
       <main id="main">
         <PageHero
