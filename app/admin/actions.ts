@@ -10,6 +10,7 @@ import { requireAdmin } from '@/lib/auth'
 import { endSession } from '@/lib/session'
 import { createEmployee, isDuplicateEmail, setEmployeeActive } from '@/lib/employees'
 import { addRanking, deleteRanking } from '@/lib/rankings'
+import { setEstimateStatus, setEstimateNotes } from '@/lib/estimates'
 import { sendMail, inviteEmailHTML, mailerConfigured } from '@/lib/mail'
 import { appBaseURL } from '@/lib/env'
 
@@ -111,4 +112,30 @@ export async function deleteRankingAction(formData: FormData) {
   deleteRanking(id)
   revalidatePath('/admin')
   redirect('/admin')
+}
+
+// backTo keeps the active pipeline filter after a lead update.
+function backTo(formData: FormData): string {
+  const f = (formData.get('filter')?.toString() ?? '').trim()
+  return f ? `/admin?status=${encodeURIComponent(f)}` : '/admin'
+}
+
+// POST /admin/leads/status — move a lead through the pipeline. Admin only.
+export async function updateLeadStatusAction(formData: FormData) {
+  await requireAdmin()
+  const id = Number(formData.get('id'))
+  const status = formData.get('status')?.toString() ?? ''
+  if (Number.isInteger(id)) setEstimateStatus(id, status)
+  revalidatePath('/admin')
+  redirect(backTo(formData))
+}
+
+// POST /admin/leads/notes — save the notes / follow-up text for a lead. Admin only.
+export async function updateLeadNotesAction(formData: FormData) {
+  await requireAdmin()
+  const id = Number(formData.get('id'))
+  const notes = (formData.get('notes')?.toString() ?? '').trim()
+  if (Number.isInteger(id)) setEstimateNotes(id, notes)
+  revalidatePath('/admin')
+  redirect(backTo(formData))
 }

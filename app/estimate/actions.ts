@@ -93,7 +93,7 @@ export async function submitEstimate(
 
   // Notify the owner. Best-effort: the lead is already saved.
   if (mailerConfigured()) {
-    const full: Estimate = { ...e, id: 0, status: 'new', createdAt: 0 }
+    const full: Estimate = { ...e, id: 0, status: 'new', notes: '', createdAt: 0 }
     try {
       await sendMail(leadsTo, `New estimate request — ${name}`, estimateEmailHTML(full))
     } catch (err) {

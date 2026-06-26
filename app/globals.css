@@ -1771,3 +1771,42 @@ button {
 .provider-github:hover {
   background: #000;
 }
+
+/* ── CRM: lead pipeline filter + inline status/notes forms (admin, light) ── */
+.lead-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 0 1.2rem;
+}
+.lead-filter a {
+  text-decoration: none;
+  color: var(--body);
+  font-size: 0.85rem;
+  text-transform: capitalize;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+.lead-filter a.active {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+.inline-form {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+}
+.inline-form select,
+.inline-form input {
+  font: inherit;
+  padding: 0.2rem 0.3rem;
+}
+.inline-form input {
+  min-width: 8rem;
+}
+.inline-form button {
+  padding: 0.2rem 0.55rem;
+  font-size: 0.85rem;
+}

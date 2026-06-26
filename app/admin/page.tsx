@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { requireAdmin } from '@/lib/auth'
 import { listEmployees, lastLogin } from '@/lib/employees'
-import { listEstimates, debrisLabel, submitted, contact } from '@/lib/estimates'
+import { listEstimates, submitted, contact, LEAD_STATUSES } from '@/lib/estimates'
 import { listRankings, groupByKeyword, checked } from '@/lib/rankings'
 import {
   logout,
@@ -10,6 +10,8 @@ import {
   toggleActiveAction,
   addRankingAction,
   deleteRankingAction,
+  updateLeadStatusAction,
+  updateLeadNotesAction,
 } from './actions'
 
 export const metadata: Metadata = { title: 'Admin | Woodchuckers' }
@@ -42,15 +44,17 @@ function noticeFor(notice: string, email: string): string {
 export default async function AdminPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string; notice?: string; email?: string }>
+  searchParams: Promise<{ error?: string; notice?: string; email?: string; status?: string }>
 }) {
   const user = await requireAdmin()
   const sp = await searchParams
   const error = (sp.error && ERRORS[sp.error]) || ''
   const notice = sp.notice ? noticeFor(sp.notice, sp.email ?? '') : ''
 
+  const statusFilter =
+    sp.status && (LEAD_STATUSES as readonly string[]).includes(sp.status) ? sp.status : ''
   const employees = listEmployees()
-  const estimates = listEstimates(50)
+  const estimates = listEstimates(50, statusFilter || undefined)
   const rankings = groupByKeyword(listRankings())
 
   return (
@@ -69,7 +73,17 @@ export default async function AdminPage({
         {error ? <p className="error">{error}</p> : null}
         {notice ? <p className="notice">{notice}</p> : null}
 
-        <h1>Estimate requests</h1>
+        <h1>Leads</h1>
+        <p className="lead-filter">
+          <a href="/admin" className={statusFilter === '' ? 'active' : ''}>
+            All
+          </a>
+          {LEAD_STATUSES.map((s) => (
+            <a key={s} href={`/admin?status=${s}`} className={statusFilter === s ? 'active' : ''}>
+              {s}
+            </a>
+          ))}
+        </p>
         {estimates.length > 0 ? (
           <table className="grid">
             <thead>
@@ -78,11 +92,9 @@ export default async function AdminPage({
                 <th>Name</th>
                 <th>Contact</th>
                 <th>Need</th>
-                <th>Source</th>
-                <th>Days</th>
-                <th>Debris</th>
                 <th>Ballpark</th>
                 <th>Status</th>
+                <th>Notes</th>
               </tr>
             </thead>
             <tbody>
@@ -100,19 +112,45 @@ export default async function AdminPage({
                       </>
                     ) : null}
                   </td>
-                  <td>{e.source}</td>
-                  <td>{e.estDays}</td>
-                  <td>{debrisLabel(e)}</td>
                   <td>
                     ${e.estLow}–${e.estHigh}
                   </td>
-                  <td>{e.status}</td>
+                  <td>
+                    <form action={updateLeadStatusAction} className="inline-form">
+                      <input type="hidden" name="id" value={e.id} />
+                      <input type="hidden" name="filter" value={statusFilter} />
+                      <select name="status" defaultValue={e.status} aria-label="Lead status">
+                        {LEAD_STATUSES.map((s) => (
+                          <option key={s} value={s}>
+                            {s}
+                          </option>
+                        ))}
+                      </select>
+                      <button type="submit">Set</button>
+                    </form>
+                  </td>
+                  <td>
+                    <form action={updateLeadNotesAction} className="inline-form">
+                      <input type="hidden" name="id" value={e.id} />
+                      <input type="hidden" name="filter" value={statusFilter} />
+                      <input
+                        type="text"
+                        name="notes"
+                        defaultValue={e.notes}
+                        placeholder="note / follow-up"
+                        aria-label="Lead notes"
+                      />
+                      <button type="submit">Save</button>
+                    </form>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         ) : (
-          <p className="muted">No estimate requests yet.</p>
+          <p className="muted">
+            {statusFilter ? `No leads in “${statusFilter}”.` : 'No leads yet.'}
+          </p>
         )}
 
         <h1>Search rankings</h1>

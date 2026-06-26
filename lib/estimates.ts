@@ -19,11 +19,12 @@ export type Estimate = {
   estLow: number // whole dollars
   estHigh: number
   status: string
+  notes: string // CRM: freeform notes / follow-up text
   createdAt: number
 }
 
 // NewEstimate is the shape inserted from the public form (no id/status/createdAt yet).
-export type NewEstimate = Omit<Estimate, 'id' | 'status' | 'createdAt'>
+export type NewEstimate = Omit<Estimate, 'id' | 'status' | 'createdAt' | 'notes'>
 
 type EstimateRow = {
   id: number
@@ -41,6 +42,7 @@ type EstimateRow = {
   est_low: number
   est_high: number
   status: string
+  notes: string
   created_at: number
 }
 
@@ -61,8 +63,17 @@ function mapEstimate(r: EstimateRow): Estimate {
     estLow: r.est_low,
     estHigh: r.est_high,
     status: r.status,
+    notes: r.notes,
     createdAt: r.created_at,
   }
+}
+
+// The lead pipeline (the status CHECK set from migration 0003). Admin moves a
+// lead along these stages; the public form always inserts 'new'.
+export const LEAD_STATUSES = ['new', 'contacted', 'quoted', 'won', 'lost', 'archived'] as const
+export type LeadStatus = (typeof LEAD_STATUSES)[number]
+export function isLeadStatus(s: string): s is LeadStatus {
+  return (LEAD_STATUSES as readonly string[]).includes(s)
 }
 
 // createEstimate inserts a public estimate request and returns its new id.
@@ -91,17 +102,43 @@ export function createEstimate(e: NewEstimate): number {
   return Number(info.lastInsertRowid)
 }
 
-// listEstimates returns recent estimate requests, newest first, for the admin view.
-export function listEstimates(limit: number): Estimate[] {
-  const rows = db
-    .prepare(
-      `SELECT id, name, email, phone, address, service, details, COALESCE(source, '') AS source,
-              COALESCE(removal_info, '') AS removal_info, est_days, cleanup, debris_removal,
-              est_low, est_high, status, created_at
-       FROM estimates ORDER BY created_at DESC LIMIT ?`,
-    )
-    .all(limit) as EstimateRow[]
-  return rows.map(mapEstimate)
+const SELECT_COLS = `id, name, email, phone, address, service, details, COALESCE(source, '') AS source,
+       COALESCE(removal_info, '') AS removal_info, est_days, cleanup, debris_removal,
+       est_low, est_high, status, COALESCE(notes, '') AS notes, created_at`
+
+// listEstimates returns recent leads, newest first, optionally filtered by a
+// pipeline status. Guarded against the notes column not existing yet (migration
+// 0008 applies on the next server boot) so admin keeps rendering before then.
+export function listEstimates(limit: number, status?: string): Estimate[] {
+  const filtered = !!status && isLeadStatus(status)
+  const where = filtered ? 'WHERE status = ?' : ''
+  const params: (string | number)[] = filtered ? [status as string, limit] : [limit]
+  try {
+    const rows = db
+      .prepare(`SELECT ${SELECT_COLS} FROM estimates ${where} ORDER BY created_at DESC LIMIT ?`)
+      .all(...params) as EstimateRow[]
+    return rows.map(mapEstimate)
+  } catch (err) {
+    if (err instanceof Error && err.message.includes('no such column')) {
+      const cols = SELECT_COLS.replace(", COALESCE(notes, '') AS notes", '')
+      const rows = db
+        .prepare(`SELECT ${cols} FROM estimates ${where} ORDER BY created_at DESC LIMIT ?`)
+        .all(...params) as Omit<EstimateRow, 'notes'>[]
+      return rows.map((r) => mapEstimate({ ...r, notes: '' }))
+    }
+    throw err
+  }
+}
+
+// setEstimateStatus moves a lead through the pipeline. An invalid status is a no-op.
+export function setEstimateStatus(id: number, status: string): void {
+  if (!isLeadStatus(status)) return
+  db.prepare(`UPDATE estimates SET status = ? WHERE id = ?`).run(status, id)
+}
+
+// setEstimateNotes saves the freeform notes / follow-up text for a lead.
+export function setEstimateNotes(id: number, notes: string): void {
+  db.prepare(`UPDATE estimates SET notes = ? WHERE id = ?`).run(notes, id)
 }
 
 // DebrisLabel describes the chosen debris add-on for the owner views.
