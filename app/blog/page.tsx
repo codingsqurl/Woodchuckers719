@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { SiteHeader, SiteFooter, MobileCTA, PHONE_DISPLAY, PHONE_HREF, EMAIL } from '../components/chrome'
+import { LeadForm } from '../components/lead-form'
 import { getDict, localePath } from '@/lib/i18n'
 import { appBaseURL } from '@/lib/env'
 import { postList } from '@/lib/posts'
@@ -78,6 +79,8 @@ export default function BlogIndexPage() {
             </ul>
           </div>
         </section>
+
+        <LeadForm locale="en" />
 
         <section className="band contact" id="contact">
           <div className="contact-inner">

@@ -7,6 +7,7 @@ import {
   PHONE_HREF,
   EMAIL,
 } from '../../components/chrome'
+import { LeadForm } from '../../components/lead-form'
 import { type Locale, getDict, localePath } from '@/lib/i18n'
 import { appBaseURL } from '@/lib/env'
 import { areaList } from '@/lib/areas'
@@ -89,6 +90,10 @@ export function ServiceContent({ locale, service }: { locale: Locale; service: S
           cta={{ href: contractHref, label: tc.freeEstimate }}
           callLabel={tc.callLabel}
         />
+
+        {/* lead capture, first band under the hero: posts to the DB via the shared
+            submitContract action — the real endpoint, no third-party service */}
+        <LeadForm locale={locale} />
 
         <section className="band services">
           <div className="band-inner">

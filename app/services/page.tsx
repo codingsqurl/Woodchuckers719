@@ -8,6 +8,7 @@ import {
   PHONE_HREF,
   EMAIL,
 } from '../components/chrome'
+import { LeadForm } from '../components/lead-form'
 import { getDict, localePath } from '@/lib/i18n'
 import { appBaseURL } from '@/lib/env'
 import { serviceList } from '@/lib/services'
@@ -73,6 +74,8 @@ export default function ServicesIndexPage() {
           cta={{ href: localePath('en', '/contract-climbing'), label: tc.freeEstimate }}
           callLabel={tc.callLabel}
         />
+
+        <LeadForm locale="en" />
 
         <section className="band services">
           <div className="band-inner">
