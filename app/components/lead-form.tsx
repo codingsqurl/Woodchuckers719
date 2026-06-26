@@ -14,7 +14,15 @@ import { type Locale, getDict } from '@/lib/i18n'
 
 const INITIAL: ContractState = { status: 'idle' }
 
-export function LeadForm({ locale, heading }: { locale: Locale; heading?: string }) {
+export function LeadForm({
+  locale,
+  heading,
+  source = 'website',
+}: {
+  locale: Locale
+  heading?: string
+  source?: string
+}) {
   const t = getDict(locale).contract
   const [state, formAction, isPending] = useActionState(submitContract, INITIAL)
 
@@ -41,6 +49,7 @@ export function LeadForm({ locale, heading }: { locale: Locale; heading?: string
         <form className="estimate-form contract-form" id="quote" action={formAction}>
           {state.status === 'error' ? <p className="error form-error">{state.error}</p> : null}
           <input type="hidden" name="locale" value={locale} readOnly />
+          <input type="hidden" name="source" value={source} readOnly />
           <h2 className="form-title">{heading ?? t.formTitle}</h2>
           <div className="row2">
             <div className="field">

@@ -39,6 +39,9 @@ export async function submitContract(
   const email = str('email').toLowerCase()
   const phone = str('phone')
   const details = str('details')
+  // lead attribution: which page's form this came from (LeadForm sets it); the
+  // contract page form sends none, so it falls back to 'contract'.
+  const source = (str('source') || 'contract').slice(0, 60)
 
   const preserved: ContractValues = { name, phone, email, details }
 
@@ -59,7 +62,7 @@ export async function submitContract(
     address: '',
     service: 'Contract climbing',
     details,
-    source: 'contract',
+    source,
     removalInfo: '',
     estDays: 1,
     cleanup: false,

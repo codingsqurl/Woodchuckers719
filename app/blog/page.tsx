@@ -80,7 +80,7 @@ export default function BlogIndexPage() {
           </div>
         </section>
 
-        <LeadForm locale="en" />
+        <LeadForm locale="en" source="blog" />
 
         <section className="band contact" id="contact">
           <div className="contact-inner">

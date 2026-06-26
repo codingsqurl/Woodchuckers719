@@ -97,7 +97,7 @@ export function ServiceContent({ locale, service }: { locale: Locale; service: S
 
         {/* lead capture, first band under the hero: posts to the DB via the shared
             submitContract action — the real endpoint, no third-party service */}
-        <LeadForm locale={locale} />
+        <LeadForm locale={locale} source={`service:${service.slug}`} />
 
         <section className="band services">
           <div className="band-inner">

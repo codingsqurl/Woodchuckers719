@@ -109,7 +109,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           </div>
         </article>
 
-        <LeadForm locale="en" />
+        <LeadForm locale="en" source={`blog:${p.slug}`} />
 
         <section className="band contact" id="contact">
           <div className="contact-inner">
