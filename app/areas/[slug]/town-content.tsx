@@ -8,7 +8,7 @@ import {
 } from '../../components/chrome'
 import { type Locale, getDict, localePath } from '@/lib/i18n'
 import { appBaseURL } from '@/lib/env'
-import type { TownPage } from '@/lib/areas'
+import { areaList, type TownPage } from '@/lib/areas'
 
 function townJsonLd(locale: Locale, town: TownPage) {
   const base = appBaseURL()
@@ -127,6 +127,28 @@ export function TownContent({ locale, town }: { locale: Locale; town: TownPage }
                 referrerPolicy="no-referrer-when-downgrade"
               />
             </div>
+          </div>
+        </section>
+
+        {/* coverage cluster: link the sibling towns + the proof page so every
+            town threads into the hierarchy, not just up to /areas */}
+        <section className="band services">
+          <div className="band-inner">
+            <h2 className="section-title">{tc.areas.townsTitle}</h2>
+            <div className="area-grid">
+              {areaList()
+                .filter((a) => a.slug !== town.slug)
+                .map((a) => (
+                  <a key={a.slug} href={localePath(locale, `/areas/${a.slug}`)}>
+                    {a.name}
+                  </a>
+                ))}
+            </div>
+            <p className="contact-cta">
+              <a className="cta cta-primary" href={localePath(locale, '/portfolio')}>
+                {tc.home.seeWork}
+              </a>
+            </p>
           </div>
         </section>
 

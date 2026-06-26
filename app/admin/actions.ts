@@ -9,6 +9,7 @@ import { revalidatePath } from 'next/cache'
 import { requireAdmin } from '@/lib/auth'
 import { endSession } from '@/lib/session'
 import { createEmployee, isDuplicateEmail, setEmployeeActive } from '@/lib/employees'
+import { addRanking, deleteRanking } from '@/lib/rankings'
 import { sendMail, inviteEmailHTML, mailerConfigured } from '@/lib/mail'
 import { appBaseURL } from '@/lib/env'
 
@@ -81,6 +82,33 @@ export async function toggleActiveAction(formData: FormData) {
   if (me.id === id) redirect('/admin?error=self')
   const active = formData.get('active')?.toString() === 'true'
   setEmployeeActive(id, active)
+  revalidatePath('/admin')
+  redirect('/admin')
+}
+
+// POST /admin/rankings — add one hand-entered SEO ranking observation. Admin only.
+export async function addRankingAction(formData: FormData) {
+  await requireAdmin()
+  const keyword = (formData.get('keyword')?.toString() ?? '').trim()
+  const competitor = (formData.get('competitor')?.toString() ?? '').trim()
+  const position = Number(formData.get('position'))
+  const isSelf = formData.get('is_self')?.toString() === 'true'
+  const note = (formData.get('note')?.toString() ?? '').trim()
+
+  if (keyword === '' || competitor === '') redirect('/admin?error=rank_required')
+  if (!Number.isInteger(position) || position < 1) redirect('/admin?error=rank_position')
+
+  addRanking({ keyword, position, competitor, isSelf, note })
+  revalidatePath('/admin')
+  redirect('/admin')
+}
+
+// POST /admin/rankings/delete — remove one observation by id. Admin only.
+export async function deleteRankingAction(formData: FormData) {
+  await requireAdmin()
+  const id = Number(formData.get('id'))
+  if (!Number.isInteger(id)) redirect('/admin')
+  deleteRanking(id)
   revalidatePath('/admin')
   redirect('/admin')
 }

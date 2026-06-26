@@ -147,6 +147,24 @@ export function SiteFooter({ locale, path }: { locale: Locale; path: string }) {
       <span className="foot-sep" aria-hidden="true">
         ·
       </span>
+      <a className="foot-link" href={localePath(locale, '/')}>
+        {d.nav.home}
+      </a>
+      <span className="foot-sep" aria-hidden="true">
+        ·
+      </span>
+      <a className="foot-link" href={localePath(locale, '/portfolio')}>
+        {d.nav.work}
+      </a>
+      <span className="foot-sep" aria-hidden="true">
+        ·
+      </span>
+      <a className="foot-link" href={localePath(locale, '/areas')}>
+        {d.nav.areas}
+      </a>
+      <span className="foot-sep" aria-hidden="true">
+        ·
+      </span>
       <a className="foot-link" href={localePath(locale, '/contract-climbing')}>
         {d.footPro}
       </a>

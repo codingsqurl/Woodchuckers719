@@ -2,7 +2,15 @@ import type { Metadata } from 'next'
 import { requireAdmin } from '@/lib/auth'
 import { listEmployees, lastLogin } from '@/lib/employees'
 import { listEstimates, debrisLabel, submitted, contact } from '@/lib/estimates'
-import { logout, createEmployeeAction, inviteAction, toggleActiveAction } from './actions'
+import { listRankings, groupByKeyword, checked } from '@/lib/rankings'
+import {
+  logout,
+  createEmployeeAction,
+  inviteAction,
+  toggleActiveAction,
+  addRankingAction,
+  deleteRankingAction,
+} from './actions'
 
 export const metadata: Metadata = { title: 'Admin | Woodchuckers' }
 
@@ -14,6 +22,8 @@ const ERRORS: Record<string, string> = {
   emp_dup: 'An account with that email already exists.',
   invite_required: 'Invite needs a name and email.',
   invite_dup: 'An account with that email already exists.',
+  rank_required: 'A ranking needs a keyword and who ranks there.',
+  rank_position: 'Position must be a whole number, 1 or higher.',
 }
 
 function noticeFor(notice: string, email: string): string {
@@ -41,6 +51,7 @@ export default async function AdminPage({
 
   const employees = listEmployees()
   const estimates = listEstimates(50)
+  const rankings = groupByKeyword(listRankings())
 
   return (
     <>
@@ -103,6 +114,83 @@ export default async function AdminPage({
         ) : (
           <p className="muted">No estimate requests yet.</p>
         )}
+
+        <h1>Search rankings</h1>
+        <p className="muted">
+          Who ranks above us, by keyword. Type what you see on a Google search. No
+          auto-tracking. Tick &ldquo;this is us&rdquo; on your own listing.
+        </p>
+        {rankings.length > 0 ? (
+          rankings.map((g) => (
+            <table className="grid" key={g.keyword}>
+              <thead>
+                <tr>
+                  <th colSpan={4}>{g.keyword}</th>
+                </tr>
+                <tr>
+                  <th>#</th>
+                  <th>Who</th>
+                  <th>Checked</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {g.rows.map((r) => (
+                  <tr key={r.id}>
+                    <td>{r.position}</td>
+                    <td>
+                      {r.isSelf ? <strong>{r.competitor} (us)</strong> : r.competitor}
+                      {r.note ? (
+                        <>
+                          <br />
+                          <span className="muted">{r.note}</span>
+                        </>
+                      ) : null}
+                    </td>
+                    <td>{checked(r)}</td>
+                    <td>
+                      <form action={deleteRankingAction}>
+                        <input type="hidden" name="id" value={r.id} />
+                        <button type="submit">Delete</button>
+                      </form>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ))
+        ) : (
+          <p className="muted">No rankings tracked yet.</p>
+        )}
+
+        <h2>Add a ranking</h2>
+        <form action={addRankingAction} className="stack">
+          <label>
+            Keyword
+            <input
+              type="text"
+              name="keyword"
+              required
+              placeholder="contract tree climber colorado springs"
+            />
+          </label>
+          <label>
+            Position
+            <input type="number" name="position" min={1} required />
+          </label>
+          <label>
+            Who ranks here
+            <input type="text" name="competitor" required placeholder="competitor.com" />
+          </label>
+          <label>
+            <input type="checkbox" name="is_self" value="true" /> This is us
+          </label>
+          <label>
+            Note <span className="muted">(optional)</span>
+            <input type="text" name="note" placeholder="map pack, ad, etc." />
+          </label>
+          <button type="submit">Add ranking</button>
+        </form>
 
         <h1>Employees</h1>
         <table className="grid">
