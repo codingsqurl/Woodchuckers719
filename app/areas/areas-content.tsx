@@ -10,6 +10,7 @@ import {
 import { type Locale, getDict, localePath } from '@/lib/i18n'
 import { areaList } from '@/lib/areas'
 import { appBaseURL } from '@/lib/env'
+import { contractClimbing } from '@/lib/rates'
 
 // LocalBusiness schema for the coverage page — the canonical NAP, single-sourced
 // via the #business @id, with the full served-area list. A data block, exempt
@@ -33,7 +34,7 @@ function areasJsonLd(locale: Locale) {
       addressRegion: 'CO',
       addressCountry: 'US',
     },
-    priceRange: '$175–$350/day',
+    priceRange: `$${contractClimbing.dayLow}–$${contractClimbing.dayHigh}/day`,
   }
 }
 

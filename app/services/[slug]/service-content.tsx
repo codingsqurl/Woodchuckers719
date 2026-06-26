@@ -12,6 +12,10 @@ import { type Locale, getDict, localePath } from '@/lib/i18n'
 import { appBaseURL } from '@/lib/env'
 import { areaList } from '@/lib/areas'
 import { type Service, serviceBySlug } from '@/lib/services'
+import { contractClimbing } from '@/lib/rates'
+
+// Day rate single-sourced from lib/rates.ts (the pricing home), never hardcoded.
+const money = (n: number) => '$' + n.toLocaleString('en-US')
 
 // Service + FAQ structured data for one service page. Service is provided by the
 // home LocalBusiness (@id ref keeps NAP single-sourced), served across the
@@ -45,8 +49,8 @@ function serviceJsonLd(locale: Locale, s: Service) {
           priceSpecification: {
             '@type': 'PriceSpecification',
             priceCurrency: 'USD',
-            minPrice: 175,
-            maxPrice: 350,
+            minPrice: contractClimbing.dayLow,
+            maxPrice: contractClimbing.dayHigh,
             unitText: 'DAY',
           },
         },
@@ -113,7 +117,9 @@ export function ServiceContent({ locale, service }: { locale: Locale; service: S
               ))}
             </ul>
             <p className="rate-figure">
-              <span className="rate-amount">$175–$350</span>
+              <span className="rate-amount">
+                {money(contractClimbing.dayLow)}–{money(contractClimbing.dayHigh)}
+              </span>
               <span className="rate-unit">per day</span>
             </p>
             <p className="included">{service.priceNote}</p>

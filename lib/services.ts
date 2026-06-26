@@ -57,7 +57,7 @@ const servicesEN: Service[] = [
       'A spar taller than your bucket can reach',
       'Your crew is short the climber for the day',
     ],
-    priceNote: 'Flat day rate, $175 to $350 depending on the climb. Most sectional removals are a day, some run two.',
+    priceNote: 'A flat day rate, billed by the day. Most sectional removals are a day, some run two.',
     faqs: [
       { q: 'Do you bring the rigging?', a: 'I bring my climbing gear and some rigging. For heavy lowering we run your blocks and your crew on the ground.' },
       { q: 'Who hauls the wood?', a: 'Your crew. I climb and bring it down in pieces; the haul, chipping, and cleanup stay with you.' },
@@ -84,7 +84,7 @@ const servicesEN: Service[] = [
       'A prune that needs a climber, not a lift',
       'Overflow when your own climber is booked',
     ],
-    priceNote: 'Flat day rate, $175 to $350 depending on the climb. Most prunes are a single day.',
+    priceNote: 'A flat day rate, billed by the day. Most prunes are a single day.',
     faqs: [
       { q: 'Spikes or no spikes?', a: 'No spikes on a tree that is staying. I climb on rope and limbs so the tree is not wounded for a prune.' },
       { q: 'Do you do the cleanup?', a: 'Your crew runs the ground and the cleanup. I make the cuts up top.' },
@@ -111,7 +111,7 @@ const servicesEN: Service[] = [
       'Spring heavy-snow damage in the canopy',
       'A hazard your crew will not free-climb',
     ],
-    priceNote: 'Same flat day rate, $175 to $350. One urgent single piece can be per-job. Call or text and I get back the same day when I can.',
+    priceNote: 'The same flat day rate. One urgent single piece can be per-job. Call or text and I get back the same day when I can.',
     faqs: [
       { q: 'How fast can you come?', a: 'Call or text the job. For storm work I get back to you the same day when I can and book the soonest day that works.' },
       { q: 'Is there an emergency rate?', a: 'Same flat day rate. One urgent piece on its own can be quoted per-job.' },
@@ -138,7 +138,7 @@ const servicesEN: Service[] = [
       'Tight rigging your crew would rather hand off',
       'A second skilled climber for a big day',
     ],
-    priceNote: 'Flat day rate, $175 to $350 depending on the climb.',
+    priceNote: 'A flat day rate, billed by the day.',
     faqs: [
       { q: 'Do you have a crane?', a: 'No. You bring the crane and operator. I am the climber who sets the picks, makes the cuts, and rigs the rest.' },
       { q: 'Whose rigging gear?', a: 'I bring my climbing gear and some rigging. Heavy blocks and lowering devices are usually yours.' },
@@ -165,7 +165,7 @@ const servicesEN: Service[] = [
       'A stacked schedule you need cleared',
       'A one-off technical piece that is not worth a hire',
     ],
-    priceNote: 'Flat day rate, $175 to $350 depending on the climb. One day, sometimes two. A single tricky piece can be per-job.',
+    priceNote: 'A flat day rate, billed by the day. One day, sometimes two. A single tricky piece can be per-job.',
     faqs: [
       { q: 'How do I book you?', a: 'Call or text the job: location, size, and when. You get a day rate back, usually the same day.' },
       // TODO(king): add your real insurance / liability arrangement for subcontract
