@@ -176,6 +176,12 @@ export function SiteFooter({ locale, path }: { locale: Locale; path: string }) {
           <span className="foot-sep" aria-hidden="true">
             ·
           </span>
+          <a className="foot-link" href="/blog">
+            Field notes
+          </a>
+          <span className="foot-sep" aria-hidden="true">
+            ·
+          </span>
         </>
       ) : null}
       <a className="foot-link" href={localePath(locale, '/contract-climbing')}>

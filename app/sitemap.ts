@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next'
 import { appBaseURL } from '@/lib/env'
 import { serviceAreas, slugify } from '@/lib/areas'
 import { serviceList } from '@/lib/services'
+import { postList } from '@/lib/posts'
 import { locales, localePath } from '@/lib/i18n'
 
 export const dynamic = 'force-dynamic'
@@ -38,11 +39,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }))
   })
 
-  // Service pages are English-only for now (the /es mirror is a later chunk), so
-  // they enter the sitemap as single-locale entries with no hreflang pair.
-  const services = [
+  // Service and blog pages are English-only for now (the /es mirror is a later
+  // chunk), so they enter the sitemap as single-locale entries, no hreflang pair.
+  const enOnly = [
     { path: '/services', priority: 0.8 },
     ...serviceList().map((s) => ({ path: `/services/${s.slug}`, priority: 0.7 })),
+    { path: '/blog', priority: 0.6 },
+    ...postList().map((p) => ({ path: `/blog/${p.slug}`, priority: 0.5 })),
   ].map(({ path, priority }) => ({
     url: `${base}${path}`,
     lastModified,
@@ -50,5 +53,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority,
   }))
 
-  return [...localized, ...services]
+  return [...localized, ...enOnly]
 }
