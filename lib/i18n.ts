@@ -52,15 +52,15 @@ const en = {
 
   // home
   home: {
-    metaTitle: 'Woodchuckers | Contract Tree Climber for Hire | Colorado Springs',
+    metaTitle: 'Woodchuckers | Contract Tree Climber, Booked by the Day | Colorado Springs',
     metaDesc:
-      'Contract tree climber for hire in Colorado Springs. Tree companies and crews: I bring my own gear, climb the piece past your team, and bring it down. Sectional takedowns, storm work, rigging. Se habla español.',
-    heroEyebrow: 'Colorado Springs · Contract climber',
+      'A contract tree climber that tree companies book by the day in Colorado Springs. I bring my own gear, climb the piece past your crew, and bring it down. One day, sometimes two. Se habla español.',
+    heroEyebrow: 'Colorado Springs · Climber by the day',
     heroTitle: ['Gear on my back,', 'up the tree,', 'down it comes.'],
     heroSub:
-      'A contract climber for tree companies. You bring the crew and the chipper; I bring my gear, climb the piece your team can’t reach, and bring it down. That’s it.',
+      'A contract climber that tree companies book by the day. You bring the crew and the chipper; I bring my gear and climb the piece your team can’t reach. One day, sometimes two.',
     ctaEstimate: 'Get a day rate',
-    trust: ['Climber for hire', 'You run the ground', 'All my own gear', 'Se habla español'],
+    trust: ['Booked by the day', 'You run the ground', 'All my own gear', 'Se habla español'],
     servicesTitle: 'The trees I climb',
     services: [
       { title: 'Sectional takedowns', body: 'Big removals brought down in pieces, roped and lowered, when there’s no room to fell it.' },
@@ -91,7 +91,7 @@ const en = {
     // objection FAQ
     faqTitle: 'Straight answers',
     faqs: [
-      { q: 'How do you charge?', a: 'A flat day rate, $175–$350 depending on the climb. One tricky piece? We can do it per-job.' },
+      { q: 'How do you charge?', a: 'A flat day rate, $175–$350 depending on the climb. Most climbs are a day, some run two. One tricky piece? We can do it per-job.' },
       { q: 'What do you bring?', a: 'Everything I climb with. Saddle, ropes, and rigging gear, on my back. You bring the chipper and ground crew.' },
       { q: 'What about the ground and cleanup?', a: 'That’s your crew. I climb and bring the tree down; hauling, chipping, and cleanup stay with you.' },
       { q: 'What climbs do you take?', a: 'Sectional takedowns, storm-damaged leaders, and rigging over structures. The piece past your team.' },
@@ -163,31 +163,31 @@ const en = {
 
   // estimate
   estimate: {
-    metaTitle: 'Free Estimate | Woodchuckers Tree Service | Colorado Springs',
+    metaTitle: 'Day Rate for Tree Companies | Woodchuckers Contract Climber | Colorado Springs',
     metaDesc:
-      'Get a free tree-work estimate in Colorado Springs. Day-rate pricing, fast and safe. Se habla español.',
-    headTitle: 'Free estimate',
+      'Get a day rate for a contract climb in Colorado Springs. Tree companies: I bring my own gear and climb the piece past your crew. Se habla español.',
+    headTitle: 'Get a day rate',
     headIntro:
-      'I’m a professional tree climber. I bring my climbing and rigging gear and get your tree down or trimmed, safely and as fast as the job allows. I work efficiently so you’re not paying for wasted time.',
+      'I’m a contract tree climber for tree companies. I bring my own climbing and rigging gear, climb the piece your crew can’t reach, and bring it down. You run the ground.',
     headNote1: 'I price by the day:',
     headNotePrice: '$175–$350 a day',
-    headNote2: '. Most single-tree jobs are one day. Optional on-site cleanup (I cut it down and pile the wood and brush) is a flat',
+    headNote2: '. Most climbs run a single day. Your crew keeps the ground, the haul, and the cleanup.',
     headNoteCleanup: '$100',
     headNote3: '. Heads up. I don’t haul debris off-site, so removal is on you or your hauler.',
     seHablaNote: 'Se habla español. Llame o escriba con cualquier pregunta.',
     calcLenLabel: 'Estimated job length',
     day1: '1 day',
     day2: '2 days',
-    calcHint: 'Most single-tree jobs are one day.',
+    calcHint: 'Most climbs run a single day.',
     debrisLabel: 'Debris',
     debrisNone: 'Leave it on site (no charge)',
     debrisCleanup: 'On-site cleanup, cut & pile (+$100)',
     debrisRemoval: 'Full debris removal, hauled off (+$150)',
-    calcSub: 'Ballpark only. Final number after I see the tree.',
+    calcSub: 'Ballpark only. Firm number once I see the job.',
     fName: 'Your name *',
     fPhone: 'Phone',
     fEmail: 'Email',
-    fAddress: 'Service address',
+    fAddress: 'Job site',
     fAddressPh: 'Street, city',
     treesTitle: 'Your trees',
     addTree: '+ Add a tree',
@@ -216,8 +216,8 @@ const en = {
     tDropClear: 'Clear, open',
     tDropSome: 'Some obstacles',
     tDropTight: 'Tight, lots of obstacles',
-    detailsLabel: 'Tell me about the trees',
-    detailsPh: 'How many trees, roughly how tall, near the house or power lines, anything I should know.',
+    detailsLabel: 'What’s the climb?',
+    detailsPh: 'The job, the site, your crew, access, power lines, the deadline. Whatever I should know.',
     sourceLabel: 'How’d you hear about me?',
     sourcePick: 'Pick one (optional)',
     sourceOpts: { google: 'Google search', facebook: 'Facebook', nextdoor: 'Nextdoor', instagram: 'Instagram', tiktok: 'TikTok', yelp: 'Yelp', referral: 'Friend or neighbor', truck: 'Saw the truck / a sign', other: 'Somewhere else' },
@@ -234,14 +234,14 @@ const en = {
 
   // contract climbing (B2B — climber for hire)
   contract: {
-    metaTitle: 'Contract Tree Climber for Hire | Woodchuckers | Colorado Springs',
+    metaTitle: 'Contract Tree Climber, Booked by the Day | Woodchuckers | Colorado Springs',
     metaDesc:
-      'Contract tree climber for hire in Colorado Springs. Tree companies and crews: I bring my own gear, climb the piece past your team, and bring it down. Sectional takedowns, storm work, rigging. Se habla español.',
+      'A contract tree climber tree companies book by the day in Colorado Springs. I bring my own gear, climb the piece past your crew, and bring it down. One day, sometimes two. Se habla español.',
     kicker: 'Colorado Springs',
     headTitle: 'I climb the tree your crew won’t',
     heroTitle: ['I climb', 'the tree', 'your crew won’t.'],
     headLede:
-      'The section your crew can’t reach, the removal past your team. I climb it, rope it, and bring it down clean. You run the ground.',
+      'Book a climber by the day, or two. The section your crew can’t reach, the removal past your team. I climb it, rope it, and bring it down clean. You run the ground.',
     bookLine: 'Call or text for a day rate:',
     ratesTitle: 'Day rate',
     rateUnit: 'per day',
@@ -273,7 +273,7 @@ const en = {
   // link-in-bio page
   links: {
     metaTitle: 'Woodchuckers | Links',
-    tagline: 'Professional Tree Climber · Colorado Springs',
+    tagline: 'Contract Tree Climber · Colorado Springs',
     heroTitle: ['Every way', 'to reach', 'Woodchuckers.'],
     website: 'Visit the website',
     websiteSub: 'woodchuckertrees.com',
@@ -317,15 +317,15 @@ const es: Dict = {
   callOrText: 'Llame o escriba sobre la escalada, sin compromiso.',
 
   home: {
-    metaTitle: 'Woodchuckers | Escalador de Árboles por Contrato | Colorado Springs',
+    metaTitle: 'Woodchuckers | Escalador de Árboles por Contrato, por Día | Colorado Springs',
     metaDesc:
-      'Escalador de árboles por contrato en Colorado Springs. Para empresas y cuadrillas: traigo mi propio equipo, escalo la pieza que su equipo no alcanza y la bajo. Remociones por secciones, daño por tormenta, aparejo. Se habla español.',
-    heroEyebrow: 'Colorado Springs · Escalador por contrato',
+      'Un escalador de árboles por contrato que las empresas contratan por día en Colorado Springs. Traigo mi propio equipo, escalo la pieza que su cuadrilla no alcanza y la bajo. Un día, a veces dos. Se habla español.',
+    heroEyebrow: 'Colorado Springs · Escalador por día',
     heroTitle: ['Equipo a la espalda,', 'subo al árbol,', 'y lo bajo.'],
     heroSub:
-      'Un escalador por contrato para empresas de árboles. Usted pone la cuadrilla y la astilladora; yo traigo mi equipo, escalo la pieza que su equipo no alcanza y la bajo. Eso es todo.',
+      'Un escalador por contrato que las empresas de árboles contratan por día. Usted pone la cuadrilla y la astilladora; yo traigo mi equipo y escalo la pieza que su equipo no alcanza. Un día, a veces dos.',
     ctaEstimate: 'Ver tarifa por día',
-    trust: ['Escalador por contrato', 'Usted maneja el suelo', 'Todo mi propio equipo', 'Se habla español'],
+    trust: ['Contratado por día', 'Usted maneja el suelo', 'Todo mi propio equipo', 'Se habla español'],
     servicesTitle: 'Los árboles que escalo',
     services: [
       { title: 'Remociones por secciones', body: 'Remociones grandes bajadas en piezas, con cuerda, cuando no hay espacio para tumbarlo.' },
@@ -353,7 +353,7 @@ const es: Dict = {
     ],
     faqTitle: 'Respuestas claras',
     faqs: [
-      { q: '¿Cómo cobra?', a: 'Una tarifa fija por día, $175–$350 según la escalada. ¿Una sola pieza difícil? Puede ser por trabajo.' },
+      { q: '¿Cómo cobra?', a: 'Una tarifa fija por día, $175–$350 según la escalada. La mayoría son de un día, algunas de dos. ¿Una sola pieza difícil? Puede ser por trabajo.' },
       { q: '¿Qué trae?', a: 'Todo con lo que escalo. Arnés, cuerdas y equipo de aparejo, a la espalda. Usted trae la astilladora y la cuadrilla de suelo.' },
       { q: '¿Y el suelo y la limpieza?', a: 'Eso es su cuadrilla. Yo escalo y bajo el árbol; el acarreo, el astillado y la limpieza quedan con usted.' },
       { q: '¿Qué escaladas toma?', a: 'Remociones por secciones, líderes dañados por tormenta y aparejo sobre estructuras. La pieza más allá de su equipo.' },
@@ -421,31 +421,31 @@ const es: Dict = {
   },
 
   estimate: {
-    metaTitle: 'Presupuesto Gratis | Woodchuckers Servicio de Árboles | Colorado Springs',
+    metaTitle: 'Tarifa por Día para Empresas de Árboles | Woodchuckers Escalador por Contrato | Colorado Springs',
     metaDesc:
-      'Reciba un presupuesto gratis de trabajo de árboles en Colorado Springs. Precio por día, rápido y seguro. Se habla español.',
-    headTitle: 'Presupuesto gratis',
+      'Vea la tarifa por día de una escalada por contrato en Colorado Springs. Empresas de árboles: traigo mi propio equipo y escalo la pieza que su cuadrilla no alcanza. Se habla español.',
+    headTitle: 'Ver la tarifa por día',
     headIntro:
-      'Soy escalador profesional de árboles. Traigo mi equipo de escalada y aparejo y bajo o podo su árbol, de forma segura y tan rápido como permita el trabajo. Trabajo con eficiencia para que no pague por tiempo perdido.',
+      'Soy escalador de árboles por contrato para empresas. Traigo mi propio equipo de escalada y aparejo, escalo la pieza que su cuadrilla no alcanza y la bajo. Usted maneja el suelo.',
     headNote1: 'Cobro por día:',
     headNotePrice: '$175 a $350 por día',
-    headNote2: '. La mayoría de los trabajos de un árbol son de un día. La limpieza opcional en sitio (lo corto y amontono la madera y la maleza) es un fijo de',
+    headNote2: '. La mayoría de las escaladas son de un día. Su cuadrilla se queda con el suelo, el acarreo y la limpieza.',
     headNoteCleanup: '$100',
     headNote3: '. Aviso. No me llevo los restos del sitio, así que el retiro es cosa suya o de su transportista.',
     seHablaNote: 'Se habla español. Llame o escriba con cualquier pregunta.',
     calcLenLabel: 'Duración estimada del trabajo',
     day1: '1 día',
     day2: '2 días',
-    calcHint: 'La mayoría de los trabajos de un árbol son de un día.',
+    calcHint: 'La mayoría de las escaladas son de un día.',
     debrisLabel: 'Restos',
     debrisNone: 'Dejarlos en el sitio (sin cargo)',
     debrisCleanup: 'Limpieza en sitio, cortar y amontonar (+$100)',
     debrisRemoval: 'Retiro completo de restos, llevados fuera (+$150)',
-    calcSub: 'Solo aproximado. El número final después de ver el árbol.',
+    calcSub: 'Solo aproximado. Número firme cuando vea el trabajo.',
     fName: 'Su nombre *',
     fPhone: 'Teléfono',
     fEmail: 'Correo',
-    fAddress: 'Dirección del servicio',
+    fAddress: 'Sitio del trabajo',
     fAddressPh: 'Calle, ciudad',
     treesTitle: 'Sus árboles',
     addTree: '+ Agregar un árbol',
@@ -474,8 +474,8 @@ const es: Dict = {
     tDropClear: 'Despejada, abierta',
     tDropSome: 'Algunos obstáculos',
     tDropTight: 'Estrecha, muchos obstáculos',
-    detailsLabel: 'Cuénteme de los árboles',
-    detailsPh: 'Cuántos árboles, qué tan altos más o menos, cerca de la casa o de los cables, cualquier cosa que deba saber.',
+    detailsLabel: '¿Cuál es la escalada?',
+    detailsPh: 'El trabajo, el sitio, su cuadrilla, acceso, líneas eléctricas, la fecha límite. Lo que deba saber.',
     sourceLabel: '¿Cómo supo de mí?',
     sourcePick: 'Elija una (opcional)',
     sourceOpts: { google: 'Búsqueda en Google', facebook: 'Facebook', nextdoor: 'Nextdoor', instagram: 'Instagram', tiktok: 'TikTok', yelp: 'Yelp', referral: 'Amigo o vecino', truck: 'Vi la camioneta / un letrero', other: 'En otro lugar' },
@@ -491,14 +491,14 @@ const es: Dict = {
   },
 
   contract: {
-    metaTitle: 'Escalador de Árboles por Contrato | Woodchuckers | Colorado Springs',
+    metaTitle: 'Escalador de Árboles por Contrato, por Día | Woodchuckers | Colorado Springs',
     metaDesc:
-      'Escalador de árboles por contrato en Colorado Springs. Empresas y cuadrillas: traigo mi propio equipo, escalo la pieza que su equipo no alcanza y la bajo. Remociones por secciones, daño por tormenta, aparejo. Se habla español.',
+      'Un escalador de árboles por contrato que las empresas contratan por día en Colorado Springs. Traigo mi propio equipo y escalo la pieza que su cuadrilla no alcanza. Un día, a veces dos. Se habla español.',
     kicker: 'Colorado Springs',
     headTitle: 'Escalo el árbol que su cuadrilla no quiere',
     heroTitle: ['Escalo el árbol', 'que su cuadrilla', 'no quiere.'],
     headLede:
-      'La sección que su cuadrilla no alcanza, la remoción más allá de su equipo. Lo escalo, lo aparejo y lo bajo limpio. Usted maneja el suelo.',
+      'Contrate un escalador por día, o dos. La sección que su cuadrilla no alcanza, la remoción más allá de su equipo. Lo escalo, lo aparejo y lo bajo limpio. Usted maneja el suelo.',
     bookLine: 'Llame o escriba para una tarifa por día:',
     ratesTitle: 'Tarifa por día',
     rateUnit: 'por día',
@@ -530,7 +530,7 @@ const es: Dict = {
 
   links: {
     metaTitle: 'Woodchuckers | Enlaces',
-    tagline: 'Escalador Profesional de Árboles · Colorado Springs',
+    tagline: 'Escalador de Árboles por Contrato · Colorado Springs',
     heroTitle: ['Todas las formas', 'de contactar a', 'Woodchuckers.'],
     website: 'Visitar el sitio web',
     websiteSub: 'woodchuckertrees.com',

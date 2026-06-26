@@ -13,9 +13,9 @@ export const metadata: Metadata = {
     siteName: 'Woodchuckers',
     locale: 'en_US',
     alternateLocale: ['es_US'],
-    title: 'Service Areas | Woodchuckers Tree Climber',
+    title: 'Where Woodchuckers Climbs Contract | Colorado Springs',
     description:
-      'Professional tree climbing across Colorado Springs and El Paso County. See every town served.',
+      'Contract tree climbing for tree companies across Colorado Springs and El Paso County. I bring my own gear and climb the piece past your crew.',
     url: '/areas',
     images: ['/img/og.jpg'],
   },

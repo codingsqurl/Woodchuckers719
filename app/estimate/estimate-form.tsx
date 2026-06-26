@@ -55,8 +55,7 @@ export function EstimateForm({ locale }: { locale: Locale }) {
         <p>{t.headIntro}</p>
         <p className="note">
           {t.headNote1} <strong>{t.headNotePrice}</strong>
-          {t.headNote2} <strong>{t.headNoteCleanup}</strong>
-          {t.headNote3}
+          {t.headNote2}
         </p>
         <p className="note">{t.seHablaNote}</p>
       </section>

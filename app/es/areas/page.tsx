@@ -13,9 +13,9 @@ export const metadata: Metadata = {
     siteName: 'Woodchuckers',
     locale: 'es_US',
     alternateLocale: ['en_US'],
-    title: 'Zonas de Servicio | Woodchuckers Escalador de Árboles',
+    title: 'Dónde Escala por Contrato Woodchuckers | Colorado Springs',
     description:
-      'Escalada profesional de árboles en Colorado Springs y el condado de El Paso. Vea cada pueblo que atiendo.',
+      'Escalada por contrato para empresas de árboles en Colorado Springs y el condado de El Paso. Traigo mi propio equipo y escalo la pieza que su cuadrilla no alcanza.',
     url: '/es/areas',
     images: ['/img/og.jpg'],
   },

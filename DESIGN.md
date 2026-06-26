@@ -130,7 +130,7 @@ in the sun). Restraint reads as competence here, and that is the point.
 A committed two-color system: the forest the work happens in, and the one signal color you can always spot in it.
 
 ### Primary
-- **Safety Orange** (#f2601c): The single signal color, rationed hard. It marks the things a stressed homeowner is hunting for — the call button, the primary CTA, the live estimate total, every section accent heading, the scroll-rope, focus rings, text selection. It is never decoration; if it is orange, it is the most important thing in view.
+- **Safety Orange** (#f2601c): The single signal color, rationed hard. It marks the things a tree-company owner is hunting for — the call button, the primary CTA, the day rate, every section accent heading, the scroll-rope, focus rings, text selection. It is never decoration; if it is orange, it is the most important thing in view.
 - **Safety Orange Deep** (#d44e10): The pressed/hover state for every orange surface. Only appears on interaction.
 
 ### Neutral

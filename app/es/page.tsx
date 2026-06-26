@@ -15,9 +15,9 @@ export const metadata: Metadata = {
     siteName: 'Woodchuckers',
     locale: 'es_US',
     alternateLocale: ['en_US'],
-    title: 'Woodchuckers | Escalador Profesional de Árboles, Colorado Springs',
+    title: 'Woodchuckers | Escalador de Árboles por Contrato, Colorado Springs',
     description:
-      'Remoción, poda y escalada técnica de árboles en Colorado Springs. Dueño y operador, rápido y seguro. Presupuestos gratis. Se habla español.',
+      'Escalador de árboles por contrato en Colorado Springs. Empresas y cuadrillas: traigo mi propio equipo, escalo la pieza que su equipo no alcanza y la bajo. Se habla español.',
     url: '/es',
     images: ['/img/og.jpg'],
   },

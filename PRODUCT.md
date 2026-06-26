@@ -11,22 +11,26 @@ brand
 
 ## Users
 
-Colorado Springs homeowners (and the Colorado springs tree service business owner that the tree is too much for them) with a tree
-that's too big, too dead, storm-damaged, or too close to the house to deal with
-themselves. They usually arrive stressed — a hazard limb over the roof, a tree
-down after a storm — on a phone, comparing a couple of local options, wanting a
-fast honest answer. The job to be done: get the tree removed or trimmed safely,
-without overpaying and without a flaky rotating crew.
+Tree-company owners and crew foremen in Colorado Springs and El Paso County who
+hit a climb their own crew can't reach, won't take, or can't staff that week — a
+sectional takedown, a storm-damaged leader, rigging over a structure, or simply
+being short a climber. They want to sub out the climbing piece to a trained
+climber for a day, sometimes two, keep the ground work and the cleanup
+themselves, and not carry a full-time climber on payroll. They arrive on a phone,
+mid-job or planning one, wanting a fast day rate and someone who shows up with his
+own gear. The job to be done: get the technical climb done safely and on schedule
+without handing it to a flaky subcontractor.
 
 Secondary users: the owner-operator (and future hires) using `/admin` to manage
 accounts, scheduling, and timesheets as the LLC grows.
 
 ## Product Purpose
 
-Turn local searches and referrals into estimate requests and phone calls for a
-solo professional tree climber. The site sells one thing: a trained climber who
-quotes the job and climbs it himself, roped and rigged by hand. Success is
-qualified estimate submissions and calls — not traffic, not time-on-page. The
+Turn searches and referrals from tree companies into day-rate bookings and phone
+calls for a solo contract climber. The site sells one thing: a trained climber
+that tree companies book by the day to climb the piece their crew can't, roped and
+rigged by hand. Success is qualified day-rate inquiries and calls — not traffic,
+not time-on-page. The
 internal staff app exists so the business side (people, shifts, hours) stays off
 spreadsheets as it scales.
 

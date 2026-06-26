@@ -59,13 +59,13 @@ type Loc = 'en' | 'es'
 // Rotating true Front Range angles so the placeholder pages aren't byte-identical.
 const LOCAL_ANGLES: Record<Loc, string[]> = {
   en: [
-    'Front Range ponderosa and pinyon grow tall and heavy — the kind of removal that’s safer climbed and rigged than felled.',
+    'Front Range ponderosa and pinyon grow tall and heavy. The kind of removal that’s safer climbed and rigged than felled.',
     'Heavy spring snow and summer storms leave hung-up limbs and leaners that a crew often wants a dedicated climber for.',
     'Tight lots against structures, fences, and power lines are exactly the technical climbs to hand off.',
     'When the wood is big and the drop zone is small, a climber on the rope beats forcing the fell.',
   ],
   es: [
-    'Los pinos ponderosa y piñoneros del Front Range crecen altos y pesados — el tipo de remoción más segura escalada y aparejada que tumbada.',
+    'Los pinos ponderosa y piñoneros del Front Range crecen altos y pesados. El tipo de remoción más segura escalada y aparejada que tumbada.',
     'La nieve fuerte de primavera y las tormentas de verano dejan ramas atoradas e inclinadas para las que una cuadrilla suele querer un escalador dedicado.',
     'Los terrenos estrechos contra estructuras, cercas y cables son justo las escaladas técnicas para delegar.',
     'Cuando la madera es grande y la zona de caída es pequeña, un escalador en la cuerda gana a forzar la tala.',
@@ -81,8 +81,8 @@ function buildTown(name: string, index: number, locale: Loc): TownPage {
       : `Woodchuckers is an owner-operated contract tree climber for hire by tree companies in ${name}, Colorado. I bring my own climbing and rigging gear, climb the piece past your crew, and bring it down. You run the ground.`
   const localNote =
     locale === 'es'
-      ? `${angle} Sea cual sea la escalada en ${name}, llego con mi equipo, tomo la pieza técnica y la bajo — su cuadrilla se queda con el suelo, el acarreo y la limpieza.`
-      : `${angle} Whatever the climb in ${name}, I show up with my gear, take the technical piece, and bring it down — your crew keeps the ground, the haul, and the cleanup.`
+      ? `${angle} Sea cual sea la escalada en ${name}, llego con mi equipo, tomo la pieza técnica y la bajo. Su cuadrilla se queda con el suelo, el acarreo y la limpieza.`
+      : `${angle} Whatever the climb in ${name}, I show up with my gear, take the technical piece, and bring it down. Your crew keeps the ground, the haul, and the cleanup.`
   return { ...base, intro, localNote, placeholder: true }
 }
 

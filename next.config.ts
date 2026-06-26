@@ -10,6 +10,15 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ['better-sqlite3'],
   // No ESLint config shipped; don't block production builds on it.
   eslint: { ignoreDuringBuilds: true },
+  // The homeowner /estimate flow is retired into the single /contract-climbing
+  // intake. Permanent (308) routing-layer redirect consolidates SEO and runs
+  // before the route, superseding the old 307 redirect() still in page.tsx.
+  async redirects() {
+    return [
+      { source: '/estimate', destination: '/contract-climbing', permanent: true },
+      { source: '/es/estimate', destination: '/es/contract-climbing', permanent: true },
+    ]
+  },
 }
 
 export default nextConfig
