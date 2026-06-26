@@ -55,6 +55,7 @@ const NAV = [
   { key: 'home', path: '/', label: (d: ReturnType<typeof getDict>) => d.nav.home },
   { key: 'work', path: '/portfolio', label: (d: ReturnType<typeof getDict>) => d.nav.work },
   { key: 'areas', path: '/areas', label: (d: ReturnType<typeof getDict>) => d.nav.areas },
+  { key: 'services', path: '/services', label: (d: ReturnType<typeof getDict>) => d.nav.services },
   { key: 'estimate', path: '/contract-climbing', label: (d: ReturnType<typeof getDict>) => d.nav.estimate },
 ] as const
 
@@ -65,7 +66,7 @@ export function SiteHeader({
   current,
 }: {
   locale: Locale
-  current?: 'home' | 'work' | 'areas' | 'estimate'
+  current?: 'home' | 'work' | 'areas' | 'services' | 'estimate'
 }) {
   const d = getDict(locale)
   return (
@@ -79,7 +80,9 @@ export function SiteHeader({
           Woodchuckers
         </a>
         <nav className="topnav">
-          {NAV.filter((n) => n.key !== current).map((n) => (
+          {/* services pages are EN-only this chunk; hide the link on /es until the
+              Spanish mirror lands so the nav never points at a missing route */}
+          {NAV.filter((n) => n.key !== current && !(n.key === 'services' && locale === 'es')).map((n) => (
             <a key={n.key} href={localePath(locale, n.path)}>
               {n.label(d)}
             </a>
@@ -165,6 +168,16 @@ export function SiteFooter({ locale, path }: { locale: Locale; path: string }) {
       <span className="foot-sep" aria-hidden="true">
         ·
       </span>
+      {locale === 'en' ? (
+        <>
+          <a className="foot-link" href={localePath(locale, '/services')}>
+            {d.nav.services}
+          </a>
+          <span className="foot-sep" aria-hidden="true">
+            ·
+          </span>
+        </>
+      ) : null}
       <a className="foot-link" href={localePath(locale, '/contract-climbing')}>
         {d.footPro}
       </a>

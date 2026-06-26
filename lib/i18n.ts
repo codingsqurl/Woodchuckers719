@@ -37,7 +37,7 @@ export const SE_HABLA = 'Se habla español'
 
 const en = {
   // chrome
-  nav: { home: 'Home', work: 'My Work', areas: 'Areas', estimate: 'Hire me' },
+  nav: { home: 'Home', work: 'My Work', areas: 'Areas', services: 'Services', estimate: 'Hire me' },
   skip: 'Skip to content',
   callLabel: 'Call',
   freeEstimate: 'Get a day rate',
@@ -49,6 +49,8 @@ const en = {
   switchTo: 'Ver en español',
   servingArea: 'Serving the Colorado Springs area',
   callOrText: 'Call or text about the climb, no obligation.',
+
+  services: { moreTitle: 'More services' },
 
   // home
   home: {
@@ -303,7 +305,7 @@ const en = {
 type Dict = typeof en
 
 const es: Dict = {
-  nav: { home: 'Inicio', work: 'Mi Trabajo', areas: 'Zonas', estimate: 'Contráteme' },
+  nav: { home: 'Inicio', work: 'Mi Trabajo', areas: 'Zonas', services: 'Servicios', estimate: 'Contráteme' },
   skip: 'Saltar al contenido',
   callLabel: 'Llamar',
   freeEstimate: 'Ver tarifa por día',
@@ -315,6 +317,8 @@ const es: Dict = {
   switchTo: 'View in English',
   servingArea: 'Sirviendo el área de Colorado Springs',
   callOrText: 'Llame o escriba sobre la escalada, sin compromiso.',
+
+  services: { moreTitle: 'Más servicios' },
 
   home: {
     metaTitle: 'Woodchuckers | Escalador de Árboles por Contrato, por Día | Colorado Springs',

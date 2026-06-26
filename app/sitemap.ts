@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { appBaseURL } from '@/lib/env'
 import { serviceAreas, slugify } from '@/lib/areas'
+import { serviceList } from '@/lib/services'
 import { locales, localePath } from '@/lib/i18n'
 
 export const dynamic = 'force-dynamic'
@@ -23,7 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
-  return [...corePaths, ...townPaths].flatMap(({ path, priority }) => {
+  const localized = [...corePaths, ...townPaths].flatMap(({ path, priority }) => {
     const languages = {
       en: `${base}${localePath('en', path)}`,
       es: `${base}${localePath('es', path)}`,
@@ -36,4 +37,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       alternates: { languages },
     }))
   })
+
+  // Service pages are English-only for now (the /es mirror is a later chunk), so
+  // they enter the sitemap as single-locale entries with no hreflang pair.
+  const services = [
+    { path: '/services', priority: 0.8 },
+    ...serviceList().map((s) => ({ path: `/services/${s.slug}`, priority: 0.7 })),
+  ].map(({ path, priority }) => ({
+    url: `${base}${path}`,
+    lastModified,
+    changeFrequency: 'monthly' as const,
+    priority,
+  }))
+
+  return [...localized, ...services]
 }
