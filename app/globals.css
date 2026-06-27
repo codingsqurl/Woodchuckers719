@@ -1839,3 +1839,13 @@ button {
   font-size: 0.98rem;
   text-align: center;
 }
+
+/* the portfolio "serving Colorado Springs" link reads white, not browser-blue */
+.serving-link {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.serving-link:hover {
+  color: var(--on-dark-soft);
+}

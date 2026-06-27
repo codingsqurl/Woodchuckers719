@@ -121,7 +121,7 @@ export function PortfolioContent({ locale }: { locale: Locale }) {
               <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
             </p>
             <p className="muted">
-              <a href={localePath(locale, '/areas')}>{tc.servingArea}</a> · {tc.seHabla}
+              <a className="serving-link" href={localePath(locale, '/areas')}>{tc.servingArea}</a> · {tc.seHabla}
             </p>
           </div>
         </section>

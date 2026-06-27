@@ -19,6 +19,18 @@ const nextConfig: NextConfig = {
       { source: '/es/estimate', destination: '/es/contract-climbing', permanent: true },
     ]
   },
+  // Cache the static media (the fixed sitewide backdrop, the video poster, the
+  // proof photos, the climb video) so repeat visits and every page's background
+  // don't re-fetch. Filenames are NOT content-hashed, so deliberately not
+  // `immutable`: max-age keeps them a day, then stale-while-revalidate serves
+  // them instantly while revalidating, so a swapped image still updates.
+  async headers() {
+    const cache = 'public, max-age=86400, stale-while-revalidate=604800'
+    return [
+      { source: '/img/:path*', headers: [{ key: 'Cache-Control', value: cache }] },
+      { source: '/video/:path*', headers: [{ key: 'Cache-Control', value: cache }] },
+    ]
+  },
 }
 
 export default nextConfig
