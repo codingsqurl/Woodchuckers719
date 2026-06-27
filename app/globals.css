@@ -1819,3 +1819,23 @@ button {
   padding: 0.2rem 0.55rem;
   font-size: 0.85rem;
 }
+
+/* ── portfolio proof video: a portrait phone clip, click-to-play ── */
+.proof-video {
+  margin: 2rem auto 0;
+  max-width: 22rem;
+}
+.proof-video video {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 16px;
+  background: #000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35), 0 22px 48px rgba(0, 0, 0, 0.5);
+}
+.proof-video figcaption {
+  margin-top: 0.7rem;
+  color: var(--on-dark-soft);
+  font-size: 0.98rem;
+  text-align: center;
+}

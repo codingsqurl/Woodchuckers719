@@ -113,6 +113,8 @@ const en = {
     cap1: 'Roped into the canopy, working the climb.',
     cap2: 'Big pines brought down piece by piece.',
     cap3: 'Rigging a limb down clear of the power lines.',
+    videoTitle: 'Watch a climb',
+    videoCap: 'Twenty seconds of real rope work, no edits.',
     doTitle: 'What I climb',
     doLead:
       'I’m a contract climber for tree companies. You bring the crew and the chipper; I bring my gear, take the technical piece, and bring it down. The ground, haul, and cleanup stay with your team.',
@@ -376,6 +378,8 @@ const es: Dict = {
     cap1: 'Con cuerda en la copa, en plena escalada.',
     cap2: 'Pinos grandes bajados pieza por pieza.',
     cap3: 'Bajando una rama lejos de los cables eléctricos.',
+    videoTitle: 'Vea una escalada',
+    videoCap: 'Veinte segundos de trabajo real con cuerda, sin ediciones.',
     doTitle: 'Lo que escalo',
     doLead:
       'Soy escalador por contrato para empresas de árboles. Usted pone la cuadrilla y la astilladora; yo traigo mi equipo, tomo la pieza técnica y la bajo. El suelo, el acarreo y la limpieza quedan con su equipo.',

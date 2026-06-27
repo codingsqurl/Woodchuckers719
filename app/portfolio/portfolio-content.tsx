@@ -75,6 +75,27 @@ export function PortfolioContent({ locale }: { locale: Locale }) {
           </div>
         </section>
 
+        {/* a 20-second clip of real rope work — click to play; nothing loads
+            until then (poster only), so it never costs an outdoor user cell data */}
+        <section className="band hazard">
+          <div className="band-inner">
+            <h2 className="section-title">{t.videoTitle}</h2>
+            <figure className="proof-video">
+              <video
+                controls
+                playsInline
+                preload="none"
+                poster="/img/climb-poster.jpg"
+                width={360}
+                height={480}
+              >
+                <source src="/video/climb.mp4" type="video/mp4" />
+              </video>
+              <figcaption>{t.videoCap}</figcaption>
+            </figure>
+          </div>
+        </section>
+
         {/* what I do — ruled list, two columns on wide screens */}
         <section className="band hazard">
           <div className="band-inner">
