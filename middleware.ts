@@ -43,6 +43,10 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Run on everything except Next's build assets and the favicon.
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  // Run on every page/route, but skip Next's build assets, the favicon, and the
+  // static media under /img and /video. Those are served straight from public/
+  // with their own Cache-Control (next.config headers); a CSP/nonce on an image
+  // or video response is meaningless, and intercepting every asset is pure
+  // overhead — excluding them keeps the static cache clean and fast.
+  matcher: ['/((?!_next/static|_next/image|img/|video/|favicon.ico).*)'],
 }
