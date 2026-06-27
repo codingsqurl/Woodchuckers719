@@ -96,7 +96,10 @@ export default function BlogIndexPage() {
               <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
             </p>
             <p className="muted">
-              {tc.servingArea} · {tc.seHabla}
+              <a className="serving-link" href={localePath('en', '/areas')}>
+                {tc.servingArea}
+              </a>{' '}
+              · {tc.seHabla}
             </p>
           </div>
         </section>

@@ -177,7 +177,10 @@ export function ServiceContent({ locale, service }: { locale: Locale; service: S
               <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
             </p>
             <p className="muted">
-              {tc.servingArea} · {tc.seHabla}
+              <a className="serving-link" href={localePath(locale, '/areas')}>
+                {tc.servingArea}
+              </a>{' '}
+              · {tc.seHabla}
             </p>
           </div>
         </section>

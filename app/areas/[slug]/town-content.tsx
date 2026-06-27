@@ -162,7 +162,10 @@ export function TownContent({ locale, town }: { locale: Locale; town: TownPage }
               <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
             </p>
             <p className="muted">
-              {t.servingFor(town.name)} · {tc.seHabla}
+              <a className="serving-link" href={localePath(locale, '/areas')}>
+                {t.servingFor(town.name)}
+              </a>{' '}
+              · {tc.seHabla}
             </p>
           </div>
         </section>
