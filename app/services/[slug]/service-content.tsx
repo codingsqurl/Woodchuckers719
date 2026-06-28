@@ -123,6 +123,7 @@ export function ServiceContent({ locale, service }: { locale: Locale; service: S
               <span className="rate-unit">{tc.services.perDay}</span>
             </p>
             <p className="included">{service.priceNote}</p>
+            <p className="note note-tight">{tc.contract.rateNote}</p>
             <div className="hero-actions">
               <a className="cta cta-primary" href={contractHref}>
                 {tc.freeEstimate}

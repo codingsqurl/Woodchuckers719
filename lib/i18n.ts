@@ -276,8 +276,9 @@ const en = {
     headLede:
       'Book a climber by the day, or two. The section your crew can’t reach, the removal past your team. I climb it, rope it, and bring it down clean. You run the ground.',
     bookLine: 'Call or text for a day rate:',
-    ratesTitle: 'Day rate',
+    ratesTitle: 'Ballpark day rate',
     rateUnit: 'per day',
+    rateNote: 'A ballpark, not a fixed quote — every job is different. Call or text and I’ll give you a real number.',
     included: 'Your crew runs the ground, I take the climb. The removal past your team, the rigging over the house, the section nobody wants. A contract climber with my own gear.',
     qualsTitle: 'What you’re getting',
     quals: [
@@ -566,8 +567,9 @@ const es: Dict = {
     headLede:
       'Contrate un escalador por día, o dos. La sección que su cuadrilla no alcanza, la remoción más allá de su equipo. Lo escalo, lo aparejo y lo bajo limpio. Usted maneja el suelo.',
     bookLine: 'Llame o escriba para una tarifa por día:',
-    ratesTitle: 'Tarifa por día',
+    ratesTitle: 'Tarifa aproximada por día',
     rateUnit: 'por día',
+    rateNote: 'Un aproximado, no un precio fijo — cada trabajo es distinto. Llame o escriba y le doy un número real.',
     included:
       'Su cuadrilla maneja el suelo, yo me encargo de la escalada. La remoción que su equipo no alcanza, el aparejo sobre la casa, la sección que nadie quiere. Escalador por contrato con mi propio equipo.',
     qualsTitle: 'Lo que recibe',

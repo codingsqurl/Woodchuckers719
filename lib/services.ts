@@ -60,7 +60,7 @@ const servicesEN: Service[] = [
       'A spar taller than your bucket can reach',
       'Your crew is short the climber for the day',
     ],
-    priceNote: 'A flat day rate, billed by the day. Most sectional removals are a day, some run two.',
+    priceNote: 'A ballpark day rate, billed by the day. Most sectional removals are a day, some run two.',
     faqs: [
       { q: 'Do you bring the rigging?', a: 'I bring my climbing gear and some rigging. For heavy lowering we run your blocks and your crew on the ground.' },
       { q: 'Who hauls the wood?', a: 'Your crew. I climb and bring it down in pieces; the haul, chipping, and cleanup stay with you.' },
@@ -87,7 +87,7 @@ const servicesEN: Service[] = [
       'A prune that needs a climber, not a lift',
       'Overflow when your own climber is booked',
     ],
-    priceNote: 'A flat day rate, billed by the day. Most prunes are a single day.',
+    priceNote: 'A ballpark day rate, billed by the day. Most prunes are a single day.',
     faqs: [
       { q: 'Spikes or no spikes?', a: 'No spikes on a tree that is staying. I climb on rope and limbs so the tree is not wounded for a prune.' },
       { q: 'Do you do the cleanup?', a: 'Your crew runs the ground and the cleanup. I make the cuts up top.' },
@@ -114,7 +114,7 @@ const servicesEN: Service[] = [
       'Spring heavy-snow damage in the canopy',
       'A hazard your crew will not free-climb',
     ],
-    priceNote: 'The same flat day rate. One urgent single piece can be per-job. Call or text and I get back the same day when I can.',
+    priceNote: 'The same ballpark day rate. One urgent single piece can be per-job. Call or text and I get back the same day when I can.',
     faqs: [
       { q: 'How fast can you come?', a: 'Call or text the job. For storm work I get back to you the same day when I can and book the soonest day that works.' },
       { q: 'Is there an emergency rate?', a: 'Same flat day rate. One urgent piece on its own can be quoted per-job.' },
@@ -141,7 +141,7 @@ const servicesEN: Service[] = [
       'Tight rigging your crew would rather hand off',
       'A second skilled climber for a big day',
     ],
-    priceNote: 'A flat day rate, billed by the day.',
+    priceNote: 'A ballpark day rate, billed by the day.',
     faqs: [
       { q: 'Do you have a crane?', a: 'No. You bring the crane and operator. I am the climber who sets the picks, makes the cuts, and rigs the rest.' },
       { q: 'Whose rigging gear?', a: 'I bring my climbing gear and some rigging. Heavy blocks and lowering devices are usually yours.' },
@@ -168,7 +168,7 @@ const servicesEN: Service[] = [
       'A stacked schedule you need cleared',
       'A one-off technical piece that is not worth a hire',
     ],
-    priceNote: 'A flat day rate, billed by the day. One day, sometimes two. A single tricky piece can be per-job.',
+    priceNote: 'A ballpark day rate, billed by the day. One day, sometimes two. A single tricky piece can be per-job.',
     faqs: [
       { q: 'How do I book you?', a: 'Call or text the job: location, size, and when. You get a day rate back, usually the same day.' },
       // TODO(king): add your real insurance / liability arrangement for subcontract
@@ -204,7 +204,7 @@ const servicesES: Service[] = [
       'A su cuadrilla le falta el escalador ese día',
     ],
     priceNote:
-      'Una tarifa plana por día, facturada por día. La mayoría de las remociones por secciones son de un día, algunas llevan dos.',
+      'Una tarifa aproximada por día, facturada por día. La mayoría de las remociones por secciones son de un día, algunas llevan dos.',
     faqs: [
       {
         q: '¿Trae usted el aparejo?',
@@ -238,7 +238,7 @@ const servicesES: Service[] = [
       'Una poda que necesita escalador, no plataforma',
       'Sobrecarga cuando su propio escalador está ocupado',
     ],
-    priceNote: 'Una tarifa plana por día, facturada por día. La mayoría de las podas son de un solo día.',
+    priceNote: 'Una tarifa aproximada por día, facturada por día. La mayoría de las podas son de un solo día.',
     faqs: [
       {
         q: '¿Con espolones o sin espolones?',
@@ -274,7 +274,7 @@ const servicesES: Service[] = [
       'Un peligro que su cuadrilla no escala libre',
     ],
     priceNote:
-      'La misma tarifa plana por día. Una sola pieza urgente puede ser por trabajo. Llame o escriba y le respondo el mismo día cuando puedo.',
+      'La misma tarifa aproximada por día. Una sola pieza urgente puede ser por trabajo. Llame o escriba y le respondo el mismo día cuando puedo.',
     faqs: [
       {
         q: '¿Qué tan rápido puede venir?',
@@ -282,7 +282,7 @@ const servicesES: Service[] = [
       },
       {
         q: '¿Hay tarifa de emergencia?',
-        a: 'La misma tarifa plana por día. Una sola pieza urgente por sí sola se puede cotizar por trabajo.',
+        a: 'La misma tarifa aproximada por día. Una sola pieza urgente por sí sola se puede cotizar por trabajo.',
       },
     ],
     related: ['technical-removals', 'rigging-crane-assist', 'contract-climbing-for-companies'],
@@ -308,7 +308,7 @@ const servicesES: Service[] = [
       'Aparejo apretado que su cuadrilla prefiere ceder',
       'Un segundo escalador con experiencia para un día grande',
     ],
-    priceNote: 'Una tarifa plana por día, facturada por día.',
+    priceNote: 'Una tarifa aproximada por día, facturada por día.',
     faqs: [
       {
         q: '¿Tiene usted grúa?',
@@ -335,7 +335,7 @@ const servicesES: Service[] = [
     heroTitle: ['Un escalador', 'para su cuadrilla,', 'por día.'],
     lede: '¿Le falta un escalador o enfrenta una escalada más allá de su equipo? Resérveme por un día, a veces dos. Llego con mi equipo y subo la pieza que su cuadrilla no puede.',
     whatTitle: 'Qué es',
-    what: 'Subcontrato con empresas de árboles y cuadrillas como el escalador: remociones, poda, trabajo de tormenta y aparejo, por una tarifa plana por día. Usted se queda con el cliente, la cuadrilla de tierra y la limpieza; yo pongo la escalada.',
+    what: 'Subcontrato con empresas de árboles y cuadrillas como el escalador: remociones, poda, trabajo de tormenta y aparejo, por una tarifa aproximada por día. Usted se queda con el cliente, la cuadrilla de tierra y la limpieza; yo pongo la escalada.',
     whenTitle: 'Cuándo me llama',
     when: [
       'Su escalador está ausente, ocupado, o no tiene uno',
@@ -344,7 +344,7 @@ const servicesES: Service[] = [
       'Una pieza técnica única que no vale una contratación',
     ],
     priceNote:
-      'Una tarifa plana por día, facturada por día. Un día, a veces dos. Una sola pieza difícil puede ser por trabajo.',
+      'Una tarifa aproximada por día, facturada por día. Un día, a veces dos. Una sola pieza difícil puede ser por trabajo.',
     faqs: [
       {
         q: '¿Cómo lo reservo?',

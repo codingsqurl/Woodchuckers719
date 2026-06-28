@@ -47,6 +47,7 @@ export function ContractForm({ locale }: { locale: Locale }) {
             </span>
             <span className="rate-unit">{t.rateUnit}</span>
           </p>
+          <p className="note note-tight">{t.rateNote}</p>
           <p className="included">{t.included}</p>
 
           <form className="estimate-form contract-form" id="job" action={formAction}>
