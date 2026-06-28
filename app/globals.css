@@ -1672,7 +1672,10 @@ picture {
 
 /* ═══════════════════════ polish / micro-interactions ══════════════════════ */
 html {
-  scroll-behavior: smooth;
+  /* Instant anchor jumps. Native smooth-scroll glides the full page distance on
+     every #anchor (skip link, mobile "Book a day" → #job, #contact, #top), which
+     reads as slow on a long page; CSS can't speed it up, only turn it off. */
+  scroll-behavior: auto;
   scrollbar-color: var(--green-700) rgba(255, 255, 255, 0.08);
 }
 [id] {
