@@ -7,12 +7,17 @@ import { locales, localePath } from '@/lib/i18n'
 
 export const dynamic = 'force-dynamic'
 
+// Stamped once at server boot (≈ deploy time), NOT per request. Computing
+// `new Date()` inside the handler made every URL report "modified now" on every
+// crawl — a false freshness signal. Module scope evaluates once per process, so
+// lastmod only moves when you redeploy (i.e. when the content can actually change).
+const lastModified = new Date()
+
 // Every public, indexable page in both languages (EN at root, ES under /es),
 // each carrying hreflang alternates so Google pairs the translations. /links and
 // /admin are excluded. Priorities reflect conversion value; ES trails EN slightly.
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = appBaseURL()
-  const lastModified = new Date()
 
   const corePaths = [
     { path: '/', priority: 1.0 },
