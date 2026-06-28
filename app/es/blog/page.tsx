@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/es/blog',
     languages: altLanguages('/blog'),
-    types: { 'application/rss+xml': '/blog/feed.xml' },
+    types: { 'application/rss+xml': '/es/blog/feed.xml' },
   },
   openGraph: {
     type: 'website',
