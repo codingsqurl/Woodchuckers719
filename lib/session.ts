@@ -15,8 +15,17 @@ function newToken(): string {
   return randomBytes(32).toString('hex')
 }
 
+// pruneExpiredSessions deletes already-expired rows so the table never grows
+// unbounded on a long-running single machine. Only removes sessions that are
+// already invalid (expires_at <= now), so it can never log anyone out. Cheap;
+// runs opportunistically at each new login. expires_at is epoch seconds.
+export function pruneExpiredSessions(): void {
+  db.prepare(`DELETE FROM sessions WHERE expires_at <= ?`).run(Math.floor(Date.now() / 1000))
+}
+
 // createSessionRow persists a session row and returns its token + expiry.
 export function createSessionRow(employeeID: number): { token: string; expires: Date } {
+  pruneExpiredSessions()
   const token = newToken()
   const expires = new Date(Date.now() + SESSION_TTL_MS)
   db.prepare(`INSERT INTO sessions (token, employee_id, expires_at) VALUES (?, ?, ?)`).run(

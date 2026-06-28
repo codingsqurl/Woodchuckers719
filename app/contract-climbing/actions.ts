@@ -3,7 +3,7 @@
 // Server Action backing the contract-climbing form (progressive enhancement —
 // works without JS). The site's only intake form now. Reuses the `estimates`
 // table with NO schema change: the lead is marked in `service`, the day rate is
-// the flat $175–$350 range, and everything the requester typed lands in details.
+// the ballpark $175–$350 range, and everything the requester typed lands in details.
 import { createEstimate, type NewEstimate } from '@/lib/estimates'
 import { estimateRL, clientIP } from '@/lib/ratelimit'
 import { contractEmailHTML, leadReply, sendMail, mailerConfigured } from '@/lib/mail'
@@ -35,10 +35,15 @@ export async function submitContract(
   const localeStr = formData.get('locale')?.toString() ?? 'en'
   const tt = getDict(isLocale(localeStr) ? localeStr : 'en').contract
 
-  const name = str('name')
-  const email = str('email').toLowerCase()
-  const phone = str('phone')
-  const details = str('details')
+  // Clamp every field before it hits the DB or an email. A Server Action body can
+  // be ~1MB; no reason to store or send oversized junk.
+  const name = str('name').slice(0, 200)
+  const email = str('email').toLowerCase().slice(0, 254)
+  const phone = str('phone').slice(0, 40)
+  const details = str('details').slice(0, 5000)
+  // Only auto-reply to a well-formed address — never let the form relay mail to
+  // an arbitrary or garbage recipient.
+  const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
   // lead attribution: which page's form this came from (LeadForm sets it); the
   // contract page form sends none, so it falls back to 'contract'.
   const source = (str('source') || 'contract').slice(0, 60)
@@ -105,10 +110,10 @@ export async function submitContract(
       console.error('contract email failed:', err)
     }
 
-    // Auto-reply to the requester (best-effort, only if they left an email).
+    // Auto-reply to the requester (best-effort, only if they left a valid email).
     // Localized to the page they were on. The lead is already saved; a failed
     // receipt never blocks the submission.
-    if (email !== '') {
+    if (validEmail) {
       try {
         const reply = leadReply(name, localeStr)
         await sendMail(email, reply.subject, reply.html)

@@ -25,6 +25,7 @@ export function middleware(request: NextRequest) {
     "form-action 'self'",
     "frame-ancestors 'none'",
     "base-uri 'self'",
+    "object-src 'none'",
   ].join('; ')
 
   const requestHeaders = new Headers(request.headers)
@@ -38,7 +39,7 @@ export function middleware(request: NextRequest) {
   res.headers.set('X-Frame-Options', 'DENY')
   res.headers.set('X-Content-Type-Options', 'nosniff')
   res.headers.set('Referrer-Policy', 'same-origin')
-  res.headers.set('Strict-Transport-Security', 'max-age=31536000')
+  res.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains')
   return res
 }
 
