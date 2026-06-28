@@ -81,8 +81,8 @@ function buildTown(name: string, index: number, locale: Loc): TownPage {
       : `Woodchuckers is an owner-operated contract tree climber for hire by tree companies in ${name}, Colorado. I bring my own climbing and rigging gear, climb the piece past your crew, and bring it down. You run the ground.`
   const localNote =
     locale === 'es'
-      ? `${angle} Sea cual sea la escalada en ${name}, llego con mi equipo, tomo la pieza técnica y la bajo. Su cuadrilla se queda con el suelo, el acarreo y la limpieza.`
-      : `${angle} Whatever the climb in ${name}, I show up with my gear, take the technical piece, and bring it down. Your crew keeps the ground, the haul, and the cleanup.`
+      ? `${angle} Sea cual sea la escalada en ${name}, llego con mi equipo y bajo la pieza técnica. Su cuadrilla se queda con el suelo, el acarreo y la limpieza.`
+      : `${angle} Whatever the climb in ${name}, I show up with my gear and bring the technical piece down. Your crew keeps the ground, the haul, and the cleanup.`
   return { ...base, intro, localNote, placeholder: true }
 }
 

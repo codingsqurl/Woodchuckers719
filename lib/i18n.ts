@@ -102,7 +102,7 @@ const en = {
     allServices: 'All services',
     hazardTitle: 'A climb past your crew?',
     hazardLead:
-      'When a removal is bigger or higher than your team can rig safely, call me in. I show up with my gear, take the climb, and bring it down. You keep the job, the ground crew, and the cleanup.',
+      'When a removal is bigger or higher than your team can rig safely, call me in. I show up with my gear, make the climb, and bring it down. You keep the job, the ground crew, and the cleanup.',
     aboutTitle: 'Just the climber',
     aboutLead:
       'No truck, no crew, no upsell. I show up with a backpack of climbing and rigging gear, climb the tree, and get it down. Second year climbing, owner-operated. The guy who quotes the climb is the one on the rope.',
@@ -125,7 +125,7 @@ const en = {
       { q: 'How do you charge?', a: 'A flat day rate, $175–$350 depending on the climb. Most climbs are a day, some run two. One tricky piece? We can do it per-job.' },
       { q: 'What do you bring?', a: 'Everything I climb with. Saddle, ropes, and rigging gear, on my back. You bring the chipper and ground crew.' },
       { q: 'What about the ground and cleanup?', a: 'That’s your crew. I climb and bring the tree down; hauling, chipping, and cleanup stay with you.' },
-      { q: 'What climbs do you take?', a: 'Sectional takedowns, storm-damaged leaders, and rigging over structures. The piece past your team.' },
+      { q: 'What I Climb', a: 'Sectional takedowns, storm-damaged leaders, and rigging over structures. The piece past your team.' },
       { q: 'Who shows up?', a: 'One climber, second year climbing professionally, owner-operated. The guy who quotes the climb is the one on the rope.' },
     ],
   },
@@ -279,7 +279,7 @@ const en = {
     ratesTitle: 'Ballpark day rate',
     rateUnit: 'per day',
     rateNote: 'A ballpark, not a fixed quote — every job is different. Call or text and I’ll give you a real number.',
-    included: 'Your crew runs the ground, I take the climb. The removal past your team, the rigging over the house, the section nobody wants. A contract climber with my own gear.',
+    included: 'Your crew runs the ground, I do the climbing. The removal past your team, the rigging over the house, the section nobody wants. A contract climber with my own gear.',
     qualsTitle: 'What you’re getting',
     quals: [
       'Second year climbing professionally',
@@ -401,7 +401,7 @@ const es: Dict = {
     allServices: 'Todos los servicios',
     hazardTitle: '¿Una escalada más allá de su cuadrilla?',
     hazardLead:
-      'Cuando una remoción es más grande o más alta de lo que su equipo puede aparejar con seguridad, llámeme. Llego con mi equipo, tomo la escalada y la bajo. Usted se queda con el trabajo, la cuadrilla de suelo y la limpieza.',
+      'Cuando una remoción es más grande o más alta de lo que su equipo puede aparejar con seguridad, llámeme. Llego con mi equipo, la escalo y la bajo. Usted se queda con el trabajo, la cuadrilla de suelo y la limpieza.',
     aboutTitle: 'Solo el escalador',
     aboutLead:
       'Sin camión, sin cuadrilla, sin venta adicional. Llego con una mochila de equipo de escalada y aparejo, escalo el árbol y lo bajo. Segundo año escalando, dueño y operador. Quien cotiza la escalada es quien está en la cuerda.',
@@ -421,7 +421,7 @@ const es: Dict = {
       { q: '¿Cómo cobra?', a: 'Una tarifa fija por día, $175–$350 según la escalada. La mayoría son de un día, algunas de dos. ¿Una sola pieza difícil? Puede ser por trabajo.' },
       { q: '¿Qué trae?', a: 'Todo con lo que escalo. Arnés, cuerdas y equipo de aparejo, a la espalda. Usted trae la astilladora y la cuadrilla de suelo.' },
       { q: '¿Y el suelo y la limpieza?', a: 'Eso es su cuadrilla. Yo escalo y bajo el árbol; el acarreo, el astillado y la limpieza quedan con usted.' },
-      { q: '¿Qué escaladas toma?', a: 'Remociones por secciones, líderes dañados por tormenta y aparejo sobre estructuras. La pieza más allá de su equipo.' },
+      { q: 'Lo que escalo', a: 'Remociones por secciones, líderes dañados por tormenta y aparejo sobre estructuras. La pieza más allá de su equipo.' },
       { q: '¿Quién llega?', a: 'Un escalador, segundo año escalando profesionalmente, dueño y operador. Quien cotiza la escalada es quien está en la cuerda.' },
     ],
   },
