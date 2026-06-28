@@ -18,9 +18,17 @@ export type BioLink = {
   copy?: string // if set and href is empty, tapping copies this value
 }
 
+// A handle is still a placeholder until the real value replaces it. Launch-safe:
+// any payment button whose routing is a placeholder is dropped before render, so
+// /links never shows a dead or misrouting pay link. Fill in the real cashtag /
+// Zelle / Apple Pay handle below and the button reappears automatically.
+function isPlaceholder(v?: string): boolean {
+  return !!v && /\$YOUR_|YOUR_[A-Z]/.test(v)
+}
+
 export function bioLinks(locale: Locale): BioLink[] {
   const t = getDict(locale).links
-  return [
+  const all: BioLink[] = [
     { label: t.website, sub: t.websiteSub, href: localePath(locale, '/') },
     { label: t.estimate, sub: t.estimateSub, href: localePath(locale, '/contract-climbing') },
     { label: t.callText, sub: '(719) 756-2597', href: 'tel:+17197562597' },
@@ -33,4 +41,5 @@ export function bioLinks(locale: Locale): BioLink[] {
     { label: t.zelle, sub: t.tapCopy, copy: 'YOUR_ZELLE_PHONE_OR_EMAIL' },
     { label: t.applepay, sub: t.tapCopy, copy: 'YOUR_APPLEPAY_PHONE_OR_EMAIL' },
   ]
+  return all.filter((l) => !isPlaceholder(l.href) && !isPlaceholder(l.sub) && !isPlaceholder(l.copy))
 }
