@@ -18,6 +18,12 @@ const bigShoulders = Big_Shoulders({
   weight: ['600', '700', '800', '900'],
   variable: '--font-bsd',
   display: 'swap',
+  // next/font has no size-adjust metrics for "Big Shoulders", so it skips the
+  // auto-generated fallback and warns. We declare the system fallback ourselves
+  // and turn the metric-override off — silences the warning, no visual change
+  // (display:swap + the system-ui stack in globals.css already cover the swap).
+  adjustFontFallback: false,
+  fallback: ['system-ui', 'sans-serif'],
 })
 
 export const metadata: Metadata = {
