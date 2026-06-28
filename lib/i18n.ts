@@ -51,7 +51,34 @@ const en = {
   saveContact: 'Save my number',
   callOrText: 'Call or text about the climb, no obligation.',
 
-  services: { moreTitle: 'More services' },
+  services: {
+    moreTitle: 'More services',
+    perDay: 'per day',
+    metaTitle: 'Contract Tree Climbing Services | Woodchuckers | Colorado Springs',
+    metaDesc:
+      'What a tree company can book me for by the day in Colorado Springs: technical removals, canopy pruning, storm and hazard work, rigging and crane assist, and contract climbing for crews. Se habla español.',
+    ogTitle: 'Contract Tree Climbing Services',
+    eyebrow: 'For tree companies',
+    heroTitle: ['What you', 'can book', 'by the day.'],
+    heroSub:
+      'I climb for tree companies and crews across the Front Range. Pick the work, get a day rate, keep your customer and your ground crew.',
+    listTitle: 'Services',
+  },
+
+  blog: {
+    metaTitle: 'Field Notes | Contract Tree Climbing | Woodchuckers | Colorado Springs',
+    metaDesc:
+      'Field notes on contract tree climbing: when to hire a climber, sectional removals, day rates, crane assist, and storm work. Plain answers for tree companies in Colorado Springs.',
+    ogTitle: 'Field Notes — Contract Tree Climbing',
+    crumb: 'Field notes',
+    eyebrow: 'Field notes',
+    indexTitle: 'Before you hire a climber',
+    indexLead:
+      'Plain answers to what tree companies and crews ask before bringing in a contract climber. Day rates, methods, and when to make the call.',
+    covers: 'What this covers',
+    draftNote:
+      'Full write-up in progress. Need the answer for a real job now? Call or text and I will talk it through.',
+  },
 
   // home
   home: {
@@ -72,6 +99,7 @@ const en = {
       { title: 'The climb nobody wants', body: 'The technical piece past your team. I climb it, you run the ground.' },
     ],
     seeWork: 'See the work',
+    allServices: 'All services',
     hazardTitle: 'A climb past your crew?',
     hazardLead:
       'When a removal is bigger or higher than your team can rig safely, call me in. I show up with my gear, take the climb, and bring it down. You keep the job, the ground crew, and the cleanup.',
@@ -322,7 +350,34 @@ const es: Dict = {
   saveContact: 'Guardar mi número',
   callOrText: 'Llame o escriba sobre la escalada, sin compromiso.',
 
-  services: { moreTitle: 'Más servicios' },
+  services: {
+    moreTitle: 'Más servicios',
+    perDay: 'por día',
+    metaTitle: 'Servicios de Escalada de Árboles por Contrato | Woodchuckers | Colorado Springs',
+    metaDesc:
+      'Lo que una empresa de árboles puede reservar conmigo por día en Colorado Springs: remociones técnicas, poda de copa, trabajo de tormenta y peligro, aparejo y apoyo con grúa, y escalada por contrato para cuadrillas. Se habla español.',
+    ogTitle: 'Servicios de Escalada de Árboles por Contrato',
+    eyebrow: 'Para empresas de árboles',
+    heroTitle: ['Lo que puede', 'reservar', 'por día.'],
+    heroSub:
+      'Escalo para empresas de árboles y cuadrillas por todo el Front Range. Elija el trabajo, reciba una tarifa por día, conserve a su cliente y su cuadrilla de tierra.',
+    listTitle: 'Servicios',
+  },
+
+  blog: {
+    metaTitle: 'Notas de Campo | Escalada de Árboles por Contrato | Woodchuckers | Colorado Springs',
+    metaDesc:
+      'Notas de campo sobre escalada de árboles por contrato: cuándo contratar un escalador, remociones por secciones, tarifas por día, apoyo con grúa y trabajo de tormenta. Respuestas claras para empresas de árboles en Colorado Springs.',
+    ogTitle: 'Notas de Campo — Escalada de Árboles por Contrato',
+    crumb: 'Notas de campo',
+    eyebrow: 'Notas de campo',
+    indexTitle: 'Antes de contratar un escalador',
+    indexLead:
+      'Respuestas claras a lo que las empresas de árboles y cuadrillas preguntan antes de traer un escalador por contrato. Tarifas por día, métodos y cuándo tomar la decisión.',
+    covers: 'Qué cubre',
+    draftNote:
+      'Artículo completo en preparación. ¿Necesita la respuesta para un trabajo real ahora? Llame o escriba y lo hablamos.',
+  },
 
   home: {
     metaTitle: 'Woodchuckers | Escalador de Árboles por Contrato, por Día | Colorado Springs',
@@ -342,6 +397,7 @@ const es: Dict = {
       { title: 'La escalada que nadie quiere', body: 'La pieza técnica más allá de su equipo. Yo la escalo, usted maneja el suelo.' },
     ],
     seeWork: 'Vea el trabajo',
+    allServices: 'Todos los servicios',
     hazardTitle: '¿Una escalada más allá de su cuadrilla?',
     hazardLead:
       'Cuando una remoción es más grande o más alta de lo que su equipo puede aparejar con seguridad, llámeme. Llego con mi equipo, tomo la escalada y la bajo. Usted se queda con el trabajo, la cuadrilla de suelo y la limpieza.',

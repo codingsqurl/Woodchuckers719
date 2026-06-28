@@ -2,12 +2,11 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { serviceList, serviceBySlug } from '@/lib/services'
 import { altLanguages } from '@/lib/i18n'
-// EN service pages live at the root; the ES mirror is under /es/services/[slug].
-import { ServiceContent } from './service-content'
+import { ServiceContent } from '@/app/services/[slug]/service-content'
 
-// One static page per service, generated from the service list. Unknown slugs 404.
+// Slugs are shared with EN, so the same list drives both locales' static params.
 export function generateStaticParams() {
-  return serviceList().map((s) => ({ slug: s.slug }))
+  return serviceList('es').map((s) => ({ slug: s.slug }))
 }
 export const dynamicParams = false
 
@@ -17,23 +16,23 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const s = serviceBySlug(slug)
+  const s = serviceBySlug(slug, 'es')
   if (!s) return {}
   return {
     title: s.metaTitle,
     description: s.metaDesc,
     alternates: {
-      canonical: `/services/${s.slug}`,
+      canonical: `/es/services/${s.slug}`,
       languages: altLanguages(`/services/${s.slug}`),
     },
     openGraph: {
       type: 'website',
       siteName: 'Woodchuckers',
-      locale: 'en_US',
-      alternateLocale: ['es_US'],
+      locale: 'es_US',
+      alternateLocale: ['en_US'],
       title: s.ogTitle,
       description: s.metaDesc,
-      url: `/services/${s.slug}`,
+      url: `/es/services/${s.slug}`,
       images: [{ url: '/img/og.jpg', width: 1200, height: 630, alt: s.imageAlt }],
     },
     twitter: { card: 'summary_large_image', title: s.ogTitle, description: s.metaDesc },
@@ -41,9 +40,9 @@ export async function generateMetadata({
   }
 }
 
-export default async function ServicePage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function ServicePageEs({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const s = serviceBySlug(slug)
+  const s = serviceBySlug(slug, 'es')
   if (!s) notFound()
-  return <ServiceContent locale="en" service={s} />
+  return <ServiceContent locale="es" service={s} />
 }

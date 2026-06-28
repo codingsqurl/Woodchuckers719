@@ -7,6 +7,8 @@
 // Audience is B2B-leaning, per the site: tree-company owners, crew foremen,
 // property/GC people who need climbing work, not homeowners shopping a yard tree.
 
+import type { Locale } from './i18n'
+
 export type Post = {
   slug: string
   metaTitle: string
@@ -116,10 +118,114 @@ const postsEN: Post[] = [
   },
 ]
 
-export function postList(): Post[] {
-  return postsEN
+// Spanish mirror. Same slugs as postsEN so the URLs pair for hreflang. Still
+// `draft: true` stubs — intro + outline translated, full bodies later.
+const postsES: Post[] = [
+  {
+    slug: 'when-to-hire-a-contract-climber',
+    metaTitle:
+      'Cuándo Contratar un Escalador de Árboles por Contrato | Woodchuckers | Colorado Springs',
+    metaDesc:
+      'Cuándo le conviene a una empresa de árboles traer un escalador por contrato por un día en vez de forzar una escalada. Zonas de caída, madera seca, sobrecarga y seguridad de la cuadrilla. Colorado Springs.',
+    ogTitle: 'Cuándo Contratar un Escalador por Contrato',
+    title: 'Cuándo contratar un escalador por contrato en vez de forzar la escalada',
+    excerpt:
+      'La mayoría de las cuadrillas puede talar un árbol en lo abierto. La decisión se complica cuando no hay zona de caída, la madera está seca, o el escalador de planta ya está reservado. Traer un escalador por contrato por un día suele ser más barato y más seguro que forzar una remoción que no cabe.',
+    outline: [
+      'Sin zona de caída segura: cuándo la tala queda descartada',
+      'Madera seca o hueca que no debe someter a carga de golpe',
+      'Sobrecarga: cubrir una agenda saturada sin contratar',
+      'La cuenta: una tarifa por día vs el riesgo de una mala tala',
+    ],
+    draft: true,
+    imageAlt:
+      'Un árbol grande encajonado entre una casa y líneas eléctricas, el tipo de remoción que un escalador por contrato baja en secciones.',
+  },
+  {
+    slug: 'sectional-removal-vs-felling',
+    metaTitle: 'Remoción por Secciones vs Talar un Árbol | Woodchuckers | Colorado Springs',
+    metaDesc:
+      'Cuándo se puede tumbar un árbol entero y cuándo tiene que bajar en secciones, con cuerda y descenso. Cómo un escalador por contrato apareja una tala sin espacio para tumbar. Colorado Springs.',
+    ogTitle: 'Remoción por Secciones vs Tala',
+    title: 'Remoción por secciones vs tala: cuándo no se puede solo tumbar',
+    excerpt:
+      'Talar es lo más rápido cuando la zona de caída está despejada. Sobre una casa, una cerca o líneas, el árbol tiene que bajar en secciones controladas, con cuerda y descenso pieza por pieza. Así decide un escalador, y esto es lo que maneja la cuadrilla de tierra.',
+    outline: [
+      'Leer la zona de caída y la inclinación',
+      'Bases del aparejo: poleas, descenso y la cuadrilla de tierra',
+      'Cuándo una grúa cambia el plan',
+      'Qué hace el escalador vs qué hace su cuadrilla',
+    ],
+    draft: true,
+    imageAlt:
+      'Un escalador aparejando una sección de tronco para bajarla sobre un techo en una remoción por secciones.',
+  },
+  {
+    slug: 'what-a-contract-climber-charges',
+    metaTitle:
+      'Cuánto Cobra un Escalador de Árboles por Contrato | Tarifas por Día | Colorado Springs',
+    metaDesc:
+      'Cómo cotizan los escaladores de árboles por contrato: tarifas planas por día, qué cubre un día, y cuándo una sola pieza es por trabajo. Números claros para empresas de árboles. Colorado Springs.',
+    ogTitle: 'Cuánto Cobra un Escalador por Contrato',
+    title: 'Cuánto cobra un escalador por contrato, y qué cubre un día',
+    excerpt:
+      'La mayoría de la escalada por contrato se cotiza por día, no por árbol. Una tarifa plana por día mantiene la cuenta simple para la empresa que contrata: usted sabe el número antes de que el escalador deje el suelo. Esto es lo que cubre un día y cuándo una pieza única se cotiza por trabajo.',
+    outline: [
+      'Por qué las tarifas por día le ganan al precio por árbol en trabajo por contrato',
+      'Qué cubre un día, y cuándo llega a dos',
+      'Precio por trabajo para una sola pieza técnica',
+      'Qué no se incluye: suelo, acarreo y limpieza',
+    ],
+    draft: true,
+    imageAlt:
+      'Un escalador por contrato equipado al pie de un árbol, listo para empezar una escalada por día.',
+  },
+  {
+    slug: 'crane-assist-vs-climb-and-rig',
+    metaTitle: 'Apoyo con Grúa vs Escalar y Aparejar | Talas de Árboles | Colorado Springs',
+    metaDesc:
+      'Cuándo una tala pide grúa y cuándo un escalador bajándola es la decisión correcta. Cómo trabaja un escalador por contrato de cualquier forma. Empresas de árboles de Colorado Springs.',
+    ogTitle: 'Apoyo con Grúa vs Escalar y Aparejar',
+    title: 'Apoyo con grúa vs escalar y aparejar: elegir el método para una tala',
+    excerpt:
+      'Una grúa acelera las cargas grandes y mantiene el peso fuera del fuste, pero no siempre es la decisión. A veces un escalador bajando el árbol pieza por pieza es más rápido y barato. El escalador trabaja de cualquier forma; así se elige el método.',
+    outline: [
+      'Dónde una grúa justifica su costo',
+      'Cuándo escalar y aparejar es lo más rápido y barato',
+      'El escalador en un trabajo con grúa: armar cargas y cortes',
+      'Acceso y montaje: qué revisar antes del día',
+    ],
+    draft: true,
+    imageAlt:
+      'Una grúa levantando una sección de árbol mientras un escalador arma la siguiente carga en una tala.',
+  },
+  {
+    slug: 'storm-damage-when-you-need-a-climber',
+    metaTitle: 'Daño por Tormenta: Cuándo Necesita un Escalador Dedicado | Colorado Springs',
+    metaDesc:
+      'Ramas colgadas, puntas quebradas e inclinados tras una tormenta son las escaladas en las que una cuadrilla quiere un escalador dedicado. Cuándo llamarlo y qué tan rápido. Colorado Springs.',
+    ogTitle: 'Daño por Tormenta: Cuándo Necesita un Escalador',
+    title: 'Daño por tormenta: los peligros en los que su cuadrilla quiere un escalador dedicado',
+    excerpt:
+      'Tras un evento de viento o nieve pesada, el trabajo peligroso está arriba en el árbol: ramas colgadas, líderes quebrados e inclinados cargados. Estas son las escaladas en las que una cuadrilla agradece ceder la cuerda a un escalador dedicado. Así se identifican y cuándo llamar.',
+    outline: [
+      'Leer un inclinado cargado antes de tocarlo',
+      'Ramas colgadas y puntas quebradas: bajarlas con control',
+      'Por qué jalar un peligro desde el suelo sale mal',
+      'Sacar un escalador rápido tras una tormenta',
+    ],
+    draft: true,
+    imageAlt:
+      'Un líder de árbol quebrado por tormenta colgado sobre una estructura, un peligro para un escalador dedicado.',
+  },
+]
+
+const postsByLocale: Record<Locale, Post[]> = { en: postsEN, es: postsES }
+
+export function postList(locale: Locale = 'en'): Post[] {
+  return postsByLocale[locale]
 }
 
-export function postBySlug(slug: string): Post | undefined {
-  return postsEN.find((p) => p.slug === slug)
+export function postBySlug(slug: string, locale: Locale = 'en'): Post | undefined {
+  return postsByLocale[locale].find((p) => p.slug === slug)
 }

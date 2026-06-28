@@ -80,9 +80,7 @@ export function SiteHeader({
           Woodchuckers
         </a>
         <nav className="topnav">
-          {/* services pages are EN-only this chunk; hide the link on /es until the
-              Spanish mirror lands so the nav never points at a missing route */}
-          {NAV.filter((n) => n.key !== current && !(n.key === 'services' && locale === 'es')).map((n) => (
+          {NAV.filter((n) => n.key !== current).map((n) => (
             <a key={n.key} href={localePath(locale, n.path)}>
               {n.label(d)}
             </a>
@@ -168,22 +166,18 @@ export function SiteFooter({ locale, path }: { locale: Locale; path: string }) {
       <span className="foot-sep" aria-hidden="true">
         ·
       </span>
-      {locale === 'en' ? (
-        <>
-          <a className="foot-link" href={localePath(locale, '/services')}>
-            {d.nav.services}
-          </a>
-          <span className="foot-sep" aria-hidden="true">
-            ·
-          </span>
-          <a className="foot-link" href="/blog">
-            Field notes
-          </a>
-          <span className="foot-sep" aria-hidden="true">
-            ·
-          </span>
-        </>
-      ) : null}
+      <a className="foot-link" href={localePath(locale, '/services')}>
+        {d.nav.services}
+      </a>
+      <span className="foot-sep" aria-hidden="true">
+        ·
+      </span>
+      <a className="foot-link" href={localePath(locale, '/blog')}>
+        {d.blog.crumb}
+      </a>
+      <span className="foot-sep" aria-hidden="true">
+        ·
+      </span>
       <a className="foot-link" href={localePath(locale, '/contract-climbing')}>
         {d.footPro}
       </a>

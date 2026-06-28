@@ -72,7 +72,7 @@ export function ServiceContent({ locale, service }: { locale: Locale; service: S
   const tc = getDict(locale)
   const contractHref = localePath(locale, '/contract-climbing')
   const related = service.related
-    .map((slug) => serviceBySlug(slug))
+    .map((slug) => serviceBySlug(slug, locale))
     .filter((s): s is Service => Boolean(s))
 
   return (
@@ -120,7 +120,7 @@ export function ServiceContent({ locale, service }: { locale: Locale; service: S
               <span className="rate-amount">
                 {money(contractClimbing.dayLow)}–{money(contractClimbing.dayHigh)}
               </span>
-              <span className="rate-unit">per day</span>
+              <span className="rate-unit">{tc.services.perDay}</span>
             </p>
             <p className="included">{service.priceNote}</p>
             <div className="hero-actions">

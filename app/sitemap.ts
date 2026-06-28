@@ -17,41 +17,38 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const corePaths = [
     { path: '/', priority: 1.0 },
     { path: '/contract-climbing', priority: 0.9 },
+    { path: '/services', priority: 0.8 },
     { path: '/portfolio', priority: 0.8 },
     { path: '/areas', priority: 0.8 },
+    { path: '/blog', priority: 0.6 },
   ]
   const townPaths = serviceAreas.map((name) => ({
     path: `/areas/${slugify(name)}`,
     priority: 0.7,
   }))
-
-  const localized = [...corePaths, ...townPaths].flatMap(({ path, priority }) => {
-    const languages = {
-      en: `${base}${localePath('en', path)}`,
-      es: `${base}${localePath('es', path)}`,
-    }
-    return locales.map((loc) => ({
-      url: `${base}${localePath(loc, path)}`,
-      lastModified,
-      changeFrequency: 'monthly' as const,
-      priority: loc === 'en' ? priority : Math.max(0.5, priority - 0.1),
-      alternates: { languages },
-    }))
-  })
-
-  // Service and blog pages are English-only for now (the /es mirror is a later
-  // chunk), so they enter the sitemap as single-locale entries, no hreflang pair.
-  const enOnly = [
-    { path: '/services', priority: 0.8 },
-    ...serviceList().map((s) => ({ path: `/services/${s.slug}`, priority: 0.7 })),
-    { path: '/blog', priority: 0.6 },
-    ...postList().map((p) => ({ path: `/blog/${p.slug}`, priority: 0.5 })),
-  ].map(({ path, priority }) => ({
-    url: `${base}${path}`,
-    lastModified,
-    changeFrequency: 'monthly' as const,
-    priority,
+  // Slugs are shared across locales, so one list drives both languages.
+  const servicePaths = serviceList().map((s) => ({
+    path: `/services/${s.slug}`,
+    priority: 0.7,
+  }))
+  const postPaths = postList().map((p) => ({
+    path: `/blog/${p.slug}`,
+    priority: 0.5,
   }))
 
-  return [...localized, ...enOnly]
+  return [...corePaths, ...townPaths, ...servicePaths, ...postPaths].flatMap(
+    ({ path, priority }) => {
+      const languages = {
+        en: `${base}${localePath('en', path)}`,
+        es: `${base}${localePath('es', path)}`,
+      }
+      return locales.map((loc) => ({
+        url: `${base}${localePath(loc, path)}`,
+        lastModified,
+        changeFrequency: 'monthly' as const,
+        priority: loc === 'en' ? priority : Math.max(0.5, priority - 0.1),
+        alternates: { languages },
+      }))
+    },
+  )
 }

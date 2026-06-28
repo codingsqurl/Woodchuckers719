@@ -155,7 +155,7 @@ export function HomeContent({ locale }: { locale: Locale }) {
                 return (
                   <li key={s.title}>
                     <h3>
-                      {locale === 'en' && slug ? (
+                      {slug ? (
                         <a href={localePath(locale, `/services/${slug}`)}>{s.title}</a>
                       ) : (
                         s.title
@@ -167,20 +167,12 @@ export function HomeContent({ locale }: { locale: Locale }) {
               })}
             </ul>
             <div className="hero-actions">
-              {locale === 'en' ? (
-                <>
-                  <a className="cta cta-primary" href={localePath(locale, '/services')}>
-                    All services
-                  </a>
-                  <a className="cta cta-ghost cta-ghost-dark" href={workHref}>
-                    {t.seeWork}
-                  </a>
-                </>
-              ) : (
-                <a className="cta cta-primary" href={workHref}>
-                  {t.seeWork}
-                </a>
-              )}
+              <a className="cta cta-primary" href={localePath(locale, '/services')}>
+                {t.allServices}
+              </a>
+              <a className="cta cta-ghost cta-ghost-dark" href={workHref}>
+                {t.seeWork}
+              </a>
             </div>
           </div>
         </section>
