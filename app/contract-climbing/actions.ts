@@ -6,7 +6,7 @@
 // the flat $175–$350 range, and everything the requester typed lands in details.
 import { createEstimate, type NewEstimate } from '@/lib/estimates'
 import { estimateRL, clientIP } from '@/lib/ratelimit'
-import { contractEmailHTML, sendMail, mailerConfigured } from '@/lib/mail'
+import { contractEmailHTML, leadReply, sendMail, mailerConfigured } from '@/lib/mail'
 import { getDict, isLocale } from '@/lib/i18n'
 import { contractClimbing } from '@/lib/rates'
 
@@ -44,6 +44,14 @@ export async function submitContract(
   const source = (str('source') || 'contract').slice(0, 60)
 
   const preserved: ContractValues = { name, phone, email, details }
+
+  // Honeypot: a hidden "company" field no human sees (off-screen, aria-hidden,
+  // tabindex -1, autocomplete off). Bots that autofill every input trip it. Play
+  // dead — show the same thanks page so the bot thinks it worked — but save and
+  // email nothing. Real submitters always leave this empty.
+  if (str('company') !== '') {
+    return { status: 'sent', name: name || 'there' }
+  }
 
   // Spam throttle: 5/min/IP, shared with the (now redirected) estimate form.
   if (!estimateRL.allow(await clientIP())) {
@@ -95,6 +103,18 @@ export async function submitContract(
       )
     } catch (err) {
       console.error('contract email failed:', err)
+    }
+
+    // Auto-reply to the requester (best-effort, only if they left an email).
+    // Localized to the page they were on. The lead is already saved; a failed
+    // receipt never blocks the submission.
+    if (email !== '') {
+      try {
+        const reply = leadReply(name, localeStr)
+        await sendMail(email, reply.subject, reply.html)
+      } catch (err) {
+        console.error('lead auto-reply failed:', err)
+      }
     }
   }
 

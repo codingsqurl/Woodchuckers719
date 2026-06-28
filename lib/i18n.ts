@@ -48,6 +48,7 @@ const en = {
   langName: { en: 'English', es: 'Español' },
   switchTo: 'Ver en español',
   servingArea: 'Serving the Colorado Springs area',
+  saveContact: 'Save my number',
   callOrText: 'Call or text about the climb, no obligation.',
 
   services: { moreTitle: 'More services' },
@@ -318,6 +319,7 @@ const es: Dict = {
   langName: { en: 'English', es: 'Español' },
   switchTo: 'View in English',
   servingArea: 'Sirviendo el área de Colorado Springs',
+  saveContact: 'Guardar mi número',
   callOrText: 'Llame o escriba sobre la escalada, sin compromiso.',
 
   services: { moreTitle: 'Más servicios' },

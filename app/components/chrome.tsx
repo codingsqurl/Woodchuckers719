@@ -194,6 +194,12 @@ export function SiteFooter({ locale, path }: { locale: Locale; path: string }) {
       <span className="foot-sep" aria-hidden="true">
         ·
       </span>
+      <a className="foot-link" href="/contact.vcf" download="woodchuckers.vcf">
+        {d.saveContact}
+      </a>
+      <span className="foot-sep" aria-hidden="true">
+        ·
+      </span>
       <LangToggle locale={locale} path={path} />
     </footer>
   )

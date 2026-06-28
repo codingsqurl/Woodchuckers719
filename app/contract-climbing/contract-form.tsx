@@ -54,6 +54,20 @@ export function ContractForm({ locale }: { locale: Locale }) {
 
             <input type="hidden" name="locale" value={locale} readOnly />
 
+            {/* honeypot: off-screen, hidden from AT and tab order; bots fill it,
+                humans never see it. Checked server-side in submitContract. */}
+            <div className="hp" aria-hidden="true">
+              <label htmlFor="company">Company</label>
+              <input
+                type="text"
+                id="company"
+                name="company"
+                tabIndex={-1}
+                autoComplete="off"
+                defaultValue=""
+              />
+            </div>
+
             <h3 className="form-title">{t.formTitle}</h3>
 
             <div className="row2">

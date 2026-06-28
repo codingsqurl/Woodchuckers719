@@ -11,7 +11,10 @@ const META_DESC =
 export const metadata: Metadata = {
   title: 'Field Notes | Contract Tree Climbing | Woodchuckers | Colorado Springs',
   description: META_DESC,
-  alternates: { canonical: '/blog' },
+  alternates: {
+    canonical: '/blog',
+    types: { 'application/rss+xml': '/blog/feed.xml' },
+  },
   openGraph: {
     type: 'website',
     siteName: 'Woodchuckers',

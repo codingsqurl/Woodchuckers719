@@ -50,6 +50,19 @@ export function LeadForm({
           {state.status === 'error' ? <p className="error form-error">{state.error}</p> : null}
           <input type="hidden" name="locale" value={locale} readOnly />
           <input type="hidden" name="source" value={source} readOnly />
+          {/* honeypot: off-screen, hidden from AT and tab order; bots fill it,
+              humans never see it. Checked server-side in submitContract. */}
+          <div className="hp" aria-hidden="true">
+            <label htmlFor="lead-company">Company</label>
+            <input
+              type="text"
+              id="lead-company"
+              name="company"
+              tabIndex={-1}
+              autoComplete="off"
+              defaultValue=""
+            />
+          </div>
           <h2 className="form-title">{heading ?? t.formTitle}</h2>
           <div className="row2">
             <div className="field">

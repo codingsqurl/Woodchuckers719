@@ -126,6 +126,16 @@ body.site .section-title {
   top: 0.75rem;
 }
 
+/* honeypot field — off-screen, never shown, never focusable. A bot that fills
+   every input trips the server-side check; real users never see it. */
+.hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 /* ───── the climbing rope-line that fills as you scroll (pure CSS) ───── */
 .scroll-rope {
   position: fixed;
