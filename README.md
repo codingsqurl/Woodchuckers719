@@ -18,8 +18,8 @@ database** with the **same schema**. No data migration, no ORM.
 | Database           | ✅ Done     | SQLite via `better-sqlite3`, same `woodchuckers.db`                 |
 | Migrations         | ✅ Done     | reused `db/migrations/*.sql`, baseline runner on first boot         |
 | Public pages       | ✅ Done     | `/`, `/portfolio`, `/areas`, `/links`, `/contract-climbing` — RSC   |
-| Services pages     | ✅ Done     | `/services` + 7 B2B service pages, keyword clusters, schema         |
-| Content hub (blog) | 🟡 Stubs   | `/blog` + 7 search-intent posts — intros real, bodies `draft: true` |
+| Services pages     | ✅ Done     | `/services` + 5 B2B service pages, keyword clusters, schema (EN+ES) |
+| Content hub (blog) | 🟡 Stubs   | `/blog` + 5 posts (EN+ES) + RSS — intros real, bodies `draft: true` |
 | Intake / lead form | ✅ Done     | `/contract-climbing` form + per-page lead-capture w/ attribution    |
 | CRM pipeline       | ✅ Done     | admin lead pipeline: editable status, notes, stage filter, Source   |
 | Login / logout     | ✅ Done     | bcrypt + server-side sessions + HttpOnly cookie                     |
@@ -28,7 +28,7 @@ database** with the **same schema**. No data migration, no ORM.
 | PWA                | ✅ Done     | installable staff PWA (`manifest.ts`)                              |
 | Security           | ✅ Done     | headers, nonce CSP, rate limits, `Secure` cookie in prod           |
 | SEO                | ✅ Done     | robots, sitemap, OG, LocalBusiness JSON-LD, internal link mesh      |
-| Bilingual (ES)     | 🟡 Partial | `/es` covers core + areas; `/services` + `/blog` still EN-only      |
+| Bilingual (ES)     | ✅ Done     | full `/es` mirror: core, areas, services, blog + ES RSS, hreflang   |
 | Deploy             | ⬜ Ready    | Node `Dockerfile` + `fly.toml` (single machine + volume)            |
 | Scheduling / hours | ⬜ Future   | `shifts` / `time_entries` tables exist, no UI yet (one-man phase)   |
 
