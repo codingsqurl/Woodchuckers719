@@ -12,20 +12,25 @@ database** with the **same schema**. No data migration, no ORM.
 
 ## 📍 Where we are right now
 
-| Area               | Status   | Notes                                                       |
-| ------------------ | -------- | ----------------------------------------------------------- |
-| HTTP server        | ✅ Done   | Next.js App Router (Node runtime), `:3000`                  |
-| Database           | ✅ Done   | SQLite via `better-sqlite3`, same `woodchuckers.db`         |
-| Migrations         | ✅ Done   | reused `db/migrations/*.sql`, baseline runner on first boot |
-| Public pages       | ✅ Done   | `/`, `/portfolio`, `/areas`, `/links` — RSC, near-zero JS   |
-| Intake / estimate  | ✅ Done   | one `/contract-climbing` form (homeowners + tree cos); `/estimate` redirects in |
-| Login / logout     | ✅ Done   | bcrypt + server-side sessions + HttpOnly cookie             |
-| Admin dashboard    | ✅ Done   | employees + last-50 estimates, create/invite/toggle         |
-| SSO                | ✅ Done   | Google OIDC + GitHub OAuth, pre-created accounts only        |
-| Security           | ✅ Done   | headers, nonce CSP, rate limits, `Secure` cookie in prod    |
-| SEO                | ✅ Done   | robots, sitemap, OG, LocalBusiness JSON-LD                  |
-| Deploy             | ⬜ Ready  | Node `Dockerfile` + `fly.toml` (single machine + volume)    |
-| Scheduling / hours | ⬜ Future | `shifts` / `time_entries` tables exist, no UI yet           |
+| Area               | Status     | Notes                                                                |
+| ------------------ | ---------- | ------------------------------------------------------------------- |
+| HTTP server        | ✅ Done     | Next.js App Router (Node runtime), `:3000`                          |
+| Database           | ✅ Done     | SQLite via `better-sqlite3`, same `woodchuckers.db`                 |
+| Migrations         | ✅ Done     | reused `db/migrations/*.sql`, baseline runner on first boot         |
+| Public pages       | ✅ Done     | `/`, `/portfolio`, `/areas`, `/links`, `/contract-climbing` — RSC   |
+| Services pages     | ✅ Done     | `/services` + 7 B2B service pages, keyword clusters, schema         |
+| Content hub (blog) | 🟡 Stubs   | `/blog` + 7 search-intent posts — intros real, bodies `draft: true` |
+| Intake / lead form | ✅ Done     | `/contract-climbing` form + per-page lead-capture w/ attribution    |
+| CRM pipeline       | ✅ Done     | admin lead pipeline: editable status, notes, stage filter, Source   |
+| Login / logout     | ✅ Done     | bcrypt + server-side sessions + HttpOnly cookie                     |
+| Admin dashboard    | ✅ Done     | employees + estimates, create/invite/toggle + SEO rank tracker      |
+| SSO                | ✅ Done     | Google OIDC + GitHub OAuth, pre-created accounts only               |
+| PWA                | ✅ Done     | installable staff PWA (`manifest.ts`)                              |
+| Security           | ✅ Done     | headers, nonce CSP, rate limits, `Secure` cookie in prod           |
+| SEO                | ✅ Done     | robots, sitemap, OG, LocalBusiness JSON-LD, internal link mesh      |
+| Bilingual (ES)     | 🟡 Partial | `/es` covers core + areas; `/services` + `/blog` still EN-only      |
+| Deploy             | ⬜ Ready    | Node `Dockerfile` + `fly.toml` (single machine + volume)            |
+| Scheduling / hours | ⬜ Future   | `shifts` / `time_entries` tables exist, no UI yet (one-man phase)   |
 
 ## Stack
 
