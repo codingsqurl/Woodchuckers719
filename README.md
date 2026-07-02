@@ -94,9 +94,17 @@ npm run smoke
 
 Same variables, same meanings as the Go app (`.env.example`):
 `APP_BASE_URL`, `DATABASE_URL`, `GOOGLE_CLIENT_ID/SECRET`,
-`GITHUB_CLIENT_ID/SECRET`, `RESEND_API_KEY`, `MAIL_FROM`. SSO/email are disabled
-(buttons hidden, routes 404, no mail) unless their vars are set. **Never commit
-secrets — `.env*.local` is gitignored.**
+`GITHUB_CLIENT_ID/SECRET`, `RESEND_API_KEY`, `MAIL_FROM`, plus the optional
+`LEAD_IDENTITY_SECRET`. SSO/email are disabled (buttons hidden, routes 404, no
+mail) unless their vars are set. **Never commit secrets — `.env*.local` is
+gitignored.**
+
+The public lead/contract form requires a Google sign-in before it shows (so every
+lead is a real, verified email). That flow uses its own redirect URI — register
+**both** `$APP_BASE_URL/auth/google/callback` (staff) and
+`$APP_BASE_URL/auth/lead/google/callback` (lead) on the same Google OAuth client,
+or Google rejects the lead flow with `redirect_uri_mismatch`. The identity is a
+short-lived signed cookie, not a session — a lead never gets an account.
 
 ## Deploy (Fly.io)
 

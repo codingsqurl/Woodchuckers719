@@ -1,20 +1,19 @@
-'use client'
-
 // LeadForm — the compact quote-request form embedded on the lead-gen pages
-// (services, blog). It reuses submitContract, the SAME server action behind the
-// /contract-climbing intake, so every lead lands in the `estimates` table and the
-// notification email. THIS IS THE REAL ENDPOINT: a server action writing to the
-// app's own SQLite DB, no third-party lead service. (If you ever swap to an
-// external CRM/webhook, that change goes in app/contract-climbing/actions.ts —
-// the single submission handler for the whole site.)
-import { useActionState } from 'react'
-import { submitContract, type ContractState } from '../contract-climbing/actions'
-import { PHONE_DISPLAY, PHONE_HREF } from './chrome'
-import { type Locale, getDict } from '@/lib/i18n'
+// (services, blog). Server wrapper: it reads the verified lead identity from the
+// signed cookie (a per-request, server-only check) and hands it to the client
+// half. Until the visitor signs in with Google, the client renders the gate
+// instead of the fields. Reading the cookie makes the host page dynamic — fine,
+// the form is per-request anyway.
+//
+// Still the SAME endpoint as the contract page: LeadFormClient submits via
+// submitContract, so every lead lands in the `estimates` table + the notify
+// email. Swap to an external CRM/webhook in app/contract-climbing/actions.ts.
+import { headers } from 'next/headers'
+import { readLeadIdentity } from '@/lib/lead-identity'
+import { LeadFormClient } from './lead-form-client'
+import { type Locale } from '@/lib/i18n'
 
-const INITIAL: ContractState = { status: 'idle' }
-
-export function LeadForm({
+export async function LeadForm({
   locale,
   heading,
   source = 'website',
@@ -23,76 +22,17 @@ export function LeadForm({
   heading?: string
   source?: string
 }) {
-  const t = getDict(locale).contract
-  const [state, formAction, isPending] = useActionState(submitContract, INITIAL)
-
-  if (state.status === 'sent') {
-    return (
-      <section className="band services">
-        <div className="band-inner">
-          <div className="thanks">
-            <h2 className="section-title">{t.thanksTitle(state.name)}</h2>
-            <p>
-              {t.thanksBody} <a href={PHONE_HREF}>{PHONE_DISPLAY}</a>.
-            </p>
-          </div>
-        </div>
-      </section>
-    )
-  }
-
-  const v = state.status === 'error' ? state.values : {}
+  const identity = await readLeadIdentity()
+  const path = (await headers()).get('x-pathname') || '/contract-climbing'
+  const loginHref = `/auth/lead/google/login?return=${encodeURIComponent(path)}`
 
   return (
-    <section className="band services">
-      <div className="band-inner">
-        <form className="estimate-form contract-form" id="quote" action={formAction}>
-          {state.status === 'error' ? <p className="error form-error">{state.error}</p> : null}
-          <input type="hidden" name="locale" value={locale} readOnly />
-          <input type="hidden" name="source" value={source} readOnly />
-          {/* honeypot: off-screen, hidden from AT and tab order; bots fill it,
-              humans never see it. Checked server-side in submitContract. */}
-          <div className="hp" aria-hidden="true">
-            <label htmlFor="lead-company">Company</label>
-            <input
-              type="text"
-              id="lead-company"
-              name="company"
-              tabIndex={-1}
-              autoComplete="off"
-              defaultValue=""
-            />
-          </div>
-          <h2 className="form-title">{heading ?? t.formTitle}</h2>
-          <div className="row2">
-            <div className="field">
-              <label htmlFor="lead-name">{t.fName}</label>
-              <input type="text" id="lead-name" name="name" defaultValue={v.name ?? ''} required />
-            </div>
-            <div className="field">
-              <label htmlFor="lead-phone">{t.fPhone}</label>
-              <input type="tel" id="lead-phone" name="phone" defaultValue={v.phone ?? ''} />
-            </div>
-          </div>
-          <div className="field">
-            <label htmlFor="lead-email">{t.fEmail}</label>
-            <input type="email" id="lead-email" name="email" defaultValue={v.email ?? ''} />
-          </div>
-          <div className="field">
-            <label htmlFor="lead-details">{t.detailsLabel}</label>
-            <textarea
-              id="lead-details"
-              name="details"
-              defaultValue={v.details ?? ''}
-              placeholder={t.detailsPh}
-            />
-          </div>
-          <p className="note note-tight">{t.requiredNote}</p>
-          <button type="submit" disabled={isPending}>
-            {isPending ? t.submitting : t.submit}
-          </button>
-        </form>
-      </div>
-    </section>
+    <LeadFormClient
+      locale={locale}
+      heading={heading}
+      source={source}
+      identity={identity}
+      loginHref={loginHref}
+    />
   )
 }

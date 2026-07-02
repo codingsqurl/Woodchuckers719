@@ -1278,6 +1278,80 @@ picture {
   margin: 0 auto 1.25rem;
 }
 
+/* ── optional Google sign-in on the contract/lead form ── */
+.btn-google {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 0.15rem;
+  background: #fff;
+  color: #3c4043;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.7rem 1.3rem;
+  border-radius: 10px;
+  border: 1px solid #dadce0;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.btn-google:hover {
+  background: #f1f3f4;
+}
+.btn-google svg {
+  display: block;
+  flex: 0 0 auto;
+}
+/* submit + optional Google verify, sat side by side at the foot of the form */
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+/* both actions equal: same width (flex:1) and same height (min-height + center) */
+.form-actions button,
+.form-actions .btn-google {
+  margin-top: 0;
+  flex: 1 1 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  box-sizing: border-box;
+}
+/* short "why is there a Google button" hint above the action row */
+.verify-hint {
+  margin-bottom: 0.1rem;
+  color: var(--on-dark-soft);
+}
+/* soft (not error-red) note when a Google verify came back unverified */
+.signin-note {
+  color: var(--on-dark-soft);
+}
+/* verified identity banner above the shortened form */
+.signed-in {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 0.9rem;
+  margin: 0 0 0.9rem;
+  font-size: 0.95rem;
+  color: var(--on-dark-soft);
+}
+.signed-in-id {
+  font-weight: 700;
+  color: var(--on-dark);
+}
+.signed-in .verified {
+  color: #6cc28a;
+  font-weight: 700;
+}
+.signed-in-switch {
+  font-size: 0.85rem;
+  color: var(--on-dark-mute);
+}
+
 /* tree-removal follow-up questions, grouped and toggled by service type */
 .removal-qs {
   display: grid;

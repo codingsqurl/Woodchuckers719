@@ -1,22 +1,37 @@
 'use client'
 
 // The contract page's only form: a short B2B job-intake wired to submitContract
-// via useActionState (works without JS). Kept deliberately small — name, a way to
-// reach back, and a free-text "what's the job" — so it can't be overlooked and
-// nobody bails on a wall of dropdowns. Day rate is a flat $175–$350 range.
-// Bilingual: visible strings come from the dictionary.
+// via useActionState (works without JS). Google sign-in is OPTIONAL — a verified
+// visitor gets name/email from the signed cookie (just phone + the job left to
+// fill); everyone else types name/email plainly, with an optional "verify with
+// Google" link above the fields. Day rate is a flat $175–$350 range. Bilingual.
 import { useActionState } from 'react'
 import { submitContract, type ContractState } from './actions'
 import { PHONE_DISPLAY, PHONE_HREF } from '../components/chrome'
+import { VerifyButton, SignedInBanner } from '../components/lead-gate'
 import { type Locale, getDict } from '@/lib/i18n'
 import { contractClimbing } from '@/lib/rates'
+import type { LeadIdentity } from '@/lib/lead-identity'
 
 const money = (n: number) => '$' + n.toLocaleString('en-US')
 const INITIAL: ContractState = { status: 'idle' }
 
-export function ContractForm({ locale }: { locale: Locale }) {
+export function ContractForm({
+  locale,
+  identity,
+  loginHref,
+  unverified = false,
+}: {
+  locale: Locale
+  identity: LeadIdentity | null
+  loginHref: string
+  // true when Google bounced the visitor back with an unverified email
+  // (callback redirects to ?signin=unverified) — show why the gate's still up.
+  unverified?: boolean
+}) {
   const t = getDict(locale).contract
   const [state, formAction, isPending] = useActionState(submitContract, INITIAL)
+  const v = state.status === 'error' ? state.values : {}
 
   if (state.status === 'sent') {
     return (
@@ -33,11 +48,9 @@ export function ContractForm({ locale }: { locale: Locale }) {
     )
   }
 
-  const v = state.status === 'error' ? state.values : {}
-
   return (
     <>
-      {/* booking band — day rate + the intake form, on glass like every other band */}
+      {/* booking band — day rate + the intake, on glass like every other band */}
       <section className="band services">
         <div className="band-inner">
           <h2 className="section-title">{t.ratesTitle}</h2>
@@ -71,20 +84,31 @@ export function ContractForm({ locale }: { locale: Locale }) {
 
             <h3 className="form-title">{t.formTitle}</h3>
 
-            <div className="row2">
-              <div className="field">
-                <label htmlFor="name">{t.fName}</label>
-                <input type="text" id="name" name="name" defaultValue={v.name ?? ''} required />
-              </div>
-              <div className="field">
-                <label htmlFor="phone">{t.fPhone}</label>
-                <input type="tel" id="phone" name="phone" defaultValue={v.phone ?? ''} />
-              </div>
-            </div>
+            {identity ? (
+              <SignedInBanner
+                label={t.signedInAs(identity.name, identity.email)}
+                switchLabel={t.switchAcct}
+                href={loginHref}
+              />
+            ) : (
+              <>
+                {unverified ? <p className="note signin-note">{t.signInUnverified}</p> : null}
+                <div className="row2">
+                  <div className="field">
+                    <label htmlFor="name">{t.fName}</label>
+                    <input type="text" id="name" name="name" defaultValue={v.name ?? ''} required />
+                  </div>
+                  <div className="field">
+                    <label htmlFor="email">{t.fEmail}</label>
+                    <input type="email" id="email" name="email" defaultValue={v.email ?? ''} />
+                  </div>
+                </div>
+              </>
+            )}
 
             <div className="field">
-              <label htmlFor="email">{t.fEmail}</label>
-              <input type="email" id="email" name="email" defaultValue={v.email ?? ''} />
+              <label htmlFor="phone">{t.fPhone}</label>
+              <input type="tel" id="phone" name="phone" defaultValue={v.phone ?? ''} />
             </div>
 
             <div className="field">
@@ -97,11 +121,15 @@ export function ContractForm({ locale }: { locale: Locale }) {
               />
             </div>
 
-            <p className="note note-tight">{t.requiredNote}</p>
+            {identity ? null : <p className="note note-tight">{t.requiredNote}</p>}
             <p className="note">{t.seHablaNote}</p>
-            <button type="submit" disabled={isPending}>
-              {isPending ? t.submitting : t.submit}
-            </button>
+            {identity ? null : <p className="note verify-hint">{t.verifyPrompt}</p>}
+            <div className="form-actions">
+              <button type="submit" disabled={isPending}>
+                {isPending ? t.submitting : t.submit}
+              </button>
+              {identity ? null : <VerifyButton label={t.verifyBtn} href={loginHref} />}
+            </div>
           </form>
         </div>
       </section>

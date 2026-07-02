@@ -1,7 +1,9 @@
+import { headers } from 'next/headers'
 import { SiteHeader, SiteFooter, MobileCTA, PageHero } from '../components/chrome'
 import { type Locale, getDict } from '@/lib/i18n'
 import { appBaseURL } from '@/lib/env'
 import { areaList } from '@/lib/areas'
+import { readLeadIdentity } from '@/lib/lead-identity'
 import { ContractForm } from './contract-form'
 
 // Service structured data for the money page: contract tree climbing offered to a
@@ -42,9 +44,18 @@ function contractJsonLd() {
 // or crew hiring a climber for the piece past their team. Same pine chrome as the
 // rest of the public site; flat day-rate range, quals, and a short job-intake form.
 // The MobileCTA swaps its second button to scroll to the form (#job).
-export function ContractContent({ locale }: { locale: Locale }) {
+export async function ContractContent({
+  locale,
+  signin,
+}: {
+  locale: Locale
+  signin?: string
+}) {
   const tc = getDict(locale)
   const t = tc.contract
+  const identity = await readLeadIdentity()
+  const path = (await headers()).get('x-pathname') || '/contract-climbing'
+  const loginHref = `/auth/lead/google/login?return=${encodeURIComponent(path)}`
   return (
     <>
       {/* Service schema — a data block, exempt from script-src CSP. */}
@@ -61,7 +72,12 @@ export function ContractContent({ locale }: { locale: Locale }) {
           cta={{ href: '#job', label: tc.freeEstimate }}
           callLabel={tc.callLabel}
         />
-        <ContractForm locale={locale} />
+        <ContractForm
+          locale={locale}
+          identity={identity}
+          loginHref={loginHref}
+          unverified={signin === 'unverified'}
+        />
       </main>
       <SiteFooter locale={locale} path="/contract-climbing" />
       <MobileCTA locale={locale} variant="contract" />

@@ -17,6 +17,13 @@ const GITHUB_EMAILS_URL = 'https://api.github.com/user/emails'
 export const OAUTH_STATE_COOKIE = 'oauth_state'
 export const OAUTH_NONCE_COOKIE = 'oauth_nonce'
 
+// Public lead-identity flow uses its OWN cookies + redirect URI so it can never
+// cross-wire with the staff login above (which mints admin sessions). See
+// lib/lead-identity.ts and app/auth/lead/google/*.
+export const LEAD_STATE_COOKIE = 'lead_oauth_state'
+export const LEAD_NONCE_COOKIE = 'lead_oauth_nonce'
+export const LEAD_RETURN_COOKIE = 'lead_return'
+
 // SSOError carries an HTTP status the route handler should surface verbatim.
 export class SSOError extends Error {
   constructor(
@@ -39,15 +46,23 @@ function googleRedirectURI(): string {
   return `${appBaseURL()}/auth/google/callback`
 }
 
+// The public lead flow's callback. MUST be registered as its own Authorized
+// redirect URI in the Google Cloud OAuth client, alongside the staff one.
+function googleLeadRedirectURI(): string {
+  return `${appBaseURL()}/auth/lead/google/callback`
+}
+
 function githubRedirectURI(): string {
   return `${appBaseURL()}/auth/github/callback`
 }
 
 // ── Google ──────────────────────────────────────────────────────────────────
-export function googleAuthURL(state: string, nonce: string): string {
+// buildGoogleAuthURL is shared by the staff and lead flows; only the redirect URI
+// (which callback Google returns to) differs.
+function buildGoogleAuthURL(redirectURI: string, state: string, nonce: string): string {
   const p = new URLSearchParams({
     client_id: process.env.GOOGLE_CLIENT_ID!,
-    redirect_uri: googleRedirectURI(),
+    redirect_uri: redirectURI,
     response_type: 'code',
     scope: 'openid email profile',
     state,
@@ -56,18 +71,27 @@ export function googleAuthURL(state: string, nonce: string): string {
   return `${GOOGLE_AUTH_URL}?${p.toString()}`
 }
 
+export function googleAuthURL(state: string, nonce: string): string {
+  return buildGoogleAuthURL(googleRedirectURI(), state, nonce)
+}
+
+export function googleLeadAuthURL(state: string, nonce: string): string {
+  return buildGoogleAuthURL(googleLeadRedirectURI(), state, nonce)
+}
+
 const g = globalThis as unknown as { __googleJWKS?: ReturnType<typeof createRemoteJWKSet> }
 function googleJWKS() {
   return (g.__googleJWKS ??= createRemoteJWKSet(GOOGLE_JWKS_URL))
 }
 
-// googleExchangeAndVerify swaps the code for tokens, verifies the id_token
-// signature/issuer/audience, checks the replay nonce, and returns the email
-// claim plus whether Google marked it verified.
-export async function googleExchangeAndVerify(
+// exchangeGoogle swaps the code for tokens, verifies the id_token
+// signature/issuer/audience, and checks the replay nonce. redirectURI must match
+// the one used to start the flow. Returns the verified id_token claims.
+async function exchangeGoogle(
+  redirectURI: string,
   code: string,
   expectedNonce: string,
-): Promise<{ email: string; emailVerified: boolean }> {
+): Promise<{ email: string; emailVerified: boolean; name: string }> {
   let res: Response
   try {
     res = await fetch(GOOGLE_TOKEN_URL, {
@@ -77,7 +101,7 @@ export async function googleExchangeAndVerify(
         code,
         client_id: process.env.GOOGLE_CLIENT_ID!,
         client_secret: process.env.GOOGLE_CLIENT_SECRET!,
-        redirect_uri: googleRedirectURI(),
+        redirect_uri: redirectURI,
         grant_type: 'authorization_code',
       }),
     })
@@ -105,7 +129,26 @@ export async function googleExchangeAndVerify(
   const email = typeof payload.email === 'string' ? payload.email : ''
   if (email === '') throw new SSOError(502, 'no email in SSO response')
   const emailVerified = payload.email_verified === true || payload.email_verified === 'true'
+  const name = typeof payload.name === 'string' ? payload.name : ''
+  return { email, emailVerified, name }
+}
+
+// googleExchangeAndVerify is the staff flow's exchange (name unused there).
+export async function googleExchangeAndVerify(
+  code: string,
+  expectedNonce: string,
+): Promise<{ email: string; emailVerified: boolean }> {
+  const { email, emailVerified } = await exchangeGoogle(googleRedirectURI(), code, expectedNonce)
   return { email, emailVerified }
+}
+
+// googleLeadExchangeAndVerify is the public flow's exchange; it also returns the
+// profile name so the lead's identity reads "Jane Doe", not just an email.
+export async function googleLeadExchangeAndVerify(
+  code: string,
+  expectedNonce: string,
+): Promise<{ email: string; emailVerified: boolean; name: string }> {
+  return exchangeGoogle(googleLeadRedirectURI(), code, expectedNonce)
 }
 
 // ── GitHub ──────────────────────────────────────────────────────────────────

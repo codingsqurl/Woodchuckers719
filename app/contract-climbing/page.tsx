@@ -22,6 +22,11 @@ export const metadata: Metadata = {
   twitter: { card: 'summary_large_image' },
 }
 
-export default function ContractPage() {
-  return <ContractContent locale="en" />
+export default async function ContractPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ signin?: string }>
+}) {
+  const { signin } = await searchParams
+  return <ContractContent locale="en" signin={signin} />
 }
