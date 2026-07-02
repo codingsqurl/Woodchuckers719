@@ -9,13 +9,16 @@ import { appBaseURL } from '@/lib/env'
 // Archivo = grotesque body; Big Shoulders Display = condensed industrial signage.
 const archivo = Archivo({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  // 400 (body default), 600 (labels), 700 (bold). 500 was declared but never
+  // used anywhere in the CSS — dropping it saves a font file on every page.
+  weight: ['400', '600', '700'],
   variable: '--font-archivo',
   display: 'swap',
 })
 const bigShoulders = Big_Shoulders({
   subsets: ['latin'],
-  weight: ['600', '700', '800', '900'],
+  // 900 was declared but never used in the CSS (headings run 700/800) — drop it.
+  weight: ['600', '700', '800'],
   variable: '--font-bsd',
   display: 'swap',
   // next/font has no size-adjust metrics for "Big Shoulders", so it skips the
