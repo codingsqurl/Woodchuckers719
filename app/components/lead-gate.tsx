@@ -53,7 +53,10 @@ export function SignedInBanner({
   return (
     <p className="signed-in">
       <span className="signed-in-id">
-        {label} <span className="verified">✓</span>
+        {label}{' '}
+        <span className="verified" aria-hidden="true">
+          ✓
+        </span>
       </span>
       <a className="signed-in-switch" href={href}>
         {switchLabel}

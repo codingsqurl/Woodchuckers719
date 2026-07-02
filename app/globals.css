@@ -1278,24 +1278,34 @@ picture {
   margin: 0 auto 1.25rem;
 }
 
-/* ── optional Google sign-in on the contract/lead form ── */
+/* ── optional Google sign-in on the contract/lead form ──
+   Google's official DARK button variant (near-black + full-color G). A white
+   Google pill is the loudest thing on a pine page and steals the eye from the
+   orange submit; the dark variant is equally brand-compliant and sits inside the
+   system, so safety orange stays the single signal (One-Signal Rule). */
 .btn-google {
   display: inline-flex;
   align-items: center;
   gap: 0.65rem;
   margin-top: 0.15rem;
-  background: #fff;
-  color: #3c4043;
+  background: #131314;
+  color: #e3e3e3;
   font-weight: 700;
   font-size: 1rem;
   padding: 0.7rem 1.3rem;
   border-radius: 10px;
-  border: 1px solid #dadce0;
+  border: 1px solid #8e918f;
   text-decoration: none;
-  transition: background 0.15s;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
 }
 .btn-google:hover {
-  background: #f1f3f4;
+  background: #1f1f20;
+  border-color: #a9acaa;
+}
+.btn-google:active {
+  transform: translateY(1px);
 }
 .btn-google svg {
   display: block;
@@ -1329,13 +1339,19 @@ picture {
 .signin-note {
   color: var(--on-dark-soft);
 }
-/* verified identity banner above the shortened form */
+/* verified identity banner above the shortened form — a pine step-up chip
+   (raised surface = one tone up + hairline, per the elevation system) so the
+   "you're verified" state reads as a real confirmation, not floating text. */
 .signed-in {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
   gap: 0.4rem 0.9rem;
-  margin: 0 0 0.9rem;
+  margin: 0 0 1.1rem;
+  padding: 0.75rem 0.95rem;
+  background: var(--green-800);
+  border: 1px solid var(--on-dark-line);
+  border-radius: 8px;
   font-size: 0.95rem;
   color: var(--on-dark-soft);
 }
@@ -1347,9 +1363,20 @@ picture {
   color: #6cc28a;
   font-weight: 700;
 }
+/* pushed to the chip's right edge; underline + padded so it's a real,
+   thumb-reachable action rather than faint mute-gray text */
 .signed-in-switch {
+  margin-left: auto;
+  padding: 0.25rem 0;
   font-size: 0.85rem;
-  color: var(--on-dark-mute);
+  color: var(--on-dark-soft);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--on-dark-line);
+  transition: text-decoration-color 0.15s;
+}
+.signed-in-switch:hover {
+  text-decoration-color: currentColor;
 }
 
 /* tree-removal follow-up questions, grouped and toggled by service type */
