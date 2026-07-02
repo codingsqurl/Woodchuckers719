@@ -15,12 +15,22 @@ function newToken(): string {
   return randomBytes(32).toString('hex')
 }
 
+// Prepared once at module load and reused — better-sqlite3 does not cache, so a
+// fresh db.prepare() per call would recompile the SQL on every request. The
+// sessions table exists from migration 0001, so eager prepare is safe here.
+const pruneStmt = db.prepare(`DELETE FROM sessions WHERE expires_at <= ?`)
+const insertStmt = db.prepare(
+  `INSERT INTO sessions (token, employee_id, expires_at) VALUES (?, ?, ?)`,
+)
+const resolveStmt = db.prepare(`SELECT employee_id FROM sessions WHERE token = ? AND expires_at > ?`)
+const deleteStmt = db.prepare(`DELETE FROM sessions WHERE token = ?`)
+
 // pruneExpiredSessions deletes already-expired rows so the table never grows
 // unbounded on a long-running single machine. Only removes sessions that are
 // already invalid (expires_at <= now), so it can never log anyone out. Cheap;
 // runs opportunistically at each new login. expires_at is epoch seconds.
 export function pruneExpiredSessions(): void {
-  db.prepare(`DELETE FROM sessions WHERE expires_at <= ?`).run(Math.floor(Date.now() / 1000))
+  pruneStmt.run(Math.floor(Date.now() / 1000))
 }
 
 // createSessionRow persists a session row and returns its token + expiry.
@@ -28,25 +38,21 @@ export function createSessionRow(employeeID: number): { token: string; expires: 
   pruneExpiredSessions()
   const token = newToken()
   const expires = new Date(Date.now() + SESSION_TTL_MS)
-  db.prepare(`INSERT INTO sessions (token, employee_id, expires_at) VALUES (?, ?, ?)`).run(
-    token,
-    employeeID,
-    Math.floor(expires.getTime() / 1000),
-  )
+  insertStmt.run(token, employeeID, Math.floor(expires.getTime() / 1000))
   return { token, expires }
 }
 
 // resolveSession resolves a non-expired session token to its (active) employee.
 export function resolveSession(token: string): Employee | null {
-  const row = db
-    .prepare(`SELECT employee_id FROM sessions WHERE token = ? AND expires_at > ?`)
-    .get(token, Math.floor(Date.now() / 1000)) as { employee_id: number } | undefined
+  const row = resolveStmt.get(token, Math.floor(Date.now() / 1000)) as
+    | { employee_id: number }
+    | undefined
   if (!row) return null
   return employeeByID(row.employee_id)
 }
 
 function deleteSession(token: string): void {
-  db.prepare(`DELETE FROM sessions WHERE token = ?`).run(token)
+  deleteStmt.run(token)
 }
 
 // startSession creates the row and sets the cookie. The `Secure` flag is on in

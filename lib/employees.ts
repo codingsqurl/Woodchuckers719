@@ -56,6 +56,22 @@ export function lastLogin(e: Employee): string {
   return out
 }
 
+// Prepared once and reused — better-sqlite3 recompiles on every db.prepare(), so
+// hoisting the hot reads (employeeByID runs on every authenticated request) off
+// the per-call path saves the compile. All referenced columns exist from
+// migrations 0001/0002, so eager prepare at module load is safe.
+const EMP_COLS = `id, email, password_hash, full_name, role, active, last_login_at, last_login_via`
+const insertEmpStmt = db.prepare(
+  `INSERT INTO employees (email, password_hash, full_name, role) VALUES (?, ?, ?, ?)`,
+)
+const byEmailStmt = db.prepare(`SELECT ${EMP_COLS} FROM employees WHERE email = ? AND active = 1`)
+const byIDStmt = db.prepare(`SELECT ${EMP_COLS} FROM employees WHERE id = ? AND active = 1`)
+const listStmt = db.prepare(`SELECT ${EMP_COLS} FROM employees ORDER BY active DESC, full_name`)
+const touchLoginStmt = db.prepare(
+  `UPDATE employees SET last_login_at = ?, last_login_via = ? WHERE id = ?`,
+)
+const setActiveStmt = db.prepare(`UPDATE employees SET active = ? WHERE id = ?`)
+
 // createEmployee inserts a new account. An empty password creates an SSO-only
 // account: the stored hash is blank and password login can never succeed for it.
 export function createEmployee(
@@ -65,12 +81,7 @@ export function createEmployee(
   password: string,
 ): Employee {
   const hash = password !== '' ? bcrypt.hashSync(password, BCRYPT_COST) : ''
-  const info = db
-    .prepare(
-      `INSERT INTO employees (email, password_hash, full_name, role)
-       VALUES (?, ?, ?, ?)`,
-    )
-    .run(email, hash, fullName, role)
+  const info = insertEmpStmt.run(email, hash, fullName, role)
   return {
     id: Number(info.lastInsertRowid),
     email,
@@ -85,34 +96,19 @@ export function createEmployee(
 
 // employeeByEmail looks up an active account for login.
 export function employeeByEmail(email: string): Employee | null {
-  const row = db
-    .prepare(
-      `SELECT id, email, password_hash, full_name, role, active, last_login_at, last_login_via
-       FROM employees WHERE email = ? AND active = 1`,
-    )
-    .get(email) as EmployeeRow | undefined
+  const row = byEmailStmt.get(email) as EmployeeRow | undefined
   return row ? mapEmployee(row) : null
 }
 
 // employeeByID loads an active account by id (used when resolving a session).
 export function employeeByID(id: number): Employee | null {
-  const row = db
-    .prepare(
-      `SELECT id, email, password_hash, full_name, role, active, last_login_at, last_login_via
-       FROM employees WHERE id = ? AND active = 1`,
-    )
-    .get(id) as EmployeeRow | undefined
+  const row = byIDStmt.get(id) as EmployeeRow | undefined
   return row ? mapEmployee(row) : null
 }
 
 // listEmployees returns all accounts (active and inactive) for the admin view.
 export function listEmployees(): Employee[] {
-  const rows = db
-    .prepare(
-      `SELECT id, email, password_hash, full_name, role, active, last_login_at, last_login_via
-       FROM employees ORDER BY active DESC, full_name`,
-    )
-    .all() as EmployeeRow[]
+  const rows = listStmt.all() as EmployeeRow[]
   return rows.map(mapEmployee)
 }
 
@@ -131,11 +127,7 @@ export function checkPassword(e: Employee, plain: string): boolean {
 // a failure here must not block the login itself.
 export function touchLogin(id: number, via: string): void {
   try {
-    db.prepare(`UPDATE employees SET last_login_at = ?, last_login_via = ? WHERE id = ?`).run(
-      Math.floor(Date.now() / 1000),
-      via,
-      id,
-    )
+    touchLoginStmt.run(Math.floor(Date.now() / 1000), via, id)
   } catch (err) {
     console.error(`touchLogin id=${id}:`, err)
   }
@@ -143,7 +135,7 @@ export function touchLogin(id: number, via: string): void {
 
 // setEmployeeActive enables or disables an account (soft delete).
 export function setEmployeeActive(id: number, active: boolean): void {
-  db.prepare(`UPDATE employees SET active = ? WHERE id = ?`).run(active ? 1 : 0, id)
+  setActiveStmt.run(active ? 1 : 0, id)
 }
 
 // isDuplicateEmail reports whether err is a UNIQUE violation on employees.email.
