@@ -122,9 +122,14 @@ const insertStmt = db.prepare(
 )
 // Enrich an existing row on re-import: only fill columns that are currently
 // blank, never clobber KING's own edits (status, notes, contact stamps). Bumps
-// updated_at so a re-scrape is visible.
+// updated_at so a re-scrape is visible. Phone is filled only when the row is
+// phone-less; on a phone-keyed match that's a no-op, and on a name-keyed match
+// the phone_key was already proven absent (the phone lookup ran first and
+// missed), so setting it can't collide with the partial UNIQUE index.
 const enrichStmt = db.prepare(
   `UPDATE prospects SET
+     phone     = CASE WHEN phone_key = '' THEN @phone     ELSE phone     END,
+     phone_key = CASE WHEN phone_key = '' THEN @phone_key ELSE phone_key END,
      email   = CASE WHEN email   = '' THEN @email   ELSE email   END,
      website = CASE WHEN website = '' THEN @website ELSE website END,
      town    = CASE WHEN town    = '' THEN @town    ELSE town    END,
@@ -134,6 +139,13 @@ const enrichStmt = db.prepare(
    WHERE id = @id`,
 )
 const findByPhoneKeyStmt = db.prepare(`SELECT id FROM prospects WHERE phone_key = ?`)
+// Fallback dedup when a source has no phone (CDA licensing data usually doesn't):
+// exact company name, case-insensitive. Coarser than phone, but without it a
+// re-import of a phone-less list would duplicate every row, and a later
+// phone-enrichment pass keyed on name couldn't merge back onto the CDA rows.
+const findByNameStmt = db.prepare(
+  `SELECT id FROM prospects WHERE company = ? COLLATE NOCASE LIMIT 1`,
+)
 const listAllStmt = db.prepare(
   `SELECT ${P_COLS} FROM prospects
      ORDER BY (next_followup_at IS NULL), next_followup_at ASC, created_at DESC
@@ -168,22 +180,30 @@ const setFollowupStmt = db.prepare(
 // is the hard backstop against a duplicate ever persisting.
 export function upsertProspect(p: NewProspect): 'inserted' | 'updated' {
   const phoneKey = normalizePhone(p.phone ?? '')
-  if (phoneKey !== '') {
-    const existing = findByPhoneKeyStmt.get(phoneKey) as { id: number } | undefined
-    if (existing) {
-      enrichStmt.run({
-        id: existing.id,
-        email: (p.email ?? '').trim(),
-        website: (p.website ?? '').trim(),
-        town: (p.town ?? '').trim(),
-        license: (p.license ?? '').trim(),
-        source: (p.source ?? '').trim(),
-      })
-      return 'updated'
-    }
+  const company = p.company.trim()
+  // Dedup by phone when known; otherwise (or if the phone isn't on file yet) fall
+  // back to an exact company-name match. Running the name fallback even when a
+  // phone IS present is deliberate: it merges a freshly-phoned import onto the
+  // phone-less CDA row for the same company instead of duplicating it.
+  let existing = phoneKey !== '' ? (findByPhoneKeyStmt.get(phoneKey) as { id: number } | undefined) : undefined
+  if (!existing && company !== '') {
+    existing = findByNameStmt.get(company) as { id: number } | undefined
+  }
+  if (existing) {
+    enrichStmt.run({
+      id: existing.id,
+      phone: (p.phone ?? '').trim(),
+      phone_key: phoneKey,
+      email: (p.email ?? '').trim(),
+      website: (p.website ?? '').trim(),
+      town: (p.town ?? '').trim(),
+      license: (p.license ?? '').trim(),
+      source: (p.source ?? '').trim(),
+    })
+    return 'updated'
   }
   insertStmt.run({
-    company: p.company.trim(),
+    company,
     phone: (p.phone ?? '').trim(),
     phone_key: phoneKey,
     email: (p.email ?? '').trim(),

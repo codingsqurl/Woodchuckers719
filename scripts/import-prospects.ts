@@ -21,6 +21,21 @@ import { upsertProspect, type NewProspect } from '../lib/prospects'
 
 type RawRow = Record<string, string>
 
+// normalizeKey folds any real-world header/JSON key to a canonical form so
+// "Business Name", "License #", and "Phone Number" all match a plain alias.
+function normalizeKey(k: string): string {
+  return k
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '')
+}
+
+function normalizeRowKeys(row: RawRow): RawRow {
+  const out: RawRow = {}
+  for (const [k, v] of Object.entries(row)) out[normalizeKey(k)] = v as string
+  return out
+}
+
 function usage(msg?: string): never {
   if (msg) console.error(`error: ${msg}`)
   console.error(
@@ -71,7 +86,7 @@ function parseCSV(text: string): RawRow[] {
     if (record.length > 1 || record[0] !== '') rows.push(record)
   }
   if (rows.length === 0) return []
-  const header = rows[0].map((h) => h.trim().toLowerCase())
+  const header = rows[0].map((h) => h.trim())
   return rows.slice(1).map((r) => {
     const obj: RawRow = {}
     header.forEach((h, i) => {
@@ -96,10 +111,11 @@ function parseRows(file: string, text: string): RawRow[] {
   return Array.isArray(data) ? (data as RawRow[]) : [data as RawRow]
 }
 
-// pick returns the first present, non-empty value across a set of aliases.
+// pick returns the first present, non-empty value across a set of aliases. Keys
+// are normalized on lookup so aliases can be written in human form.
 function pick(row: RawRow, ...keys: string[]): string {
   for (const k of keys) {
-    const v = row[k] ?? row[k.toLowerCase()]
+    const v = row[normalizeKey(k)]
     if (typeof v === 'string' && v.trim() !== '') return v.trim()
     if (typeof v === 'number') return String(v)
   }
@@ -107,17 +123,27 @@ function pick(row: RawRow, ...keys: string[]): string {
 }
 
 function toProspect(row: RawRow, defaultSource: string): NewProspect | null {
-  const company = pick(row, 'company', 'name', 'business', 'business_name')
+  const company = pick(
+    row,
+    'company',
+    'company name',
+    'name',
+    'business',
+    'business name',
+    'licensee',
+    'licensee name',
+    'dba',
+  )
   if (company === '') return null
   return {
     company,
-    phone: pick(row, 'phone', 'telephone', 'tel', 'phone_number'),
-    email: pick(row, 'email', 'e-mail'),
-    website: pick(row, 'website', 'url', 'site'),
-    town: pick(row, 'town', 'city', 'locality'),
+    phone: pick(row, 'phone', 'phone number', 'telephone', 'tel'),
+    email: pick(row, 'email', 'email address', 'e-mail'),
+    website: pick(row, 'website', 'url', 'site', 'web'),
+    town: pick(row, 'town', 'city', 'locality', 'mailing city'),
     source: pick(row, 'source') || defaultSource,
-    license: pick(row, 'license', 'license_number', 'lic'),
-    notes: pick(row, 'notes', 'note'),
+    license: pick(row, 'license', 'license number', 'license #', 'credential number', 'lic'),
+    notes: pick(row, 'notes', 'note', 'comments'),
   }
 }
 
@@ -138,7 +164,7 @@ try {
 
 let rawRows: RawRow[]
 try {
-  rawRows = parseRows(file, text)
+  rawRows = parseRows(file, text).map(normalizeRowKeys)
 } catch (err) {
   usage(`failed to parse ${file}: ${(err as Error).message}`)
 }
