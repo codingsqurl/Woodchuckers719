@@ -62,6 +62,7 @@ export default async function AdminPage({
       <header className="topbar">
         <span>Woodchuckers · Admin</span>
         <nav>
+          <a href="/admin/prospects">Prospects</a>
           <a href="/admin/portal">Portal</a>
           <form action={logout}>
             <button type="submit">Log out</button>

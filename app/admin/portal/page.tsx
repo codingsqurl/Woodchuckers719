@@ -20,7 +20,7 @@ export default async function PortalPage() {
         <p>Role: {user.role}</p>
         {isAdmin(user) ? (
           <p>
-            <a href="/admin">Admin dashboard</a>
+            <a href="/admin">Admin dashboard</a> · <a href="/admin/prospects">Prospects</a>
           </p>
         ) : null}
       </main>

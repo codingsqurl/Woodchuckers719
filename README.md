@@ -22,6 +22,7 @@ database** with the **same schema**. No data migration, no ORM.
 | Content hub (blog) | 🟡 Stubs   | `/blog` + 5 posts (EN+ES) + RSS — intros real, bodies `draft: true` |
 | Intake / lead form | ✅ Done     | `/contract-climbing` form + per-page lead-capture w/ attribution    |
 | CRM pipeline       | ✅ Done     | admin lead pipeline: editable status, notes, stage filter, Source   |
+| Outbound prospects | ✅ Done     | `/admin/prospects` call list: import + phone dedup, funnel, tap-to-call |
 | Login / logout     | ✅ Done     | bcrypt + server-side sessions + HttpOnly cookie                     |
 | Admin dashboard    | ✅ Done     | employees + estimates, create/invite/toggle + SEO rank tracker      |
 | SSO                | ✅ Done     | Google OIDC + GitHub OAuth, pre-created accounts only               |
@@ -89,6 +90,19 @@ Verify the data layer without a browser (bcrypt, snapshot, helpers):
 ```sh
 npm run smoke
 ```
+
+Bulk-load the outbound call list (`/admin/prospects`) from a scrape or export.
+Dedups on normalized phone; accepts CSV, NDJSON, or a JSON array with a `company`
+column (plus optional phone/email/website/town/source/license/notes):
+
+```sh
+npm run import:prospects <file.csv> --source cda   # add --dry to parse-only
+```
+
+Only persist fields you're allowed to store: the Google Places API ToS forbids
+retaining its name/phone/address, so use it to *discover* companies and enrich
+from a storable public source (CDA licensee lists). CDA exports and hand-built
+CSVs are fine to keep.
 
 ## Environment
 

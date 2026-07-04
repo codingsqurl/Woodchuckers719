@@ -2055,6 +2055,44 @@ button {
   }
 }
 
+/* ── outbound prospects: funnel tally + call-list row ── */
+.funnel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.2rem;
+}
+.funnel li {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.funnel strong {
+  color: var(--ink);
+  font-size: 1.1rem;
+  margin-right: 0.15rem;
+}
+/* the tap-to-call number is the whole point of the list on a phone — make it
+   the loudest thing in the row */
+.prospect-tel {
+  color: var(--accent-dark);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.prospect-tel:hover {
+  text-decoration: underline;
+}
+/* the outreach row form carries more controls than a lead row — let them wrap on
+   a narrow screen rather than forcing the (already scroll-wrapped) table wider */
+.prospect-edit {
+  flex-wrap: wrap;
+}
+.prospect-edit input[type='text'] {
+  min-width: 10rem;
+}
+
 /* ── portfolio proof video: a portrait phone clip, click-to-play ── */
 .proof-video {
   margin: 2rem auto 0;

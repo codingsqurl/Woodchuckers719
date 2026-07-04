@@ -11,7 +11,8 @@
     "start": "next start",
     "createuser": "tsx scripts/createuser.ts",
     "smoke": "tsx scripts/smoke.ts",
-    "preview:email": "tsx scripts/preview-email.ts"
+    "preview:email": "tsx scripts/preview-email.ts",
+    "import:prospects": "tsx scripts/import-prospects.ts"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
