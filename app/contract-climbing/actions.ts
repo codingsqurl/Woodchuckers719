@@ -4,8 +4,9 @@
 // works without JS). The site's only intake form now. Reuses the `estimates`
 // table with NO schema change: the lead is marked in `service`, the day rate is
 // the ballpark $175–$350 range, and everything the requester typed lands in details.
+import { after } from 'next/server'
 import { createEstimate, type NewEstimate } from '@/lib/estimates'
-import { estimateRL, clientIP } from '@/lib/ratelimit'
+import { estimateRL, autoReplyRL, clientIP } from '@/lib/ratelimit'
 import { contractEmailHTML, leadReply, sendMail, mailerConfigured } from '@/lib/mail'
 import { getDict, isLocale } from '@/lib/i18n'
 import { contractClimbing } from '@/lib/rates'
@@ -62,11 +63,14 @@ export async function submitContract(
 
   const preserved: ContractValues = { name, phone, email, details }
 
-  // Honeypot: a hidden "company" field no human sees (off-screen, aria-hidden,
-  // tabindex -1, autocomplete off). Bots that autofill every input trip it. Play
-  // dead — show the same thanks page so the bot thinks it worked — but save and
-  // email nothing. Real submitters always leave this empty.
-  if (str('company') !== '') {
+  // Honeypot: a hidden "referral_code" field no human sees (off-screen,
+  // aria-hidden, tabindex -1, autocomplete off). Deliberately NOT named
+  // "company"/"organization" — those are real browser-autofill tokens Chrome
+  // fills even with autocomplete=off, which would silently drop a legit B2B lead
+  // whose profile has an org. Bots that fill every input still trip it. Play dead
+  // (same thanks page) but save and email nothing; log a trace so it isn't silent.
+  if (str('referral_code') !== '') {
+    console.warn('lead honeypot tripped, dropping submission')
     return { status: 'sent', name: name || 'there' }
   }
 
@@ -75,9 +79,12 @@ export async function submitContract(
     return { status: 'error', error: tt.errRate, values: preserved }
   }
 
-  // Need a name and at least one way to reach back. Skipped when verified —
-  // Google guarantees both, so a signed-in lead never trips this.
-  if (!verified && (name === '' || (email === '' && phone === ''))) {
+  // Need a name and at least one WORKING way to reach back. A non-empty but
+  // malformed email (e.g. "bob@gmailcom" — passes the browser's type=email check)
+  // with no phone is treated as no contact info, so the lead isn't saved as
+  // permanently unreachable while the visitor is told it went through. Skipped
+  // when verified — Google guarantees a real address.
+  if (!verified && (name === '' || (!validEmail && phone === ''))) {
     return { status: 'error', error: tt.errMissing, values: preserved }
   }
 
@@ -104,36 +111,42 @@ export async function submitContract(
     return { status: 'error', error: tt.errSave, values: preserved }
   }
 
-  // Notify the owner. Best-effort: the lead is already saved.
+  // Notify the owner + send the auto-reply AFTER the response is sent. The lead
+  // is already saved, mail is best-effort, and Resend can be slow (each send has
+  // a 10s timeout) — running it inline would hold the Server Action open up to
+  // ~20s on a hung ESP and widen the double-submit window on the no-JS path.
   if (mailerConfigured()) {
-    try {
-      await sendMail(
-        leadsTo,
-        `New website lead — ${name}`,
-        contractEmailHTML({
-          name,
-          phone,
-          email,
-          details,
-          low: contractClimbing.dayLow,
-          high: contractClimbing.dayHigh,
-        }),
-      )
-    } catch (err) {
-      console.error('contract email failed:', err)
-    }
-
-    // Auto-reply to the requester (best-effort, only if they left a valid email).
-    // Localized to the page they were on. The lead is already saved; a failed
-    // receipt never blocks the submission.
-    if (validEmail) {
+    after(async () => {
       try {
-        const reply = leadReply(name, localeStr)
-        await sendMail(email, reply.subject, reply.html)
+        await sendMail(
+          leadsTo,
+          `New website lead — ${name}`,
+          contractEmailHTML({
+            name,
+            phone,
+            email,
+            details,
+            low: contractClimbing.dayLow,
+            high: contractClimbing.dayHigh,
+          }),
+        )
       } catch (err) {
-        console.error('lead auto-reply failed:', err)
+        console.error('contract email failed:', err)
       }
-    }
+
+      // Auto-reply receipt to the requester, localized to their page. Only to a
+      // valid address, and throttled to one per recipient per hour so the public
+      // form can't be used to mail-bomb a third party (the IP limit alone lets 5
+      // sends/min to any typed address). The lead is saved regardless.
+      if (validEmail && autoReplyRL.allow(email)) {
+        try {
+          const reply = leadReply(name, localeStr)
+          await sendMail(email, reply.subject, reply.html)
+        } catch (err) {
+          console.error('lead auto-reply failed:', err)
+        }
+      }
+    })
   }
 
   return { status: 'sent', name }

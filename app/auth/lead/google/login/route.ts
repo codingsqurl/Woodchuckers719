@@ -9,18 +9,29 @@ import {
 } from '@/lib/sso'
 import { setFlowCookie } from '@/lib/session'
 import { ssoRL, clientIP } from '@/lib/ratelimit'
+import { appBaseURL } from '@/lib/env'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 const token = () => randomBytes(32).toString('hex')
 
-// safeReturn keeps the post-login redirect on this site: a single leading slash,
-// never a scheme-relative "//evil.com" or a back-slash trick. Anything else falls
-// back to the contract page. Open-redirect guard.
-function safeReturn(raw: string | null): string {
-  if (!raw || raw[0] !== '/' || raw[1] === '/' || raw[1] === '\\') return '/contract-climbing'
-  return raw
+// safeReturn keeps the post-login redirect on this site. Resolve the candidate
+// against the app origin and confirm it stayed same-origin, rather than
+// inspecting characters — a raw tab/newline/CR (e.g. ?return=/%09//evil.com) is
+// stripped by the URL parser and slips past a char-2 check, but a resolved
+// cross-origin URL is caught here. Anything off-origin or unparseable falls back
+// to the contract page. Returns a path+query only (never an absolute URL).
+function safeReturn(raw: string | null | undefined): string {
+  if (!raw) return '/contract-climbing'
+  try {
+    const base = appBaseURL()
+    const u = new URL(raw, base)
+    if (u.origin !== new URL(base).origin) return '/contract-climbing'
+    return u.pathname + u.search
+  } catch {
+    return '/contract-climbing'
+  }
 }
 
 // GET /auth/lead/google/login — start the PUBLIC lead-identity flow. Distinct

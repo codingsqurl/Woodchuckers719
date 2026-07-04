@@ -59,13 +59,15 @@ export function LeadFormClient({
           <input type="hidden" name="locale" value={locale} readOnly />
           <input type="hidden" name="source" value={source} readOnly />
           {/* honeypot: off-screen, hidden from AT and tab order; bots fill it,
-              humans never see it. Checked server-side in submitContract. */}
+              humans never see it. Checked server-side in submitContract. NOT
+              named "company" — that's a real autofill token Chrome fills for a
+              B2B visitor even with autocomplete=off, which would drop the lead. */}
           <div className="hp" aria-hidden="true">
-            <label htmlFor="lead-company">Company</label>
+            <label htmlFor="lead-referral-code">Referral code</label>
             <input
               type="text"
-              id="lead-company"
-              name="company"
+              id="lead-referral-code"
+              name="referral_code"
               tabIndex={-1}
               autoComplete="off"
               defaultValue=""
@@ -89,6 +91,7 @@ export function LeadFormClient({
                     id="lead-name"
                     name="name"
                     autoComplete="name"
+                    maxLength={200}
                     defaultValue={v.name ?? ''}
                     required
                   />
@@ -100,6 +103,7 @@ export function LeadFormClient({
                     id="lead-email"
                     name="email"
                     autoComplete="email"
+                    maxLength={254}
                     defaultValue={v.email ?? ''}
                   />
                 </div>
@@ -114,6 +118,7 @@ export function LeadFormClient({
               id="lead-phone"
               name="phone"
               autoComplete="tel"
+              maxLength={40}
               defaultValue={v.phone ?? ''}
             />
           </div>
@@ -122,6 +127,7 @@ export function LeadFormClient({
             <textarea
               id="lead-details"
               name="details"
+              maxLength={5000}
               defaultValue={v.details ?? ''}
               placeholder={t.detailsPh}
             />

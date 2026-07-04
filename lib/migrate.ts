@@ -37,14 +37,31 @@ export function runMigrations(db: DatabaseType.Database): void {
     return
   }
 
+  // Apply each pending migration and record it as applied inside ONE
+  // transaction. The files carry their own BEGIN/COMMIT (like the Go version);
+  // we strip that outer wrapper so the statements and the schema_migrations row
+  // commit atomically. Otherwise a crash between exec and record leaves the
+  // migration applied but untracked, and the next boot re-runs non-idempotent
+  // SQL (ALTER/CREATE) which throws at module load and 500s every request.
+  const applyOne = db.transaction((sql: string, version: string) => {
+    db.exec(sql)
+    record.run(version)
+  })
+
   for (const f of files) {
     if (applied.has(f)) continue
-    const sql = readFileSync(path.join(MIGRATIONS_DIR, f), 'utf8')
-    // Each migration file carries its own BEGIN/COMMIT (like the Go version),
-    // so exec it directly, then record it as applied.
-    db.exec(sql)
-    record.run(f)
+    const raw = readFileSync(path.join(MIGRATIONS_DIR, f), 'utf8')
+    applyOne(stripOuterTx(raw), f)
   }
+}
+
+// stripOuterTx removes a migration file's own leading BEGIN; and trailing
+// COMMIT; so the statements can run inside our own transaction (SQLite rejects a
+// nested BEGIN). Only the transaction-control tokens match — a trigger body's
+// BEGIN is followed by statements, not a semicolon, and closes with END;. A file
+// without an explicit transaction is returned unchanged.
+function stripOuterTx(sql: string): string {
+  return sql.replace(/\bBEGIN(\s+TRANSACTION)?\s*;/i, '').replace(/\bCOMMIT\s*;\s*$/i, '')
 }
 
 function tableExists(db: DatabaseType.Database, name: string): boolean {

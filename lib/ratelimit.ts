@@ -40,12 +40,16 @@ const g = globalThis as unknown as {
   __loginRL?: RateLimiter
   __estimateRL?: RateLimiter
   __ssoRL?: RateLimiter
+  __autoReplyRL?: RateLimiter
 }
 
 // Brute-force throttle on auth attempts; spam throttle on the estimate form.
 export const loginRL: RateLimiter = (g.__loginRL ??= new RateLimiter(10, 60_000))
 export const estimateRL: RateLimiter = (g.__estimateRL ??= new RateLimiter(5, 60_000))
 export const ssoRL: RateLimiter = (g.__ssoRL ??= new RateLimiter(10, 60_000))
+// Per-recipient cap on the lead auto-reply (keyed on the lowercased email, not
+// IP) so the public form can't be turned into a mailer aimed at a third party.
+export const autoReplyRL: RateLimiter = (g.__autoReplyRL ??= new RateLimiter(1, 3_600_000))
 
 // clientIP resolves the caller's IP. Behind Fly's proxy, trust Fly-Client-IP,
 // else the right-most (closest, trusted) hop of X-Forwarded-For — never the

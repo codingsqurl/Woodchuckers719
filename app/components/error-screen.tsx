@@ -9,8 +9,12 @@ export function ErrorScreen({ code, locale }: { code: number; locale: Locale }) 
   const d = getDict(locale)
   const title = code === 404 ? d.errpage.notFoundTitle : d.errpage.errorTitle
   const message = code === 404 ? d.errpage.notFoundMsg : d.errpage.errorMsg
+  // Wrapped in .error-shell so this renders correctly even on an /admin path,
+  // where the body has no `.site` class (and thus no backdrop): the shell paints
+  // the solid pine ground so the white text stays readable. On public (body.site)
+  // pages the shell is transparent and the real backdrop shows through.
   return (
-    <>
+    <div className="error-shell">
       <SiteHeader locale={locale} />
       <main id="main">
         <section className="thanks">
@@ -29,6 +33,6 @@ export function ErrorScreen({ code, locale }: { code: number; locale: Locale }) 
       </main>
       <SiteFooter locale={locale} path="/" />
       <MobileCTA locale={locale} />
-    </>
+    </div>
   )
 }

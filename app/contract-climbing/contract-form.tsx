@@ -73,13 +73,15 @@ export function ContractForm({
             <input type="hidden" name="locale" value={locale} readOnly />
 
             {/* honeypot: off-screen, hidden from AT and tab order; bots fill it,
-                humans never see it. Checked server-side in submitContract. */}
+                humans never see it. Checked server-side in submitContract. NOT
+                named "company" — that's a real autofill token Chrome fills for a
+                B2B visitor even with autocomplete=off, which would drop the lead. */}
             <div className="hp" aria-hidden="true">
-              <label htmlFor="company">Company</label>
+              <label htmlFor="referral-code">Referral code</label>
               <input
                 type="text"
-                id="company"
-                name="company"
+                id="referral-code"
+                name="referral_code"
                 tabIndex={-1}
                 autoComplete="off"
                 defaultValue=""
@@ -105,6 +107,7 @@ export function ContractForm({
                       id="name"
                       name="name"
                       autoComplete="name"
+                      maxLength={200}
                       defaultValue={v.name ?? ''}
                       required
                     />
@@ -116,6 +119,7 @@ export function ContractForm({
                       id="email"
                       name="email"
                       autoComplete="email"
+                      maxLength={254}
                       defaultValue={v.email ?? ''}
                     />
                   </div>
@@ -130,6 +134,7 @@ export function ContractForm({
                 id="phone"
                 name="phone"
                 autoComplete="tel"
+                maxLength={40}
                 defaultValue={v.phone ?? ''}
               />
             </div>
@@ -139,6 +144,7 @@ export function ContractForm({
               <textarea
                 id="details"
                 name="details"
+                maxLength={5000}
                 defaultValue={v.details ?? ''}
                 placeholder={t.detailsPh}
               />

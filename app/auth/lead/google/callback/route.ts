@@ -9,14 +9,24 @@ import {
 } from '@/lib/sso'
 import { readFlowCookie, clearFlowCookie } from '@/lib/session'
 import { setLeadIdentity } from '@/lib/lead-identity'
+import { appBaseURL } from '@/lib/env'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
-// safeReturn mirrors the login route: keep the redirect on-site. Open-redirect guard.
-function safeReturn(raw: string | undefined): string {
-  if (!raw || raw[0] !== '/' || raw[1] === '/' || raw[1] === '\\') return '/contract-climbing'
-  return raw
+// safeReturn mirrors the login route: resolve against the app origin and keep
+// only same-origin path+query, so a control-char open-redirect can't survive the
+// cookie round-trip. Open-redirect guard.
+function safeReturn(raw: string | null | undefined): string {
+  if (!raw) return '/contract-climbing'
+  try {
+    const base = appBaseURL()
+    const u = new URL(raw, base)
+    if (u.origin !== new URL(base).origin) return '/contract-climbing'
+    return u.pathname + u.search
+  } catch {
+    return '/contract-climbing'
+  }
 }
 
 // GET /auth/lead/google/callback — finish the PUBLIC lead-identity flow. Verify

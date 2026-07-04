@@ -1,12 +1,13 @@
 'use server'
 
 // Admin mutations (ports of handlers_admin.go) + logout. Each admin action
-// re-checks requireAdmin() so a mutation is gated exactly like its page —
-// non-admins get notFound() (deny by vanishing). Flash messages are passed
-// back via redirect query params and rendered at the top of /admin.
+// re-checks requireAdminAction() so a mutation is gated like its page —
+// authenticated non-admins get notFound() (deny by vanishing); a lapsed session
+// redirects to login instead of dead-ending. Flash messages are passed back via
+// redirect query params and rendered at the top of /admin.
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
-import { requireAdmin } from '@/lib/auth'
+import { requireAdminAction } from '@/lib/auth'
 import { endSession } from '@/lib/session'
 import { createEmployee, isDuplicateEmail, setEmployeeActive } from '@/lib/employees'
 import { addRanking, deleteRanking } from '@/lib/rankings'
@@ -22,7 +23,7 @@ export async function logout() {
 
 // POST /admin/employees — create an account from the web form. Admin only.
 export async function createEmployeeAction(formData: FormData) {
-  await requireAdmin()
+  await requireAdminAction()
   const email = (formData.get('email')?.toString() ?? '').trim().toLowerCase()
   const fullName = (formData.get('full_name')?.toString() ?? '').trim()
   const role = formData.get('role')?.toString() ?? ''
@@ -45,7 +46,7 @@ export async function createEmployeeAction(formData: FormData) {
 
 // POST /admin/invite — create an SSO-only account and email a sign-in link.
 export async function inviteAction(formData: FormData) {
-  await requireAdmin()
+  await requireAdminAction()
   const email = (formData.get('email')?.toString() ?? '').trim().toLowerCase()
   const fullName = (formData.get('full_name')?.toString() ?? '').trim()
   if (email === '' || fullName === '') redirect('/admin?error=invite_required')
@@ -77,7 +78,7 @@ export async function inviteAction(formData: FormData) {
 // POST /admin/employees/{id}/active — toggle an account on/off. Admin only.
 // Guards against an admin disabling their own account.
 export async function toggleActiveAction(formData: FormData) {
-  const me = await requireAdmin()
+  const me = await requireAdminAction()
   const id = Number(formData.get('id'))
   if (!Number.isInteger(id)) redirect('/admin')
   if (me.id === id) redirect('/admin?error=self')
@@ -89,7 +90,7 @@ export async function toggleActiveAction(formData: FormData) {
 
 // POST /admin/rankings — add one hand-entered SEO ranking observation. Admin only.
 export async function addRankingAction(formData: FormData) {
-  await requireAdmin()
+  await requireAdminAction()
   const keyword = (formData.get('keyword')?.toString() ?? '').trim()
   const competitor = (formData.get('competitor')?.toString() ?? '').trim()
   const position = Number(formData.get('position'))
@@ -106,7 +107,7 @@ export async function addRankingAction(formData: FormData) {
 
 // POST /admin/rankings/delete — remove one observation by id. Admin only.
 export async function deleteRankingAction(formData: FormData) {
-  await requireAdmin()
+  await requireAdminAction()
   const id = Number(formData.get('id'))
   if (!Number.isInteger(id)) redirect('/admin')
   deleteRanking(id)
@@ -122,7 +123,7 @@ function backTo(formData: FormData): string {
 
 // POST /admin/leads/status — move a lead through the pipeline. Admin only.
 export async function updateLeadStatusAction(formData: FormData) {
-  await requireAdmin()
+  await requireAdminAction()
   const id = Number(formData.get('id'))
   const status = formData.get('status')?.toString() ?? ''
   if (Number.isInteger(id)) setEstimateStatus(id, status)
@@ -132,7 +133,7 @@ export async function updateLeadStatusAction(formData: FormData) {
 
 // POST /admin/leads/notes — save the notes / follow-up text for a lead. Admin only.
 export async function updateLeadNotesAction(formData: FormData) {
-  await requireAdmin()
+  await requireAdminAction()
   const id = Number(formData.get('id'))
   const notes = (formData.get('notes')?.toString() ?? '').trim()
   if (Number.isInteger(id)) setEstimateNotes(id, notes)

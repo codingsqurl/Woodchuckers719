@@ -41,7 +41,9 @@ export async function GET(req: NextRequest) {
     })
   }
 
-  const e = employeeByEmail(email)
+  // Lowercase to match stored accounts (BINARY-collated email column); a
+  // mixed-case GitHub primary email would otherwise miss an account that exists.
+  const e = employeeByEmail(email.toLowerCase())
   if (!e) {
     return NextResponse.redirect(new URL('/admin/login?denied=github_noaccount', req.url), {
       status: 303,

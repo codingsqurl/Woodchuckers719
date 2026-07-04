@@ -26,12 +26,25 @@ export async function requireAuth(): Promise<Employee> {
   return u
 }
 
-// requireAdmin gates admin-only surfaces. Anyone who is not a signed-in admin —
-// the public included — gets a plain 404 (notFound()), so the route is
+// requireAdmin gates admin-only PAGES. Anyone who is not a signed-in admin — the
+// public included — gets a plain 404 (notFound()), so the route is
 // indistinguishable from one that does not exist. No redirect, no 403: deny by
-// vanishing. Server Actions guarding admin mutations call this too.
+// vanishing.
 export async function requireAdmin(): Promise<Employee> {
   const u = await currentUser()
   if (!u || !isAdmin(u)) notFound()
+  return u
+}
+
+// requireAdminAction gates admin MUTATIONS (Server Actions). Same admin check,
+// but a *lapsed* session (no user at all) redirects to the login instead of
+// 404'ing. Without this, a POST from the installed staff PWA after the 7-day
+// session expires dead-ends on the public 404 with no route back to sign in.
+// Anonymous non-admins still get notFound() (deny by vanishing is preserved for
+// page GETs, which use requireAdmin(); action POSTs are not discoverable URLs).
+export async function requireAdminAction(): Promise<Employee> {
+  const u = await currentUser()
+  if (!u) redirect('/admin/login')
+  if (!isAdmin(u)) notFound()
   return u
 }

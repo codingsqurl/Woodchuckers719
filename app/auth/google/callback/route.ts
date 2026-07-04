@@ -43,8 +43,11 @@ export async function GET(req: NextRequest) {
     })
   }
 
-  // Pre-created only: the email must already map to an active employee.
-  const e = employeeByEmail(result.email)
+  // Pre-created only: the email must already map to an active employee. Lowercase
+  // to match how accounts are stored (createEmployee/invite lowercase on write);
+  // the email column is BINARY-collated, so a mixed-case id_token claim would
+  // otherwise miss an account that exists.
+  const e = employeeByEmail(result.email.toLowerCase())
   if (!e) {
     return NextResponse.redirect(new URL('/admin/login?denied=google_noaccount', req.url), {
       status: 303,

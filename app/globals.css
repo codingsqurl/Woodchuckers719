@@ -1362,6 +1362,10 @@ picture {
 .signed-in-id {
   font-weight: 700;
   color: var(--on-dark);
+  /* a long Google display name / email is one unbreakable token — let it wrap
+     inside the chip instead of widening the whole form band */
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .signed-in .verified {
   color: #6cc28a;
@@ -1430,6 +1434,9 @@ picture {
   margin: 5rem auto;
   text-align: center;
   padding: 0 1.25rem;
+  /* the success heading echoes a user-typed name (up to 200 chars, possibly one
+     unbroken token) — break it instead of forcing sitewide horizontal scroll */
+  overflow-wrap: anywhere;
 }
 .thanks h1 {
   font-size: clamp(2rem, 6vw, 2.6rem);
@@ -1873,6 +1880,27 @@ body.site .muted {
   padding: 0 1rem;
 }
 
+/* admin-area 404/500 renders the site-themed ErrorScreen on a body without the
+   .site class (so no fixed backdrop) — paint the pine ground here so the white
+   text stays readable. On public .site pages the shell stays transparent and the
+   real backdrop shows through unchanged. */
+body:not(.site) .error-shell {
+  min-height: 100vh;
+  background: var(--green-900);
+  color: var(--on-dark);
+}
+
+/* horizontal-scroll shell for the wide admin tables so the whole page never pans
+   on a ~390px phone (the installed staff PWA): the table scrolls, the page doesn't */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 2rem;
+}
+.table-scroll table.grid {
+  margin-bottom: 0;
+}
+
 /* employee table */
 table.grid {
   border-collapse: collapse;
@@ -1990,6 +2018,41 @@ button {
 .inline-form button {
   padding: 0.2rem 0.55rem;
   font-size: 0.85rem;
+}
+
+/* the lead's full job text, collapsed by default inside the Need cell (replaces
+   the old hover-only title tooltip that never showed on a touch device) */
+.lead-details {
+  margin-top: 0.4rem;
+}
+.lead-details summary {
+  cursor: pointer;
+  color: var(--accent-dark);
+  font-size: 0.85rem;
+}
+.lead-details p {
+  margin: 0.4rem 0 0;
+  max-width: 32rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: var(--body);
+}
+
+/* touch: bump the dense CRM controls to the 44px iOS minimum on a phone without
+   disturbing the compact desktop (fine-pointer) layout */
+@media (pointer: coarse) {
+  .inline-form button,
+  .inline-form select,
+  .inline-form input,
+  .lead-filter a,
+  table.grid form button {
+    min-height: 44px;
+  }
+  .inline-form button,
+  .lead-filter a,
+  table.grid form button {
+    padding: 0.5rem 0.9rem;
+  }
 }
 
 /* ── portfolio proof video: a portrait phone clip, click-to-play ── */

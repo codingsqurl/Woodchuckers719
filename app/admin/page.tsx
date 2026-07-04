@@ -93,6 +93,7 @@ export default async function AdminPage({
           ))}
         </p>
         {estimates.length > 0 ? (
+          <div className="table-scroll">
           <table className="grid">
             <thead>
               <tr>
@@ -110,7 +111,7 @@ export default async function AdminPage({
               {estimates.map((e) => (
                 <tr key={e.id}>
                   <td>{submitted(e)}</td>
-                  <td title={e.details || undefined}>{e.name}</td>
+                  <td>{e.name}</td>
                   <td>{contact(e)}</td>
                   <td>
                     {e.service}
@@ -119,6 +120,12 @@ export default async function AdminPage({
                         <br />
                         <span className="muted">{e.removalInfo}</span>
                       </>
+                    ) : null}
+                    {e.details ? (
+                      <details className="lead-details">
+                        <summary>Job details</summary>
+                        <p>{e.details}</p>
+                      </details>
                     ) : null}
                   </td>
                   <td>{e.source || '—'}</td>
@@ -157,6 +164,7 @@ export default async function AdminPage({
               ))}
             </tbody>
           </table>
+          </div>
         ) : (
           <p className="muted">
             {statusFilter ? `No leads in “${statusFilter}”.` : 'No leads yet.'}
@@ -170,7 +178,8 @@ export default async function AdminPage({
         </p>
         {rankings.length > 0 ? (
           rankings.map((g) => (
-            <table className="grid" key={g.keyword}>
+            <div className="table-scroll" key={g.keyword}>
+            <table className="grid">
               <thead>
                 <tr>
                   <th colSpan={4}>{g.keyword}</th>
@@ -206,6 +215,7 @@ export default async function AdminPage({
                 ))}
               </tbody>
             </table>
+            </div>
           ))
         ) : (
           <p className="muted">No rankings tracked yet.</p>
@@ -241,6 +251,7 @@ export default async function AdminPage({
         </form>
 
         <h2>Employees</h2>
+        <div className="table-scroll">
         <table className="grid">
           <thead>
             <tr>
@@ -275,6 +286,7 @@ export default async function AdminPage({
             ))}
           </tbody>
         </table>
+        </div>
 
         <h3>Invite employee</h3>
         <p className="muted">
