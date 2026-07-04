@@ -18,6 +18,26 @@ export type Area = {
   name: string
   slug: string
   mapsURL: string
+  lat?: number // town-center latitude, for the map embed + per-town geo
+  lng?: number
+}
+
+// Real town-center coordinates (decimal degrees), keyed by slug. The town maps
+// center on these instead of geocoding the town NAME, which is fuzzy for the
+// unincorporated CDPs (Black Forest, Gleneagle, Cimarron Hills) and ambiguous for
+// "Black Forest" worldwide. Verified against public gazetteer data. Add a slug
+// here when you add a town to serviceAreas; a town without coordinates falls back
+// to a name-query map, so a missing entry degrades rather than breaks.
+const TOWN_COORDS: Record<string, { lat: number; lng: number }> = {
+  'colorado-springs': { lat: 38.8339, lng: -104.8214 },
+  monument: { lat: 39.0917, lng: -104.8722 },
+  'black-forest': { lat: 39.0131, lng: -104.7008 },
+  fountain: { lat: 38.6822, lng: -104.7002 },
+  'cimarron-hills': { lat: 38.8586, lng: -104.6989 },
+  'manitou-springs': { lat: 38.8597, lng: -104.9172 },
+  'woodland-park': { lat: 38.9939, lng: -105.0569 },
+  'palmer-lake': { lat: 39.1222, lng: -104.9169 },
+  gleneagle: { lat: 39.0453, lng: -104.8244 },
 }
 
 // URL-safe slug: "Security-Widefield" -> "security-widefield",
@@ -29,14 +49,22 @@ export function slugify(name: string): string {
     .replace(/^-|-$/g, '')
 }
 
-// areaList builds the served areas with their slug and a keyless Google Maps
-// search link, matching areas.go's url.Values encoding ("?api=1&query=<name>, CO").
+// areaList builds the served areas with their slug, a keyless Google Maps search
+// link, and real town-center coordinates for the map embed + JSON-LD geo.
 export function areaList(): Area[] {
   return serviceAreas.map((name) => {
+    const slug = slugify(name)
+    const coords = TOWN_COORDS[slug]
     const q = new URLSearchParams()
     q.set('api', '1')
     q.set('query', `${name}, CO`)
-    return { name, slug: slugify(name), mapsURL: `https://www.google.com/maps/search/?${q.toString()}` }
+    return {
+      name,
+      slug,
+      mapsURL: `https://www.google.com/maps/search/?${q.toString()}`,
+      lat: coords?.lat,
+      lng: coords?.lng,
+    }
   })
 }
 

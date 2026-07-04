@@ -34,6 +34,9 @@ function townJsonLd(locale: Locale, town: TownPage) {
           addressRegion: 'CO',
           addressCountry: 'US',
         },
+        ...(town.lat != null && town.lng != null
+          ? { geo: { '@type': 'GeoCoordinates', latitude: town.lat, longitude: town.lng } }
+          : {}),
         priceRange: '$175–$350/day',
       },
       {
@@ -51,7 +54,12 @@ function townJsonLd(locale: Locale, town: TownPage) {
 export function TownContent({ locale, town }: { locale: Locale; town: TownPage }) {
   const tc = getDict(locale)
   const t = tc.town
-  const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(`${town.name}, CO`)}&z=11&output=embed`
+  // Center the embed on the real town-center coordinates when we have them
+  // (precise, unambiguous); fall back to a name query for any town without coords.
+  const mapSrc =
+    town.lat != null && town.lng != null
+      ? `https://maps.google.com/maps?q=${town.lat},${town.lng}&z=12&output=embed`
+      : `https://maps.google.com/maps?q=${encodeURIComponent(`${town.name}, CO`)}&z=11&output=embed`
 
   return (
     <>
