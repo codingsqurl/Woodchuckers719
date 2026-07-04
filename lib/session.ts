@@ -24,6 +24,7 @@ const insertStmt = db.prepare(
 )
 const resolveStmt = db.prepare(`SELECT employee_id FROM sessions WHERE token = ? AND expires_at > ?`)
 const deleteStmt = db.prepare(`DELETE FROM sessions WHERE token = ?`)
+const deleteByEmployeeStmt = db.prepare(`DELETE FROM sessions WHERE employee_id = ?`)
 
 // pruneExpiredSessions deletes already-expired rows so the table never grows
 // unbounded on a long-running single machine. Only removes sessions that are
@@ -53,6 +54,14 @@ export function resolveSession(token: string): Employee | null {
 
 function deleteSession(token: string): void {
   deleteStmt.run(token)
+}
+
+// deleteSessionsForEmployee removes every session row for an account, forcing a
+// log-out on all devices. Called when an account is deactivated so a stale
+// cookie can't ride the remaining TTL — and can't come back to life if the
+// account is re-enabled inside the 7-day window.
+export function deleteSessionsForEmployee(employeeID: number): void {
+  deleteByEmployeeStmt.run(employeeID)
 }
 
 // startSession creates the row and sets the cookie. The `Secure` flag is on in

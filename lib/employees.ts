@@ -4,6 +4,7 @@
 import bcrypt from 'bcryptjs'
 import { db } from './db'
 import { formatStamp } from './format'
+import { deleteSessionsForEmployee } from './session'
 
 // DefaultCost in Go's bcrypt is 10 — match it so new hashes look the same.
 const BCRYPT_COST = 10
@@ -123,6 +124,22 @@ export function checkPassword(e: Employee, plain: string): boolean {
   }
 }
 
+// A real bcrypt hash (same cost as live accounts) computed once per process and
+// never matched by any password. verifyDummyPassword compares against it so that
+// a login for an unknown email still spends ~one bcrypt on the request. Without
+// it, the not-found path skips bcrypt and returns in microseconds while a real
+// account pays tens of ms — a timing oracle that enumerates staff emails despite
+// the generic error message.
+let dummyHash: string | null = null
+export function verifyDummyPassword(plain: string): void {
+  if (dummyHash === null) dummyHash = bcrypt.hashSync('not-a-real-password', BCRYPT_COST)
+  try {
+    bcrypt.compareSync(plain, dummyHash)
+  } catch {
+    // result discarded — this call only exists to equalize response timing
+  }
+}
+
 // touchLogin stamps an employee's last sign-in time and method. Best-effort:
 // a failure here must not block the login itself.
 export function touchLogin(id: number, via: string): void {
@@ -133,9 +150,13 @@ export function touchLogin(id: number, via: string): void {
   }
 }
 
-// setEmployeeActive enables or disables an account (soft delete).
+// setEmployeeActive enables or disables an account (soft delete). Deactivating
+// also force-logs-out the account: without this, the disabled user keeps a valid
+// cookie until it expires (enforced only by the active=1 read filter), and
+// re-enabling inside the 7-day window would silently revive those sessions.
 export function setEmployeeActive(id: number, active: boolean): void {
   setActiveStmt.run(active ? 1 : 0, id)
+  if (!active) deleteSessionsForEmployee(id)
 }
 
 // isDuplicateEmail reports whether err is a UNIQUE violation on employees.email.

@@ -39,7 +39,10 @@ export function middleware(request: NextRequest) {
   res.headers.set('X-Frame-Options', 'DENY')
   res.headers.set('X-Content-Type-Options', 'nosniff')
   res.headers.set('Referrer-Policy', 'same-origin')
-  res.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains')
+  res.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload')
+  // Deny powerful features the site never uses, so injected/embedded content
+  // can't reach for them. Left off the list: anything the site actually needs.
+  res.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=(), usb=()')
   return res
 }
 

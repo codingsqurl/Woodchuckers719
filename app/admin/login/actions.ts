@@ -4,7 +4,7 @@
 // Rate-limited 10/min/IP (login bucket). On success it redirects to the portal;
 // on any failure it re-renders the form with a generic error.
 import { redirect } from 'next/navigation'
-import { employeeByEmail, checkPassword, touchLogin } from '@/lib/employees'
+import { employeeByEmail, checkPassword, touchLogin, verifyDummyPassword } from '@/lib/employees'
 import { startSession } from '@/lib/session'
 import { loginRL, clientIP } from '@/lib/ratelimit'
 
@@ -19,7 +19,13 @@ export async function login(_prev: LoginState, formData: FormData): Promise<Logi
   const password = formData.get('password')?.toString() ?? ''
 
   const e = employeeByEmail(email)
-  if (!e || !checkPassword(e, password)) {
+  if (!e) {
+    // Spend the same ~bcrypt time as a real check so response timing can't tell
+    // an attacker whether this email is a staff account (user enumeration).
+    verifyDummyPassword(password)
+    return { error: 'Invalid email or password.' }
+  }
+  if (!checkPassword(e, password)) {
     return { error: 'Invalid email or password.' }
   }
 

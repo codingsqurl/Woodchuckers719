@@ -51,13 +51,22 @@ export const ssoRL: RateLimiter = (g.__ssoRL ??= new RateLimiter(10, 60_000))
 // IP) so the public form can't be turned into a mailer aimed at a third party.
 export const autoReplyRL: RateLimiter = (g.__autoReplyRL ??= new RateLimiter(1, 3_600_000))
 
-// clientIP resolves the caller's IP. Behind Fly's proxy, trust Fly-Client-IP,
-// else the right-most (closest, trusted) hop of X-Forwarded-For — never the
-// spoofable left-most entry. Falls back to a constant in local dev.
+// Fly injects FLY_APP_NAME into the machine's env. The Fly proxy overwrites
+// fly-client-ip on every inbound request, so on Fly that header is authoritative
+// — but only there. Off Fly nothing strips it, so a client could forge
+// fly-client-ip to spoof its source and defeat the per-IP throttles; ignore the
+// header unless we're actually running on a Fly machine.
+const ON_FLY = !!process.env.FLY_APP_NAME
+
+// clientIP resolves the caller's IP. On Fly, trust Fly-Client-IP; otherwise the
+// right-most (closest, trusted) hop of X-Forwarded-For — never the spoofable
+// left-most entry. Falls back to a constant in local dev.
 export async function clientIP(): Promise<string> {
   const h = await headers()
-  const fly = h.get('fly-client-ip')
-  if (fly) return fly.trim()
+  if (ON_FLY) {
+    const fly = h.get('fly-client-ip')
+    if (fly) return fly.trim()
+  }
   const xff = h.get('x-forwarded-for')
   if (xff) {
     const parts = xff

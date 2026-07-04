@@ -26,9 +26,12 @@ const nextConfig: NextConfig = {
   // them instantly while revalidating, so a swapped image still updates.
   async headers() {
     const cache = 'public, max-age=86400, stale-while-revalidate=604800'
+    // nosniff too: the middleware matcher skips /img and /video, so these static
+    // responses would otherwise ship with no MIME-sniffing protection.
+    const nosniff = { key: 'X-Content-Type-Options', value: 'nosniff' }
     return [
-      { source: '/img/:path*', headers: [{ key: 'Cache-Control', value: cache }] },
-      { source: '/video/:path*', headers: [{ key: 'Cache-Control', value: cache }] },
+      { source: '/img/:path*', headers: [{ key: 'Cache-Control', value: cache }, nosniff] },
+      { source: '/video/:path*', headers: [{ key: 'Cache-Control', value: cache }, nosniff] },
     ]
   },
 }
