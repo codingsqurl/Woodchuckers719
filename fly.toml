@@ -14,7 +14,7 @@ primary_region = "dfw"
   dockerfile = "Dockerfile"
 
 [env]
-  APP_BASE_URL = "https://woodchuckers-springs.fly.dev"
+  APP_BASE_URL = "https://woodchuckertrees.com"
   DATABASE_URL = "/data/woodchuckers.db"
 
 # Persistent disk for the SQLite database. Without this the DB resets on deploy.
