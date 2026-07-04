@@ -19,6 +19,9 @@ woodchuckers.dev.db-shm
 *.db-wal
 *.db-shm
 
+# prospect pull CSVs (CDA / self-listed) hold real business data — never commit
+*.csv
+
 # secrets — never commit (everything except the checked-in template)
 .env*
 !.env.example

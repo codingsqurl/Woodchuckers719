@@ -1,11 +1,83 @@
-# Prospecting — self-listed discovery
+# Prospecting
+
+Two passes into the same importer. **CDA applicators first** — public licensing
+records, the storable seed. **Self-listed discovery second** — the removal and
+climbing shops CDA's spray-license filter misses. Both dedupe automatically, so
+run them in that order and the second pass fills phones onto the first.
+
+---
+
+## First pass — CDA applicators
+
+CDA data is not bulk-downloadable and not scriptable. It lives behind a
+session-bound license search (current licenses only), and the program moved to a
+new system on 2026-07-01. Two ways to pull it — do both.
+
+### A. Records request (the full list)
+
+Ask the Pesticides Program for the whole set at once. Send this to
+**commercialapplicator@state.co.us**. It's written clean, to send as-is:
+
+> **Subject line**
+> Colorado Open Records Act request for commercial pesticide applicator licenses
+>
+> To the Colorado Department of Agriculture Pesticides Program,
+>
+> Under the Colorado Open Records Act I am requesting a list of current
+> commercial pesticide applicator business licenses in El Paso County and the
+> surrounding counties of Teller, Douglas, Elbert, Pueblo, and Fremont. I am
+> interested in the businesses licensed in the Ornamental category.
+>
+> For each business please include the business name, the license number, the
+> city, and the county, plus a phone number if that is part of the record. A
+> spreadsheet or CSV would be ideal if the data is available that way.
+>
+> If any fee applies please tell me the amount before you begin. Thank you.
+>
+> [your name]
+> Woodchuckers
+> [phone]
+> [email]
+
+The record is public, so this is a clean ask. Expect a few days.
+
+### B. Manual search (start dialing this week)
+
+Don't wait on the request to start calling. Search the tool yourself:
+
+1. Open the Pesticide Applicator Search at `ag.colorado.gov` and choose the
+   **Business** search.
+2. **Category** Ornamental. **County** El Paso, then Ctrl-click to add Teller
+   (that's Woodland Park). It returns current licenses only.
+3. Copy the results into a CSV with the header below. The search may not carry a
+   phone — that's fine, phones come in on the self-listed pass and merge by name.
+
+If the tool looks different than this, it's the July 1 migration; same idea,
+Business search filtered to Ornamental in your counties.
+
+### Import it
+
+Same importer either way — header row and command:
+
+```
+Business Name,City,County,License #
+```
+
+```sh
+npm run import:prospects cda-elpaso.csv --source cda
+```
+
+Keep the pull CSVs out of git — they hold real business data and the repo now
+ignores `*.csv` for exactly that reason.
+
+---
+
+## Second pass — self-listed discovery
 
 The pass that catches what CDA misses. CDA's Ornamental license only finds
 companies that **spray**; the removal- and climbing-only shops never show up
 there. This pass finds them through their own public listings, then feeds the
 same importer, deduping onto your CDA rows automatically.
-
-Run **CDA first** (it's your storable seed), then work this pass town by town.
 
 ---
 
