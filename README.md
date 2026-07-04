@@ -19,7 +19,7 @@ database** with the **same schema**. No data migration, no ORM.
 | Migrations         | ✅ Done     | reused `db/migrations/*.sql`, baseline runner on first boot         |
 | Public pages       | ✅ Done     | `/`, `/portfolio`, `/areas`, `/links`, `/contract-climbing` — RSC   |
 | Services pages     | ✅ Done     | `/services` + 5 B2B service pages, keyword clusters, schema (EN+ES) |
-| Content hub (blog) | 🟡 Stubs   | `/blog` + 5 posts (EN+ES) + RSS — intros real, bodies `draft: true` |
+| Content hub (blog) | 🟡 Filling | `/blog` + 5 posts (EN+ES) + RSS — 1 full article, 4 stubs `draft: true` |
 | Intake / lead form | ✅ Done     | `/contract-climbing` form + per-page lead-capture w/ attribution    |
 | CRM pipeline       | ✅ Done     | admin lead pipeline: editable status, notes, stage filter, Source   |
 | Outbound prospects | ✅ Done     | `/admin/prospects` call list: import + phone dedup, funnel, tap-to-call |

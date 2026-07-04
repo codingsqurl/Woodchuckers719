@@ -9,6 +9,9 @@
 
 import type { Locale } from './i18n'
 
+// One section of a finished article: a subhead plus its paragraphs.
+export type Section = { heading: string; paras: string[] }
+
 export type Post = {
   slug: string
   metaTitle: string
@@ -19,6 +22,9 @@ export type Post = {
   excerpt: string
   // h2 outline the full article will cover (gives the stub real structure)
   outline: string[]
+  // The finished article. When present (and draft:false) the page renders these
+  // sections instead of the outline. Absent on the stubs still being written.
+  body?: Section[]
   // ISO date string is passed in from a build-time constant, not generated here
   // (scripts can't call Date.now()); for a stub we just mark it draft.
   draft: boolean
@@ -41,8 +47,38 @@ const postsEN: Post[] = [
       'Overflow: covering a stacked schedule without a hire',
       'The math: a day rate vs the risk of a bad fell',
     ],
-    draft: true,
-    imageAlt: 'A large tree boxed in by a house and power lines, the kind of removal a contract climber takes in sections.',
+    body: [
+      {
+        heading: 'No safe place for it to land',
+        paras: [
+          'A tree in the open is a fell. The saw work is quick and the risk is low. That changes the moment there is nowhere clear for the trunk to land. A house on one side, a fence and a shed on the other, power lines over the only lean. A straight fell now puts thousands of dollars of the customer’s property in the fall path.',
+          'That is the point to climb it instead. Roped in, the tree comes down in pieces small enough to control, lowered to a spot your ground crew picks. Nothing swings wider than the rope allows. When the drop zone is the problem, a climber for the day is not an upgrade. It is the only safe way down.',
+        ],
+      },
+      {
+        heading: 'Dead and hollow wood',
+        paras: [
+          'Green wood bends and holds a hinge. Dead and hollow wood does neither. A standing dead ponderosa or a trunk gone punky in the middle can shatter when the hinge loads, and it can fail early and drop the top where nobody planned. Felling that is a gamble even in the open.',
+          'A climber reads the wood on the way up and rigs each piece so it is never shock loaded. Small cuts, controlled lowers, no big hinge betting on rotten fiber. If your crew is looking at standing dead or a hollow butt near anything that matters, that is a climb to hand off, not a fell to force.',
+        ],
+      },
+      {
+        heading: 'Short a climber, not short a job',
+        paras: [
+          'Sometimes the tree is a clean climb and the only problem is you are out of climbers. Your one guy is booked across town, or you are between hires, and the customer wants it down this week. Turn the job away and it goes to a competitor. Send a groundman up a rope he is not ready for and someone goes home hurt.',
+          'A climber for the day covers the gap without carrying a full climber on payroll for a season you cannot promise. You keep the customer, keep the schedule, and keep your ground crew doing what they do best. When the climb is fine and the bench is thin, that is the cheapest way to say yes to the work.',
+        ],
+      },
+      {
+        heading: 'The math on a bad fell',
+        paras: [
+          'The day rate is the easy number to see. The number that matters is the one you avoid. A trunk through a roof, a limb across a fence, a broken truck window, a claim, a day lost to cleanup and apologies. One bad fell can cost more than a month of day rates.',
+          'Set the flat rate against that. You know the cost before anyone leaves the ground, your crew runs the job it already knows, and the technical piece comes down on rope instead of on a gamble. For the jobs that do not fit a clean fell, the day rate is not the expense. The bad fell is.',
+        ],
+      },
+    ],
+    draft: false,
+    imageAlt: 'A large tree boxed in by a house and power lines, the kind of removal a contract climber brings down in sections.',
   },
   {
     slug: 'sectional-removal-vs-felling',
@@ -137,7 +173,37 @@ const postsES: Post[] = [
       'Sobrecarga: cubrir una agenda saturada sin contratar',
       'La cuenta: una tarifa por día vs el riesgo de una mala tala',
     ],
-    draft: true,
+    body: [
+      {
+        heading: 'Sin lugar seguro donde caer',
+        paras: [
+          'Un árbol en lo abierto es una tala. El trabajo de motosierra es rápido y el riesgo es bajo. Eso cambia en el momento en que no hay dónde caer el tronco despejado. Una casa de un lado, una cerca y un cobertizo del otro, líneas eléctricas sobre la única inclinación. Una tala directa ahora pone miles de dólares de la propiedad del cliente en la ruta de caída.',
+          'Ese es el momento de escalarlo en su lugar. Con cuerda, el árbol baja en piezas lo bastante pequeñas para controlar, descendidas a un punto que elige su cuadrilla de tierra. Nada se balancea más de lo que la cuerda permite. Cuando la zona de caída es el problema, un escalador por el día no es un lujo. Es la única forma segura de bajarlo.',
+        ],
+      },
+      {
+        heading: 'Madera muerta y hueca',
+        paras: [
+          'La madera verde se dobla y sostiene una bisagra. La madera muerta y hueca no hace ninguna de las dos. Una ponderosa muerta en pie o un tronco podrido por dentro puede reventar cuando carga la bisagra, y puede fallar antes de tiempo y soltar la punta donde nadie lo planeó. Talar eso es una apuesta incluso en lo abierto.',
+          'Un escalador lee la madera al subir y apareja cada pieza para que nunca reciba carga de golpe. Cortes pequeños, descensos controlados, ninguna bisagra grande apostando a fibra podrida. Si su cuadrilla tiene enfrente madera muerta en pie o una base hueca cerca de algo que importa, esa es una escalada para delegar, no una tala para forzar.',
+        ],
+      },
+      {
+        heading: 'Falta un escalador, no falta trabajo',
+        paras: [
+          'A veces el árbol es una escalada limpia y el único problema es que se quedó sin escaladores. Su único hombre está reservado al otro lado del pueblo, o está entre contrataciones, y el cliente lo quiere abajo esta semana. Rechace el trabajo y se va a un competidor. Suba a un hombre de tierra a una cuerda para la que no está listo y alguien se lastima.',
+          'Un escalador por el día cubre el hueco sin cargar un escalador completo en la nómina por una temporada que no puede prometer. Usted conserva al cliente, conserva la agenda y mantiene a su cuadrilla de tierra en lo que mejor hace. Cuando la escalada está bien y el banco está corto, esa es la forma más barata de decir sí al trabajo.',
+        ],
+      },
+      {
+        heading: 'La cuenta de una mala tala',
+        paras: [
+          'La tarifa por día es el número fácil de ver. El número que importa es el que evita. Un tronco a través de un techo, una rama sobre una cerca, la ventana de una troca rota, un reclamo, un día perdido en limpieza y disculpas. Una mala tala puede costar más que un mes de tarifas por día.',
+          'Ponga la tarifa plana contra eso. Usted sabe el costo antes de que nadie deje el suelo, su cuadrilla hace el trabajo que ya conoce, y la pieza técnica baja con cuerda en vez de a la suerte. Para los trabajos que no caben en una tala limpia, la tarifa por día no es el gasto. La mala tala lo es.',
+        ],
+      },
+    ],
+    draft: false,
     imageAlt:
       'Un árbol grande encajonado entre una casa y líneas eléctricas, el tipo de remoción que un escalador por contrato baja en secciones.',
   },

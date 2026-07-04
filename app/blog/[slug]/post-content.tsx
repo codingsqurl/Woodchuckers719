@@ -55,14 +55,29 @@ export function PostContent({ locale, post: p }: { locale: Locale; post: Post })
             <h1 className="section-title">{p.title}</h1>
             <p className="band-lead">{p.excerpt}</p>
 
-            <h2 className="form-title">{tc.blog.covers}</h2>
-            <ul className="svc-list">
-              {p.outline.map((h) => (
-                <li key={h}>
-                  <p>{h}</p>
-                </li>
-              ))}
-            </ul>
+            {p.body && p.body.length > 0 ? (
+              <div className="post-body">
+                {p.body.map((s) => (
+                  <section key={s.heading}>
+                    <h2>{s.heading}</h2>
+                    {s.paras.map((para, i) => (
+                      <p key={i}>{para}</p>
+                    ))}
+                  </section>
+                ))}
+              </div>
+            ) : (
+              <>
+                <h2 className="form-title">{tc.blog.covers}</h2>
+                <ul className="svc-list">
+                  {p.outline.map((h) => (
+                    <li key={h}>
+                      <p>{h}</p>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
 
             {p.draft ? <p className="muted">{tc.blog.draftNote}</p> : null}
 
@@ -71,7 +86,8 @@ export function PostContent({ locale, post: p }: { locale: Locale; post: Post })
                 {tc.freeEstimate}
               </a>
               <a className="cta cta-ghost cta-ghost-dark" href={PHONE_HREF}>
-                {tc.callLabel} {PHONE_DISPLAY}
+                <span className="call-verb">{tc.callLabel} </span>
+                {PHONE_DISPLAY}
               </a>
             </div>
           </div>

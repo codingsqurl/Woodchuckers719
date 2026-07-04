@@ -323,10 +323,24 @@ body.site .topbar {
   color: #fff;
   border: 2px solid rgba(255, 255, 255, 0.45);
 }
+/* on the darkest pine-glass bands the 0.45 edge nearly disappears; brighten it
+   so the ghost button still reads as a button, not floating text. */
+.cta-ghost-dark {
+  border-color: rgba(255, 255, 255, 0.62);
+}
 .cta-ghost:hover,
 .cta-ghost-dark:hover {
   background: rgba(255, 255, 255, 0.1);
   border-color: #fff;
+}
+
+/* the "Call" verb is a nicety; the number is the payload. On the narrowest
+   phones the ghost button can't hold both, so drop the word and let the
+   digits stand alone. */
+@media (max-width: 22rem) {
+  .call-verb {
+    display: none;
+  }
 }
 
 /* button row — stacked on phones, inline once there's room */
@@ -428,6 +442,30 @@ body.site .section-title {
   color: var(--on-dark-soft);
   font-size: clamp(1.02rem, 3.6vw, 1.15rem);
   line-height: 1.65;
+}
+
+/* finished blog article: signage subheads over readable body prose, capped at a
+   comfortable measure. Sits on the same pine glass band as the rest of the site. */
+.post-body {
+  max-width: 40rem;
+}
+.post-body section {
+  margin-top: 1.9rem;
+}
+.post-body h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 4.2vw, 1.6rem);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--on-dark);
+  margin: 0 0 0.55rem;
+}
+.post-body p {
+  margin: 0 0 0.9rem;
+  color: var(--on-dark-soft);
+  font-size: clamp(1.02rem, 3.6vw, 1.12rem);
+  line-height: 1.7;
+  text-wrap: pretty;
 }
 
 /* split = stacked on mobile, asymmetric two-up on desktop */

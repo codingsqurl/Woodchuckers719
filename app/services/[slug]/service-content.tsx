@@ -129,7 +129,8 @@ export function ServiceContent({ locale, service }: { locale: Locale; service: S
                 {tc.freeEstimate}
               </a>
               <a className="cta cta-ghost cta-ghost-dark" href={PHONE_HREF}>
-                {tc.callLabel} {PHONE_DISPLAY}
+                <span className="call-verb">{tc.callLabel} </span>
+                {PHONE_DISPLAY}
               </a>
             </div>
           </div>

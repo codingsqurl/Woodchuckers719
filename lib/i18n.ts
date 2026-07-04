@@ -277,7 +277,7 @@ const en = {
     headLede:
       'Book a climber by the day, or two. The section your crew can’t reach, the removal past your team. I climb it, rope it, and bring it down clean. You run the ground.',
     bookLine: 'Call or text for a day rate:',
-    ratesTitle: 'Ballpark day rate',
+    ratesTitle: 'Day Rate Ballpark',
     rateUnit: 'per day',
     rateNote: 'A ballpark, not a fixed quote — every job is different. Call or text and I’ll give you a real number.',
     included: 'Your crew runs the ground, I do the climbing. The removal past your team, the rigging over the house, the section nobody wants. A contract climber with my own gear.',

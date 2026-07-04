@@ -95,7 +95,8 @@ export function TownContent({ locale, town }: { locale: Locale; town: TownPage }
                 {tc.home.ctaEstimate}
               </a>
               <a className="cta cta-ghost cta-ghost-dark" href={PHONE_HREF}>
-                {tc.callLabel} {PHONE_DISPLAY}
+                <span className="call-verb">{tc.callLabel} </span>
+                {PHONE_DISPLAY}
               </a>
             </div>
           </div>

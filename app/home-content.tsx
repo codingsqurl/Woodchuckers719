@@ -127,7 +127,8 @@ export function HomeContent({ locale }: { locale: Locale }) {
                 {t.ctaEstimate}
               </a>
               <a className="cta cta-ghost" href={PHONE_HREF}>
-                {tc.callLabel} {PHONE_DISPLAY}
+                <span className="call-verb">{tc.callLabel} </span>
+                {PHONE_DISPLAY}
               </a>
             </div>
             <p className="sms-note">
@@ -209,7 +210,8 @@ export function HomeContent({ locale }: { locale: Locale }) {
                 {t.ctaEstimate}
               </a>
               <a className="cta cta-ghost cta-ghost-dark" href={PHONE_HREF}>
-                {tc.callLabel} {PHONE_DISPLAY}
+                <span className="call-verb">{tc.callLabel} </span>
+                {PHONE_DISPLAY}
               </a>
             </div>
           </div>

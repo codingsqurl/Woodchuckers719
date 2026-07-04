@@ -130,7 +130,8 @@ export function PageHero({
             {cta.label}
           </a>
           <a className="cta cta-ghost" href={PHONE_HREF}>
-            {callLabel} {PHONE_DISPLAY}
+            <span className="call-verb">{callLabel} </span>
+            {PHONE_DISPLAY}
           </a>
         </div>
       </div>

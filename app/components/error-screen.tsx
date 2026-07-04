@@ -26,7 +26,8 @@ export function ErrorScreen({ code, locale }: { code: number; locale: Locale }) 
               {d.errpage.backHome}
             </a>
             <a className="cta cta-ghost" href={PHONE_HREF}>
-              {d.callLabel} {PHONE_DISPLAY}
+              <span className="call-verb">{d.callLabel} </span>
+              {PHONE_DISPLAY}
             </a>
           </div>
         </section>
