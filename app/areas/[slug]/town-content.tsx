@@ -165,7 +165,7 @@ export function TownContent({ locale, town }: { locale: Locale; town: TownPage }
               <a className="serving-link" href={localePath(locale, '/areas')}>
                 {t.servingFor(town.name)}
               </a>{' '}
-              · {tc.seHabla}
+              · <span lang="es">{tc.seHabla}</span>
             </p>
           </div>
         </section>

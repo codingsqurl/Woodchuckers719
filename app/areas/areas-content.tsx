@@ -95,7 +95,7 @@ export function AreasContent({ locale }: { locale: Locale }) {
               <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
             </p>
             <p className="muted">
-              {tc.servingArea} · {tc.seHabla}
+              {tc.servingArea} · <span lang="es">{tc.seHabla}</span>
             </p>
           </div>
         </section>

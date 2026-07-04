@@ -70,7 +70,7 @@ export function BlogContent({ locale }: { locale: Locale }) {
               <a className="serving-link" href={localePath(locale, '/areas')}>
                 {tc.servingArea}
               </a>{' '}
-              · {tc.seHabla}
+              · <span lang="es">{tc.seHabla}</span>
             </p>
           </div>
         </section>

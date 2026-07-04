@@ -64,7 +64,11 @@ export function ContractForm({
           <p className="included">{t.included}</p>
 
           <form className="estimate-form contract-form" id="job" action={formAction}>
-            {state.status === 'error' ? <p className="error form-error">{state.error}</p> : null}
+            {state.status === 'error' ? (
+              <p className="error form-error" role="alert">
+                {state.error}
+              </p>
+            ) : null}
 
             <input type="hidden" name="locale" value={locale} readOnly />
 
@@ -96,11 +100,24 @@ export function ContractForm({
                 <div className="row2">
                   <div className="field">
                     <label htmlFor="name">{t.fName}</label>
-                    <input type="text" id="name" name="name" defaultValue={v.name ?? ''} required />
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      autoComplete="name"
+                      defaultValue={v.name ?? ''}
+                      required
+                    />
                   </div>
                   <div className="field">
                     <label htmlFor="email">{t.fEmail}</label>
-                    <input type="email" id="email" name="email" defaultValue={v.email ?? ''} />
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      autoComplete="email"
+                      defaultValue={v.email ?? ''}
+                    />
                   </div>
                 </div>
               </>
@@ -108,7 +125,13 @@ export function ContractForm({
 
             <div className="field">
               <label htmlFor="phone">{t.fPhone}</label>
-              <input type="tel" id="phone" name="phone" defaultValue={v.phone ?? ''} />
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                autoComplete="tel"
+                defaultValue={v.phone ?? ''}
+              />
             </div>
 
             <div className="field">
@@ -122,7 +145,9 @@ export function ContractForm({
             </div>
 
             {identity ? null : <p className="note note-tight">{t.requiredNote}</p>}
-            <p className="note">{t.seHablaNote}</p>
+            <p className="note" lang="es">
+              {t.seHablaNote}
+            </p>
             {identity ? null : <p className="note verify-hint">{t.verifyPrompt}</p>}
             <div className="form-actions">
               <button type="submit" disabled={isPending}>

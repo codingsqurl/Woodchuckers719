@@ -31,6 +31,7 @@ export function PortfolioContent({ locale }: { locale: Locale }) {
             <div className="gallery">
               <figure className="shot">
                 <picture>
+                  <source srcSet="/img/layingback.avif" type="image/avif" />
                   <source srcSet="/img/layingback.webp" type="image/webp" />
                   <img
                     src="/img/layingback.jpg"
@@ -45,6 +46,7 @@ export function PortfolioContent({ locale }: { locale: Locale }) {
               </figure>
               <figure className="shot">
                 <picture>
+                  <source srcSet="/img/uphigh.avif" type="image/avif" />
                   <source srcSet="/img/uphigh.webp" type="image/webp" />
                   <img
                     src="/img/uphigh.jpg"
@@ -59,6 +61,7 @@ export function PortfolioContent({ locale }: { locale: Locale }) {
               </figure>
               <figure className="shot">
                 <picture>
+                  <source srcSet="/img/powerline.avif" type="image/avif" />
                   <source srcSet="/img/powerline.webp" type="image/webp" />
                   <img
                     src="/img/powerline.jpg"
@@ -121,7 +124,7 @@ export function PortfolioContent({ locale }: { locale: Locale }) {
               <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
             </p>
             <p className="muted">
-              <a className="serving-link" href={localePath(locale, '/areas')}>{tc.servingArea}</a> · {tc.seHabla}
+              <a className="serving-link" href={localePath(locale, '/areas')}>{tc.servingArea}</a> · <span lang="es">{tc.seHabla}</span>
             </p>
           </div>
         </section>

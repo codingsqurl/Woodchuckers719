@@ -70,8 +70,16 @@ export default async function AdminPage({
       </header>
 
       <main>
-        {error ? <p className="error">{error}</p> : null}
-        {notice ? <p className="notice">{notice}</p> : null}
+        {error ? (
+          <p className="error" role="alert">
+            {error}
+          </p>
+        ) : null}
+        {notice ? (
+          <p className="notice" role="status">
+            {notice}
+          </p>
+        ) : null}
 
         <h1>Leads</h1>
         <p className="lead-filter">
@@ -155,7 +163,7 @@ export default async function AdminPage({
           </p>
         )}
 
-        <h1>Search rankings</h1>
+        <h2>Search rankings</h2>
         <p className="muted">
           Who ranks above us, by keyword. Type what you see on a Google search. No
           auto-tracking. Tick &ldquo;this is us&rdquo; on your own listing.
@@ -203,7 +211,7 @@ export default async function AdminPage({
           <p className="muted">No rankings tracked yet.</p>
         )}
 
-        <h2>Add a ranking</h2>
+        <h3>Add a ranking</h3>
         <form action={addRankingAction} className="stack">
           <label>
             Keyword
@@ -232,7 +240,7 @@ export default async function AdminPage({
           <button type="submit">Add ranking</button>
         </form>
 
-        <h1>Employees</h1>
+        <h2>Employees</h2>
         <table className="grid">
           <thead>
             <tr>
@@ -268,7 +276,7 @@ export default async function AdminPage({
           </tbody>
         </table>
 
-        <h2>Invite employee</h2>
+        <h3>Invite employee</h3>
         <p className="muted">
           Creates a Google sign-in account and emails them a link. No password.
         </p>
@@ -284,7 +292,7 @@ export default async function AdminPage({
           <button type="submit">Send invite</button>
         </form>
 
-        <h2>Add employee</h2>
+        <h3>Add employee</h3>
         <form action={createEmployeeAction} className="stack">
           <label>
             Full name

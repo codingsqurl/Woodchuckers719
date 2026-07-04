@@ -7,7 +7,7 @@ import {
   EMAIL,
   smsHref,
 } from './components/chrome'
-import { type Locale, getDict, localePath } from '@/lib/i18n'
+import { type Locale, getDict, localePath, SE_HABLA } from '@/lib/i18n'
 import { appBaseURL } from '@/lib/env'
 import { areaList } from '@/lib/areas'
 
@@ -79,8 +79,8 @@ function homeJsonLd(locale: Locale) {
 }
 
 // The home "what I take on" cards deep-link, in order, onto the /services pages
-// so the homepage threads into the service hub. English only — the /es service
-// mirror is a later chunk, so Spanish keeps plain cards (no broken links).
+// so the homepage threads into the service hub — both locales; localePath routes
+// the Spanish cards onto the /es/services mirror.
 const HOME_SERVICE_SLUGS = [
   'technical-removals',
   'storm-hazard-work',
@@ -140,7 +140,9 @@ export function HomeContent({ locale }: { locale: Locale }) {
         <section className="trust" id="trust">
           <ul className="trust-list">
             {t.trust.map((item) => (
-              <li key={item}>{item}</li>
+              <li key={item} lang={item === SE_HABLA ? 'es' : undefined}>
+                {item}
+              </li>
             ))}
           </ul>
         </section>
@@ -254,7 +256,7 @@ export function HomeContent({ locale }: { locale: Locale }) {
               <a className="serving-link" href={localePath(locale, '/areas')}>
                 {tc.servingArea}
               </a>{' '}
-              · {tc.seHabla}
+              · <span lang="es">{tc.seHabla}</span>
             </p>
           </div>
         </section>

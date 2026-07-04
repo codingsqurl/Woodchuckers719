@@ -38,6 +38,7 @@ export const SE_HABLA = 'Se habla español'
 const en = {
   // chrome
   nav: { home: 'Home', work: 'My Work', areas: 'Areas', services: 'Services', estimate: 'Hire me' },
+  navLabel: 'Primary',
   skip: 'Skip to content',
   callLabel: 'Call',
   freeEstimate: 'Get a day rate',
@@ -122,7 +123,7 @@ const en = {
     // objection FAQ
     faqTitle: 'Straight answers',
     faqs: [
-      { q: 'How do you charge?', a: 'A flat day rate, $175–$350 depending on the climb. Most climbs are a day, some run two. One tricky piece? We can do it per-job.' },
+      { q: 'How do you charge?', a: 'A flat day rate, $175–$350 depending on the climb. Most climbs are a day, some run two. One tricky piece? I can do it per-job.' },
       { q: 'What do you bring?', a: 'Everything I climb with. Saddle, ropes, and rigging gear, on my back. You bring the chipper and ground crew.' },
       { q: 'What about the ground and cleanup?', a: 'That’s your crew. I climb and bring the tree down; hauling, chipping, and cleanup stay with you.' },
       { q: 'What I Climb', a: 'Sectional takedowns, storm-damaged leaders, and rigging over structures. The piece past your team.' },
@@ -169,7 +170,7 @@ const en = {
     townsTitle: 'Towns I cover',
     expansionTag: 'Coming September 2027',
     expansionBody:
-      'The Great Expansion Project. Taking Woodchuckers contract climbing beyond Colorado. Washington, Oregon, and California next.',
+      'The Great Expansion Project. Bringing Woodchuckers contract climbing beyond Colorado. Washington, Oregon, and California next.',
     contactTitle: 'Crew in the area? Let’s talk.',
   },
 
@@ -344,6 +345,7 @@ type Dict = typeof en
 
 const es: Dict = {
   nav: { home: 'Inicio', work: 'Mi Trabajo', areas: 'Zonas', services: 'Servicios', estimate: 'Contráteme' },
+  navLabel: 'Principal',
   skip: 'Saltar al contenido',
   callLabel: 'Llamar',
   freeEstimate: 'Ver tarifa por día',

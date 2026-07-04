@@ -91,7 +91,7 @@ export function PostContent({ locale, post: p }: { locale: Locale; post: Post })
               <a className="serving-link" href={localePath(locale, '/areas')}>
                 {tc.servingArea}
               </a>{' '}
-              · {tc.seHabla}
+              · <span lang="es">{tc.seHabla}</span>
             </p>
           </div>
         </section>

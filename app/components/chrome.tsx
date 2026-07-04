@@ -79,7 +79,7 @@ export function SiteHeader({
         <a className="brand" href={localePath(locale, '/')}>
           Woodchuckers
         </a>
-        <nav className="topnav">
+        <nav className="topnav" aria-label={d.navLabel}>
           {NAV.filter((n) => n.key !== current).map((n) => (
             <a key={n.key} href={localePath(locale, n.path)}>
               {n.label(d)}
@@ -184,7 +184,7 @@ export function SiteFooter({ locale, path }: { locale: Locale; path: string }) {
       <span className="foot-sep" aria-hidden="true">
         ·
       </span>
-      <span>{d.seHabla}</span>
+      <span lang="es">{d.seHabla}</span>
       <span className="foot-sep" aria-hidden="true">
         ·
       </span>

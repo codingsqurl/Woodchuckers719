@@ -11,7 +11,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'Woodchuckers Staff',
     short_name: 'Woodchuckers',
-    description: 'Woodchuckers staff portal for estimate requests and crew.',
+    description: 'Woodchuckers staff portal for leads and estimate requests.',
     start_url: '/admin/portal',
     scope: '/',
     display: 'standalone',

@@ -118,10 +118,10 @@ fly deploy            # KING runs this at cutover
 
 ## Notes on fidelity (intentional deviations)
 
-- **Fonts:** the live Go site's CSP (`style-src 'self'`) already blocks the
-  Google Fonts link, so it renders in `system-ui`. This port preserves that
-  exactly (no external font load). To actually ship Big Shoulders Display,
-  self-host it and add a style nonce.
+- **Fonts:** the live Go site's CSP (`style-src 'self'`) blocked the Google
+  Fonts link, so it rendered in `system-ui`. This port instead self-hosts the
+  brand faces via `next/font` (Archivo + Big Shoulders Display served from
+  `/_next`, no external request), which satisfies the same strict CSP.
 - **Rate-limit status:** the SSO GET routes return a real `429`. The estimate
   and login forms are Server Actions (a page route can't also be a raw POST
   handler in the App Router), so an over-limit hit there shows the same "too

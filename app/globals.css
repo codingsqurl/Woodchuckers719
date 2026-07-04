@@ -583,14 +583,16 @@ body.site .site-backdrop {
   position: fixed;
   inset: 0;
   z-index: -2;
-  /* WebP backdrop (~half the bytes) with a JPEG fallback for older engines. The
-     shorthand paints the JPEG + position/size; image-set upgrades it to WebP. */
+  /* AVIF (~58KB) > WebP (~70KB) > JPEG (~208KB) backdrop. The shorthand paints
+     the JPEG + position/size; image-set upgrades to the best supported format. */
   background: url("/img/background.jpg") center / cover no-repeat;
   background-image: -webkit-image-set(
+    url("/img/background.avif") type("image/avif"),
     url("/img/background.webp") type("image/webp"),
     url("/img/background.jpg") type("image/jpeg")
   );
   background-image: image-set(
+    url("/img/background.avif") type("image/avif"),
     url("/img/background.webp") type("image/webp"),
     url("/img/background.jpg") type("image/jpeg")
   );
@@ -1043,7 +1045,8 @@ picture {
 .area-grid a::after {
   content: "›";
   color: var(--accent);
-  font-weight: 800;
+  /* 700, not 800 — Archivo ships 400/600/700; 800 renders as faux-bold */
+  font-weight: 700;
 }
 .area-grid a:hover {
   background: var(--green-700);
@@ -1193,7 +1196,8 @@ picture {
 }
 .calc-result .amount {
   font-size: clamp(2rem, 7vw, 2.9rem);
-  font-weight: 800;
+  /* 700, not 800 — Archivo ships 400/600/700; 800 renders as faux-bold */
+  font-weight: 700;
   color: var(--accent);
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
@@ -1830,6 +1834,11 @@ html {
   .calc-result .amount.bump {
     animation: none;
   }
+  .link-btn:hover,
+  .call-btn:active,
+  .area-grid a:active {
+    transform: none;
+  }
   .scroll-rope {
     display: none;
   }
@@ -1844,6 +1853,11 @@ html {
 }
 .muted {
   color: var(--muted);
+}
+/* the admin gray fails 4.5:1 on the dark glass bands — public pages use the
+   pine-tinted mute instead (blog draft note, any future .muted on site) */
+body.site .muted {
+  color: var(--on-dark-mute);
 }
 .notice {
   color: #166534;

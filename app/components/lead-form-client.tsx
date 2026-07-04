@@ -51,7 +51,11 @@ export function LeadFormClient({
     <section className="band services">
       <div className="band-inner">
         <form className="estimate-form contract-form" id="quote" action={formAction}>
-          {state.status === 'error' ? <p className="error form-error">{state.error}</p> : null}
+          {state.status === 'error' ? (
+            <p className="error form-error" role="alert">
+              {state.error}
+            </p>
+          ) : null}
           <input type="hidden" name="locale" value={locale} readOnly />
           <input type="hidden" name="source" value={source} readOnly />
           {/* honeypot: off-screen, hidden from AT and tab order; bots fill it,
@@ -84,13 +88,20 @@ export function LeadFormClient({
                     type="text"
                     id="lead-name"
                     name="name"
+                    autoComplete="name"
                     defaultValue={v.name ?? ''}
                     required
                   />
                 </div>
                 <div className="field">
                   <label htmlFor="lead-email">{t.fEmail}</label>
-                  <input type="email" id="lead-email" name="email" defaultValue={v.email ?? ''} />
+                  <input
+                    type="email"
+                    id="lead-email"
+                    name="email"
+                    autoComplete="email"
+                    defaultValue={v.email ?? ''}
+                  />
                 </div>
               </div>
             </>
@@ -98,7 +109,13 @@ export function LeadFormClient({
 
           <div className="field">
             <label htmlFor="lead-phone">{t.fPhone}</label>
-            <input type="tel" id="lead-phone" name="phone" defaultValue={v.phone ?? ''} />
+            <input
+              type="tel"
+              id="lead-phone"
+              name="phone"
+              autoComplete="tel"
+              defaultValue={v.phone ?? ''}
+            />
           </div>
           <div className="field">
             <label htmlFor="lead-details">{t.detailsLabel}</label>

@@ -18,7 +18,11 @@ export function LoginForm({
     <main className="auth">
       <h1>Woodchuckers</h1>
       <h2>Employee log in</h2>
-      {state.error ? <p className="error">{state.error}</p> : null}
+      {state.error ? (
+        <p className="error" role="alert">
+          {state.error}
+        </p>
+      ) : null}
       <form action={formAction}>
         <label>
           Email
