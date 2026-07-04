@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next'
 import { Archivo, Big_Shoulders } from 'next/font/google'
 import { headers } from 'next/headers'
 import { appBaseURL } from '@/lib/env'
+import { Haptics } from './components/haptics'
 
 // Self-hosted brand faces (next/font downloads + serves them from /_next, so
 // they load under the strict CSP that blocked the old Google Fonts <link>).
@@ -97,6 +98,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </>
         ) : null}
         {children}
+        {/* Delegated haptic tap on call/email buttons only; no-ops without the
+            Vibration API (iOS). Client island that renders nothing. */}
+        <Haptics />
       </body>
     </html>
   )
