@@ -54,12 +54,10 @@ function townJsonLd(locale: Locale, town: TownPage) {
 export function TownContent({ locale, town }: { locale: Locale; town: TownPage }) {
   const tc = getDict(locale)
   const t = tc.town
-  // Center the embed on the real town-center coordinates when we have them
-  // (precise, unambiguous); fall back to a name query for any town without coords.
-  const mapSrc =
-    town.lat != null && town.lng != null
-      ? `https://maps.google.com/maps?q=${town.lat},${town.lng}&z=12&output=embed`
-      : `https://maps.google.com/maps?q=${encodeURIComponent(`${town.name}, CO`)}&z=11&output=embed`
+  // Query by town NAME (not lat/lng) so Google draws the place boundary outline,
+  // matching the main /areas map. A coordinate query (q=lat,lng) only drops a pin
+  // with no outline, and the outline is what reads as "we cover this whole town".
+  const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(`${town.name}, CO`)}&z=11&output=embed`
 
   return (
     <>
