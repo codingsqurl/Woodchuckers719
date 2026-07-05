@@ -2,6 +2,7 @@
 // and clamp helpers from handlers_estimate.go.
 import { db } from './db'
 import { formatStamp } from './format'
+import { enqueueLeadEvent, kickOutbox, startOutboxPump } from './outbox'
 
 export type Estimate = {
   id: number
@@ -77,7 +78,9 @@ export function isLeadStatus(s: string): s is LeadStatus {
 }
 
 // createEstimate inserts a public estimate request and returns its new id.
-export function createEstimate(e: NewEstimate): number {
+// The estimate row and its CRM outbox event commit in the SAME transaction:
+// if the lead exists, its delivery event exists (see lib/outbox.ts).
+const createEstimateTx = db.transaction((e: NewEstimate): number => {
   const info = db
     .prepare(
       `INSERT INTO estimates
@@ -99,7 +102,24 @@ export function createEstimate(e: NewEstimate): number {
       e.estLow,
       e.estHigh,
     )
-  return Number(info.lastInsertRowid)
+  const id = Number(info.lastInsertRowid)
+  enqueueLeadEvent({
+    source: e.service === 'Contract climbing' ? 'site:contract' : 'site:estimate',
+    name: e.name,
+    phone: e.phone,
+    email: e.email,
+    summary: [e.service, e.address || e.details.slice(0, 120)].filter(Boolean).join(' — '),
+    value_cents: null,
+    payload: { estimateId: id, ...e },
+  })
+  return id
+})
+
+export function createEstimate(e: NewEstimate): number {
+  const id = createEstimateTx(e)
+  startOutboxPump() // idempotent; first call arms the 60s retry loop
+  kickOutbox() // fire-and-forget immediate delivery
+  return id
 }
 
 const SELECT_COLS = `id, name, email, phone, address, service, details, COALESCE(source, '') AS source,
