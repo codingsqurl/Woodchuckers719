@@ -27,7 +27,7 @@ export async function sendMail(
   subject: string,
   html: string,
   replyTo?: string,
-): Promise<void> {
+): Promise<string | null> {
   const key = process.env.RESEND_API_KEY
   if (!key) throw new Error('mail not configured')
   const from = process.env.MAIL_FROM || 'Woodchuckers <onboarding@resend.dev>'
@@ -48,6 +48,19 @@ export async function sendMail(
     const body = await res.text()
     throw new Error(`resend ${res.status}: ${body}`)
   }
+  // Return the Resend message id so callers can record it in the email log.
+  try {
+    const data = (await res.json()) as { id?: string }
+    return data.id ?? null
+  } catch {
+    return null
+  }
+}
+
+// The from-address a send actually used — recorded on outbound log rows so the
+// CRM shows who the lead heard from (the verified domain, or the sandbox default).
+export function mailFrom(): string {
+  return process.env.MAIL_FROM || 'Woodchuckers <onboarding@resend.dev>'
 }
 
 // estimateEmailHTML builds the owner notification for a new estimate request.

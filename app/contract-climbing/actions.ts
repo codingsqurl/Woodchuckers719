@@ -7,7 +7,8 @@
 import { after } from 'next/server'
 import { createEstimate, type NewEstimate } from '@/lib/estimates'
 import { estimateRL, autoReplyRL, clientIP } from '@/lib/ratelimit'
-import { contractEmailHTML, leadReply, sendMail, mailerConfigured } from '@/lib/mail'
+import { contractEmailHTML, leadReply, sendMail, mailerConfigured, mailFrom } from '@/lib/mail'
+import { logEmail } from '@/lib/email-log'
 import { getDict, isLocale } from '@/lib/i18n'
 import { contractClimbing } from '@/lib/rates'
 import { readLeadIdentity } from '@/lib/lead-identity'
@@ -104,8 +105,9 @@ export async function submitContract(
     estHigh: contractClimbing.dayHigh,
   }
 
+  let leadId: number
   try {
-    createEstimate(e)
+    leadId = createEstimate(e)
   } catch (err) {
     console.error('createEstimate (contract):', err)
     return { status: 'error', error: tt.errSave, values: preserved }
@@ -117,10 +119,11 @@ export async function submitContract(
   // ~20s on a hung ESP and widen the double-submit window on the no-JS path.
   if (mailerConfigured()) {
     after(async () => {
+      const ownerSubject = `New website lead — ${name}`
       try {
-        await sendMail(
+        const id = await sendMail(
           leadsTo,
-          `New website lead — ${name}`,
+          ownerSubject,
           contractEmailHTML({
             name,
             phone,
@@ -133,8 +136,10 @@ export async function submitContract(
           // on the lead notification answers the lead directly.
           validEmail ? email : undefined,
         )
+        logEmail({ estimateId: leadId, direction: 'out', from: mailFrom(), to: leadsTo, subject: ownerSubject, status: 'sent', providerId: id })
       } catch (err) {
         console.error('contract email failed:', err)
+        logEmail({ estimateId: leadId, direction: 'out', from: mailFrom(), to: leadsTo, subject: ownerSubject, status: 'failed' })
       }
 
       // Auto-reply receipt to the requester, localized to their page. Only to a
@@ -142,13 +147,15 @@ export async function submitContract(
       // form can't be used to mail-bomb a third party (the IP limit alone lets 5
       // sends/min to any typed address). The lead is saved regardless.
       if (validEmail && autoReplyRL.allow(email)) {
+        const reply = leadReply(name, localeStr)
         try {
-          const reply = leadReply(name, localeStr)
           // Reply-To the owner's monitored inbox so a customer reply lands there
           // directly, not on the send-only from-address (no forwarding needed).
-          await sendMail(email, reply.subject, reply.html, leadsTo)
+          const id = await sendMail(email, reply.subject, reply.html, leadsTo)
+          logEmail({ estimateId: leadId, direction: 'out', from: mailFrom(), to: email, subject: reply.subject, status: 'sent', providerId: id })
         } catch (err) {
           console.error('lead auto-reply failed:', err)
+          logEmail({ estimateId: leadId, direction: 'out', from: mailFrom(), to: email, subject: reply.subject, status: 'failed' })
         }
       }
     })

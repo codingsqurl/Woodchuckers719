@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { requireAdmin } from '@/lib/auth'
 import { listEmployees, lastLogin } from '@/lib/employees'
 import { listEstimates, submitted, contact, LEAD_STATUSES } from '@/lib/estimates'
+import { emailsForEstimate } from '@/lib/email-log'
+import { formatStamp } from '@/lib/format'
 import { listRankings, groupByKeyword, checked } from '@/lib/rankings'
 import {
   logout,
@@ -13,6 +15,28 @@ import {
   updateLeadStatusAction,
   updateLeadNotesAction,
 } from './actions'
+
+// LeadEmails shows the send/receive history for one lead (email_log, migration
+// 0011). A server component — reads synchronously; renders nothing until there's
+// history (and stays empty-safe before 0011 applies, via emailsForEstimate).
+function LeadEmails({ estimateId }: { estimateId: number }) {
+  const emails = emailsForEstimate(estimateId)
+  if (emails.length === 0) return null
+  return (
+    <details className="lead-details">
+      <summary>Emails ({emails.length})</summary>
+      <ul className="email-log">
+        {emails.map((m) => (
+          <li key={m.id}>
+            <span className="muted">{formatStamp(m.createdAt)}</span>{' '}
+            {m.direction === 'out' ? `sent to ${m.to}` : `from ${m.from}`}: {m.subject}
+            {m.status === 'failed' ? ' [failed]' : m.status === 'received' ? ' [reply]' : ''}
+          </li>
+        ))}
+      </ul>
+    </details>
+  )
+}
 
 export const metadata: Metadata = { title: 'Admin | Woodchuckers' }
 
@@ -128,6 +152,7 @@ export default async function AdminPage({
                         <p>{e.details}</p>
                       </details>
                     ) : null}
+                    <LeadEmails estimateId={e.id} />
                   </td>
                   <td>{e.source || '—'}</td>
                   <td>
