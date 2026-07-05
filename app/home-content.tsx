@@ -84,8 +84,6 @@ function homeJsonLd(locale: Locale) {
 const HOME_SERVICE_SLUGS = [
   'technical-removals',
   'storm-hazard-work',
-  'rigging-crane-assist',
-  'contract-climbing-for-companies',
 ]
 
 export function HomeContent({ locale }: { locale: Locale }) {
