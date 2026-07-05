@@ -2,8 +2,6 @@
 // via raw fetch (the Go code used the same raw HTTP call). When RESEND_API_KEY
 // is unset, email is "not configured": invites/leads still create rows but no
 // mail goes out.
-import { debrisLabel, type Estimate } from './estimates'
-
 // escapeHtml mirrors Go's template.HTMLEscapeString exactly.
 function escapeHtml(s: string): string {
   return s
@@ -61,19 +59,6 @@ export async function sendMail(
 // CRM shows who the lead heard from (the verified domain, or the sandbox default).
 export function mailFrom(): string {
   return process.env.MAIL_FROM || 'Woodchuckers <onboarding@resend.dev>'
-}
-
-// estimateEmailHTML builds the owner notification for a new estimate request.
-export function estimateEmailHTML(e: Estimate): string {
-  const row = (label: string, val: string): string =>
-    val === '' ? '' : `<p><strong>${label}:</strong> ${escapeHtml(val)}</p>`
-  const details =
-    e.details !== '' ? `<p><strong>Details:</strong><br>${escapeHtml(e.details)}</p>` : ''
-
-  return `<h2>New estimate request</h2>
-${row('Name', e.name)}${row('Phone', e.phone)}${row('Email', e.email)}${row('Address', e.address)}${row('Trees', e.service)}${row('Details', e.removalInfo)}${row('Heard via', e.source)}<p><strong>Debris:</strong> ${debrisLabel(e)}</p>
-<p><strong>Estimated:</strong> ${e.estDays} day(s), ballpark $${e.estLow}–$${e.estHigh}</p>
-${details}`
 }
 
 // contractEmailHTML builds the owner notification for a new website lead from the

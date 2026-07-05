@@ -87,7 +87,7 @@ Terminal-first. Not because GUIs are bad. Because KING already knows how to work
 
 ## Project notes
 
-woodchuckers, ported to Next.js. Public marketing site (home, portfolio, areas, links, estimate, contract-climbing) plus an internal `/admin` staff app — login, portal, admin dashboard, growing toward scheduling and timesheets. The public pages are bilingual: English at the root, Spanish mirrored under `/es` (see `lib/i18n.ts`).
+woodchuckers, ported to Next.js. Public marketing site (home, portfolio, areas, links, contract-climbing; `/estimate` redirects there) plus an internal `/admin` staff app — login, portal, admin dashboard, growing toward scheduling and timesheets. The public pages are bilingual: English at the root, Spanish mirrored under `/es` (see `lib/i18n.ts`).
 
 Stack:
 - Next.js App Router (React Server Components + Server Actions), TypeScript, Node 22 LTS. Node runtime everywhere (`better-sqlite3` is a native addon, never Edge).
@@ -96,7 +96,7 @@ Stack:
 - Email via the Resend HTTP API (raw `fetch`). Security headers + per-request nonce CSP in `middleware.ts`. In-memory fixed-window rate limiter (single process — hence single Fly machine).
 - The original `static/css/style.css` ships as `app/globals.css`. Images moved to `public/img/`.
 - The public site is a committed **sitewide glass** look: one fixed `background.jpg` backdrop behind every page (mounted once in `app/layout.tsx`) + pine-tinted translucent/blurred bands and panels. This deliberately overrode the old No-Glass Rule — see `DESIGN.md` → "The Glass Rule". Don't flatten it back to solid pine thinking it's drift; form fields stay opaque white on purpose.
-- Pricing lives in `lib/rates.ts` (the single source): homeowner `fullJob` day-rate + B2B `contractClimbing` tiers. The `/contract-climbing` page sells KING as a contract climber to other tree companies. The homeowner `/estimate` form is intentionally short (one "what for" select + a free-text description); the old per-tree builder was cut for fewer clicks.
+- Pricing lives in `lib/rates.ts` (the single source): homeowner `fullJob` day-rate + B2B `contractClimbing` tiers. The `/contract-climbing` page sells KING as a contract climber to other tree companies and carries the single intake form. The old homeowner `/estimate` flow is folded into it: `/estimate` and `/es/estimate` are redirect-only, the form/calculator/action code is deleted.
 
 Layout:
 - `app/` — routes: RSC pages, Server Actions, SSO route handlers, robots/sitemap, themed error/404

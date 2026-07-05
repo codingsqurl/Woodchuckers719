@@ -1,5 +1,11 @@
 # HANDOFF — Woodchuckers site, next work
 
+> **✅ RESOLVED 2026-07-04.** Task 1 done: all 4 stub posts have full EN+ES bodies,
+> `draft: false`. Task 2 done: `app/estimate/{actions,estimate-content,estimate-form}`
+> deleted (closes the uncapped-input security finding), `estimateEmailHTML` removed
+> from `lib/mail.ts`, redirect pages kept. Tasks 3/4 were already done by the manager.
+> Everything below is history.
+
 ## ⚙️ MANAGER COORDINATION — read this FIRST (added by the site-manager session)
 
 A second agent (the **site manager**) is live on this *same uncommitted working tree*.

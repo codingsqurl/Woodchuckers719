@@ -1,8 +1,8 @@
 // posts.ts — the content hub (lead-gen rebuild, chunk 3). Each entry is one
-// /blog/[slug] stub: a real, indexable, SEO-complete page with an intro and an
-// outline, targeting a search question someone asks before hiring a contract
-// climber. `draft: true` marks it a stub (outline, not the full article) so the
-// UI can label it honestly and KING can flesh each one out later.
+// /blog/[slug] page: real, indexable, SEO-complete, targeting a search question
+// someone asks before hiring a contract climber. All five posts ship full
+// bodies now; `draft: true` still marks any future stub (outline, no body) so
+// the UI can label it honestly until it is fleshed out.
 //
 // Audience is B2B-leaning, per the site: tree-company owners, crew foremen,
 // property/GC people who need climbing work, not homeowners shopping a yard tree.
@@ -95,7 +95,37 @@ const postsEN: Post[] = [
       'When a crane changes the plan',
       'What the climber does vs what your crew does',
     ],
-    draft: true,
+    body: [
+      {
+        heading: 'Reading the tree before the first cut',
+        paras: [
+          'Every removal decision starts from the ground, before a saw comes out. The lean tells you where the tree wants to go. The weight in the canopy tells you how hard it wants to go there. Wind can push a top past its hinge, and a chinook day can turn a marginal fell into a bad one. The last piece is the drop zone, the actual space the customer is giving you to work with. Add those four up and the tree either fits in the clear ground you have or it does not.',
+          'When the numbers do not add up, sectional is the answer. If the lean points at the garage and there is no room to pull it over, or the only open lane is shorter than the tree is tall, forcing the fell means betting the customer’s property on a hinge. A climber takes the same reading and works backward from it. Pieces sized to the space, brought down in the order the tree allows. The read decides the method, and the method decides who you need on site.',
+        ],
+      },
+      {
+        heading: 'How rigging brings it down',
+        paras: [
+          'Sectional removal means the tree comes apart from the top down. The climber sets a block in the tree, an anchored pulley the lowering line runs through, and ties off each piece before cutting it. When the piece comes free it loads the rope instead of falling. The block turns the trunk itself into the lifting frame, so wood that has been standing for decades does the holding while its own top comes off a piece at a time.',
+          'The other half of the system is on the ground. Your crew runs the lowering line, usually through a friction device at the base, and controls how fast each piece comes down. Let it run and the piece lands soft in the spot you picked. Lock it off too hard and the whole tree takes a shock load. A good rope man matters as much as a good climber here, which is why a climber for the day works so well. He brings the saw and the rigging skill aloft, and your people already know how to run a rope.',
+        ],
+      },
+      {
+        heading: 'When the crane comes in',
+        paras: [
+          'Rigging works because the spar can take the load. Every piece lowered on a block pulls down on the trunk, and a heavy pick can double its own weight in force when the rope catches it. Most trees handle that fine. Some do not. A dead ponderosa with a hollow butt, a trunk split by storm damage, or wood so big that no reasonable piece is light enough to catch on rope. When the spar cannot be trusted or the pieces cannot be made small enough, rigging off the tree stops being an option.',
+          'A crane changes the physics. The piece is held from above before it is ever cut, so the tree never takes the load and nothing has to swing. The climber still goes up, sets the choker, and makes the cut, but the weight rides the crane to the ground instead of the rope to the drop zone. Cranes cost real money and need room to set up, so they are not the default. When the wood is too heavy or the spar too far gone, though, the crane is the plan, and the climber is still the one making it work aloft.',
+        ],
+      },
+      {
+        heading: 'One man aloft, your crew below',
+        paras: [
+          'The arrangement is simple. One contract climber handles everything that happens off the ground. He climbs the tree, reads the wood, sets the blocks, ties the pieces, and makes the cuts. That is the technical slice of the job, the part that takes years on rope to do safely, and it is the only part the day rate covers. He shows up with his own saddle, ropes, and rigging, works the tree top down, and comes back to earth when the spar is on the ground.',
+          'Everything else stays with your crew. They run the lowering line, drag brush to the chipper, buck the trunk wood, and haul it off. They load the truck, rake the lawn, and talk to the customer, because it is still your job and your name on it. Nothing about the sectional plan changes who owns the work. It just puts a specialist on the one task your crew cannot cover that day. The climb and the rigging come off your plate, and the rest of the removal runs exactly the way it always has.',
+        ],
+      },
+    ],
+    draft: false,
     imageAlt: 'A climber rigging a section of trunk to lower it over a roof on a sectional tree removal.',
   },
   {
@@ -113,7 +143,37 @@ const postsEN: Post[] = [
       'Per-job pricing for a single technical piece',
       'What is not included: ground, haul, and cleanup',
     ],
-    draft: true,
+    body: [
+      {
+        heading: 'One flat number instead of a tree count',
+        paras: [
+          'Per tree pricing sounds fair until two people count the same yard differently. A double stem might be one tree or two. A half dead cottonwood tangled into its neighbor might be one removal or three. The quote turns into a debate about what a tree even is, and that debate tends to happen after the crew is on site and the clock is running. For contract climbing work, that kind of pricing invites friction between the climber and the company that hired him.',
+          'A flat day rate cuts all of that out. The number is set before the climber leaves the ground, so the owner can price the whole job with the climbing line already fixed. No haggling at the base of the trunk, no surprise on the invoice, no argument over whether the codominant maple counted twice. Bid the customer however you like. The climbing cost underneath your bid stays one known number, and the current ballpark is listed on the contract climbing page.',
+        ],
+      },
+      {
+        heading: 'One day on rope, and when it takes two',
+        paras: [
+          'A day covers the climbing itself. The climber goes up, rigs what needs rigging, and cuts everything down to pieces the ground crew can move and chip. That is the whole scope, and it runs across as many trees as fit between morning and dark. Three easy removals and a trim, or one big takedown that eats the whole day, either way the rate is the same and the climber keeps cutting until the day is done or the list is.',
+          'Some jobs stretch to a second day, and the reasons are predictable. Access is slow, a backyard with one narrow gate and a long carry to the rigging point. The wood is oversized, ponderosa trunk sections too heavy to lower fast. Or the rigging has to run extra conservative because the tree stands over a roof, a line, or a glass sunroom, and every piece comes down small and slow. When one of those shows up in the bid walk, plan for two days up front instead of arguing about the overage later.',
+        ],
+      },
+      {
+        heading: 'One nasty piece, one quote',
+        paras: [
+          'Not every job needs a full day of climbing. Sometimes the crew can handle the whole removal except one piece, a broken top hanging over a roof after a heavy spring snow, a leader cracked over the service drop, one limb nobody on the ground can reach safely. The rest of the tree is work your crew already owns. Paying a full day rate for forty minutes of rope work does not sit right with anyone.',
+          'That single technical piece can be quoted per job instead. Send a photo, describe the target under it, and get a number for just that cut and lower. The climber shows up, deals with the one piece the job is stuck on, and hands the tree back to your crew. It keeps small jobs small and saves the day rate for the days that actually need one. No wasted hours on either side of the invoice.',
+        ],
+      },
+      {
+        heading: 'The ground work stays yours',
+        paras: [
+          'The day rate buys a climber, not a full service removal. Groundwork, chipping, haul off, stump grinding, raking the lawn back to clean, all of that stays with the hiring company and its crew. One man comes to the job with a saddle, ropes, and saws. Everything below the rope is yours, the same way it would be if the climber were on your own payroll that day. There is no second truck and no second crew showing up behind him.',
+          'That split is what makes the arrangement work. Your crew already runs a chipper, a truck, and a drag line better than any outsider could on unfamiliar equipment. The climber stays in the tree where the specialty is, and the ground moves at the pace your foreman sets. Price your jobs with that in mind. The day rate covers what happens on rope, and everything that hits the ground after that is the part of the job your company was already built to do.',
+        ],
+      },
+    ],
+    draft: false,
     imageAlt: 'A contract climber geared up at the base of a tree, ready to start a day-rate climb.',
   },
   {
@@ -131,7 +191,37 @@ const postsEN: Post[] = [
       'The climber on a crane job: setting picks and cuts',
       'Access and setup: what to check before the day',
     ],
-    draft: true,
+    body: [
+      {
+        heading: 'When the crane pays its way',
+        paras: [
+          'Some takedowns are built for a boom. Big wood hanging over a roof, a spar too rotten to trust with a rigging load, a backyard giant where every limb would need a controlled lower. A crane changes the arithmetic on those. Each pick flies out whole and lands in the staging area instead of coming down piece by piece on rope. Hours of rigging turn into minutes of boom time, and the wood never swings over the target at all.',
+          'A dead ponderosa leaning over a garage is the clearest case. Rigging off a spar means trusting the spar, and dead or hollow wood gives nothing to trust. With a crane the load goes to the boom, not the tree, so the climber never asks rotten fiber to take a shock load. When the wood is heavy, the targets are close, or the spar cannot carry a rigging load, the crane is worth every hour of its rental.',
+        ],
+      },
+      {
+        heading: 'When rope is the cheaper answer',
+        paras: [
+          'A crane only helps if it can reach the tree. A narrow drive, a soft septic field, a backyard behind two fences, and the boom stays on the truck. Plenty of takedowns also just do not have enough wood in them. A moderate trunk with a workable drop zone comes apart on rope in a morning, and the crane would spend longer setting up than the climb takes. When mobilization costs more than the hours it saves, climb and rig wins on the math alone.',
+          'For those jobs a climber for the day is the whole answer. He brings the rigging, your crew runs the ropes and feeds the chipper, and the tree comes down at a flat day rate you knew before the truck left the yard. No crane schedule to wait on, no operator to book, no second mobilization if the weather turns. If the wood is moderate and the access is tight, rope is not the fallback. It is the faster, cheaper method.',
+        ],
+      },
+      {
+        heading: 'The crane does not replace the climber',
+        paras: [
+          'A crane on site does not put the climber out of work. Somebody still has to go up. Every pick starts with a strap set at the right point on the wood, a balance judgment, and a cut placed so the piece lifts clean instead of rolling or splitting out. The climber makes that call from inside the canopy, pick after pick, and he stays tied to the tree, not to the crane hook, whatever the old stories say about riding the ball.',
+          'The conversation with the operator matters as much as the saw work. The climber calls out the estimated weight of each pick before the cut so the operator knows what the boom is about to take. Guess heavy and the lift stalls. Guess light and the boom takes a jolt it was not set for. A climber with hours under a boom reads wood weight well and keeps every pick inside what the setup can handle. That judgment aloft is what your crew is renting for the day, crane or no crane.',
+        ],
+      },
+      {
+        heading: 'Walk the site before the crane rolls',
+        paras: [
+          'The worst crane day is the one where the machine shows up and cannot work. Walk the site first. Check the setup room within reach of the tree. Check the footing under the outriggers, because solid ground beats a soft lawn over a buried tank or a fresh utility trench. Check for overhead lines in the swing path between the tree and the landing zone. Any one of those can kill the plan after the mobilization is already booked.',
+          'Then plan the picks and the yard. A rough weight on the biggest pieces tells you whether the quoted crane can make the reach, because capacity falls fast as the boom stretches out. Decide where the trucks and the chipper stage so each pick lands near the work instead of across the property. A contract climber who has worked under a boom can walk that site with you and flag the problems while they are still cheap to fix. The crane day runs on what got checked before it.',
+        ],
+      },
+    ],
+    draft: false,
     imageAlt: 'A crane lifting a section of tree while a climber sets the next pick on a takedown.',
   },
   {
@@ -149,13 +239,43 @@ const postsEN: Post[] = [
       'Why ground-pulling a hazard goes wrong',
       'Getting a climber out fast after a storm',
     ],
-    draft: true,
+    body: [
+      {
+        heading: 'Read the leaner before the saw comes out',
+        paras: [
+          'A chinook wind or a heavy wet spring snow leaves trees leaning where they never grew. A leaner resting on a neighbor tree or a roof is not standing on its roots anymore. It is a loaded spring. The trunk, the limbs holding it up, and the wood it rests on are all carrying force in directions nobody can see from the driveway. Cut the wrong fiber and that force releases all at once, toward the saw and the man holding it.',
+          'The read comes first. Which way the load wants to move, what is holding it, what lets go when the first cut opens. A climber who works storm wood makes that read from a rope in a sound tree next door, not from under the lean. Each cut is planned so the wood shifts away from him and away from whatever it is resting on. If your crew is standing around a leaner debating where to start, that debate is the sign the job belongs to a climber.',
+        ],
+      },
+      {
+        heading: 'Snapped tops and hung limbs',
+        paras: [
+          'The wind snaps a leader and the top does not always come down. It hangs in the canopy, caught on a few small branches, over the driveway or the service drop or the spot where your groundman stacks brush. A hung limb can sit there for a week or let go the next time the breeze moves it. Nobody can tell which from the ground. Every hour it stays up there, it is a load with no rigging on it over a work area.',
+          'A climber puts the rigging on before anything moves. He gets above or beside the hanger, ties it off to a sound point, and only then makes the cut that frees it. The piece swings onto the rope instead of falling, and the ground crew lowers it to a clear spot at whatever speed they choose. A snapped top comes down the same way, cut into lengths the rope can hold. Controlled from the first cut to the ground, not dropped and hoped for.',
+        ],
+      },
+      {
+        heading: 'The trouble with pulling from the ground',
+        paras: [
+          'Pulling a hanger down with a throwline or a truck feels like the safe play because nobody leaves the ground. The problem is that a pull is a guess. Nobody knows what is actually holding the piece, so nobody knows what direction it takes when it lets go. It can roll off its catch and fall somewhere else entirely. It can whip back along the line toward the man pulling it. It can shake the whole broken top loose and bring that down too.',
+          'Rigged work removes the guess. The piece is tied before it is free, so the release point and the landing spot are chosen, not discovered. That is the whole difference. A pull spends its control before the wood moves and has none left after. A rope set from above keeps control through the entire ride down. When the hanger is over a roof, a line, or a spot your crew has to keep working under, guessing is the expensive option.',
+        ],
+      },
+      {
+        heading: 'When every crew in town is buried',
+        paras: [
+          'After a big blow the phone does not stop. Every tree company in town is slammed at the same time, and the jobs that pile up are exactly the ones with hazards aloft. Your crew can move brush and buck downed trunks all day, but each hung limb and loaded leaner stalls the schedule until someone qualified goes up. If your climber is the bottleneck, storm week is when it shows.',
+          'A contract climber for the day breaks that bottleneck. He shows up, ropes in on the hazard climbs, and your crew runs the ground work it already knows while the technical pieces come down on rigging. One flat day rate, no new hire, no sending a groundman up under pressure. The dangerous jobs come off the board while the rest of the schedule keeps moving. When storm work stacks up, the fastest way through it is a climber who slots into the crew you already have.',
+        ],
+      },
+    ],
+    draft: false,
     imageAlt: 'A storm-snapped tree leader hung over a structure, a hazard for a dedicated climber.',
   },
 ]
 
-// Spanish mirror. Same slugs as postsEN so the URLs pair for hreflang. Still
-// `draft: true` stubs — intro + outline translated, full bodies later.
+// Spanish mirror. Same slugs as postsEN so the URLs pair for hreflang. Full
+// bodies shipped for all five posts, mirrored section by section from EN.
 const postsES: Post[] = [
   {
     slug: 'when-to-hire-a-contract-climber',
@@ -222,7 +342,37 @@ const postsES: Post[] = [
       'Cuándo una grúa cambia el plan',
       'Qué hace el escalador vs qué hace su cuadrilla',
     ],
-    draft: true,
+    body: [
+      {
+        heading: 'Leer el árbol antes del primer corte',
+        paras: [
+          'Cada remoción se decide desde el suelo, antes de que salga una motosierra. La inclinación le dice hacia dónde quiere irse el árbol. El peso de la copa le dice con cuánta fuerza quiere irse. El viento puede empujar la punta más allá de la bisagra, y un día de viento chinook puede convertir una tala apretada en una mala tala. La última pieza es la zona de caída, el espacio real que el cliente le está dando para trabajar. Sume esos cuatro factores y el árbol cabe en el terreno despejado que tiene o no cabe.',
+          'Cuando la cuenta no sale, la respuesta es por secciones. Si la inclinación apunta a la cochera y no hay espacio para jalarlo hacia el otro lado, o el único carril abierto es más corto que la altura del árbol, forzar la tala es apostar la propiedad del cliente a una bisagra. Un escalador toma la misma lectura y trabaja al revés desde ella. Piezas del tamaño del espacio disponible, bajadas en el orden que el árbol permite. La lectura decide el método, y el método decide a quién necesita en la obra.',
+        ],
+      },
+      {
+        heading: 'Cómo funciona el aparejo',
+        paras: [
+          'La remoción por secciones significa que el árbol se desarma de arriba hacia abajo. El escalador instala una polea anclada en el árbol, por la que corre la línea de descenso, y amarra cada pieza antes de cortarla. Cuando la pieza se suelta, carga la cuerda en lugar de caer. La polea convierte al propio tronco en la estructura de carga, de modo que la madera que lleva décadas parada sostiene el peso mientras su propia copa baja pieza por pieza.',
+          'La otra mitad del sistema está en el suelo. Su cuadrilla corre la línea de descenso, normalmente por un dispositivo de fricción en la base, y controla la velocidad con que baja cada pieza. Déjela correr y la pieza aterriza suave en el punto que usted eligió. Frénela en seco y todo el árbol recibe carga de golpe. Un buen hombre de cuerda importa tanto como un buen escalador, y por eso funciona tan bien un escalador por el día. Él sube con la motosierra y la habilidad de aparejar, y su gente ya sabe correr una cuerda.',
+        ],
+      },
+      {
+        heading: 'Cuándo entra la grúa',
+        paras: [
+          'El aparejo funciona porque el tronco aguanta la carga. Cada pieza descendida por la polea jala el tronco hacia abajo, y una pieza pesada puede duplicar su propio peso en fuerza cuando la cuerda la atrapa. La mayoría de los árboles lo aguantan sin problema. Algunos no. Una ponderosa muerta con la base hueca, un tronco rajado por una tormenta, o madera tan gruesa que ninguna pieza razonable queda lo bastante ligera para bajarla con cuerda. Cuando no se puede confiar en el tronco o las piezas no se pueden hacer lo bastante chicas, aparejar desde el árbol deja de ser opción.',
+          'Una grúa cambia la física. La pieza queda sostenida desde arriba antes del corte, así que el árbol nunca recibe la carga y nada tiene que balancearse. El escalador sube igual, coloca el estrobo y hace el corte, pero el peso viaja por la grúa hasta el suelo en lugar de por la cuerda hasta la zona de caída. Las grúas cuestan y necesitan espacio para armarse, así que no son la opción por defecto. Pero cuando la madera pesa demasiado o el tronco ya no sirve, la grúa es el plan, y el escalador sigue siendo quien lo hace funcionar allá arriba.',
+        ],
+      },
+      {
+        heading: 'Un hombre arriba, su cuadrilla abajo',
+        paras: [
+          'El arreglo es simple. Un escalador por contrato se encarga de todo lo que pasa fuera del suelo. Sube el árbol, lee la madera, instala las poleas, amarra las piezas y hace los cortes. Esa es la parte técnica del trabajo, la que toma años de cuerda para hacerse con seguridad, y es lo único que cubre la tarifa por día. Llega con su propia silla, sus cuerdas y su aparejo, trabaja el árbol de arriba hacia abajo, y vuelve al suelo cuando el tronco ya está abajo.',
+          'Todo lo demás queda con su cuadrilla. Ellos corren la línea de descenso, arrastran la rama al triturador, trozan la madera del tronco y la acarrean. Cargan la troca, rastrillan el pasto y hablan con el cliente, porque el trabajo sigue siendo suyo y lleva su nombre. Nada del plan por secciones cambia quién es dueño del trabajo. Solo pone a un especialista en la única tarea que su cuadrilla no puede cubrir ese día. La escalada y el aparejo salen de su lista, y el resto de la remoción corre exactamente como siempre.',
+        ],
+      },
+    ],
+    draft: false,
     imageAlt:
       'Un escalador aparejando una sección de tronco para bajarla sobre un techo en una remoción por secciones.',
   },
@@ -242,7 +392,37 @@ const postsES: Post[] = [
       'Precio por trabajo para una sola pieza técnica',
       'Qué no se incluye: suelo, acarreo y limpieza',
     ],
-    draft: true,
+    body: [
+      {
+        heading: 'Un solo número plano en vez de contar árboles',
+        paras: [
+          'El precio por árbol suena justo hasta que dos personas cuentan el mismo patio de forma distinta. Un tronco doble puede ser un árbol o dos. Un álamo medio muerto enredado en su vecino puede ser un derribo o tres. La cotización se convierte en un debate sobre qué cuenta como árbol, y ese debate suele darse cuando la cuadrilla ya está en el sitio y el reloj corre. Para el trabajo de escalada por contrato, ese tipo de precio invita fricción entre el escalador y la compañía que lo contrató.',
+          'Una tarifa por día plana corta todo eso. El número queda fijo antes de que el escalador deje el suelo, así el dueño puede cotizar el trabajo completo con la línea de escalada ya cerrada. Sin regateos al pie del tronco, sin sorpresas en la factura, sin discutir si el arce de doble líder contó dos veces. Cotice a su cliente como usted quiera. El costo de escalada debajo de su oferta se queda en un solo número conocido, y la página de escalada por contrato muestra el rango actual.',
+        ],
+      },
+      {
+        heading: 'Un día en cuerda, y cuándo se vuelve dos',
+        paras: [
+          'Un día cubre la escalada en sí. El escalador sube, apareja lo que necesita aparejo y corta todo hasta dejar piezas que la cuadrilla de tierra puede mover y astillar. Ese es todo el alcance, y corre por tantos árboles como quepan entre la mañana y la tarde. Tres derribos fáciles y una poda, o un solo árbol grande que se come el día entero, de cualquier forma la tarifa es la misma y el escalador sigue cortando hasta que se acaba el día o se acaba la lista.',
+          'Algunos trabajos se estiran a un segundo día, y las razones son predecibles. El acceso es lento, un patio trasero con una sola puerta angosta y un acarreo largo hasta el punto de aparejo. La madera es demasiado grande, secciones de tronco de ponderosa muy pesadas para bajar rápido. O el aparejo tiene que correr muy conservador porque el árbol está sobre un techo, una línea eléctrica o un ventanal, y cada pieza baja pequeña y despacio. Cuando algo de eso aparece al caminar el trabajo, planee dos días desde el principio en vez de pelear el excedente después.',
+        ],
+      },
+      {
+        heading: 'Una pieza fea, una cotización',
+        paras: [
+          'No todo trabajo necesita un día completo de escalada. A veces la cuadrilla puede con todo el derribo menos una pieza, una punta quebrada colgando sobre un techo después de una nevada pesada de primavera, un líder rajado sobre la acometida, una rama que nadie puede alcanzar seguro desde el suelo. El resto del árbol es trabajo que su cuadrilla ya domina. Pagar una tarifa por día completa por cuarenta minutos de trabajo en cuerda no le cuadra a nadie.',
+          'Esa sola pieza técnica se puede cotizar por trabajo. Mande una foto, describa lo que hay debajo, y reciba un número por ese corte y descenso nada más. El escalador llega, resuelve la pieza que tiene atorado el trabajo, y le regresa el árbol a su cuadrilla. Así los trabajos chicos se quedan chicos y la tarifa por día se guarda para los días que de verdad la necesitan. Sin horas desperdiciadas de ningún lado de la factura.',
+        ],
+      },
+      {
+        heading: 'El trabajo de tierra sigue siendo suyo',
+        paras: [
+          'La tarifa por día compra un escalador, no un servicio completo de derribo. El trabajo de tierra, el astillado, el acarreo, el destoconado, dejar el pasto limpio, todo eso queda con la compañía que contrata y su cuadrilla. Un solo hombre llega al trabajo con silla, cuerdas y motosierras. Todo lo que queda debajo de la cuerda es suyo, igual que si el escalador estuviera en su propia nómina ese día. No hay una segunda troca ni una segunda cuadrilla llegando detrás de él.',
+          'Esa división es lo que hace que el arreglo funcione. Su cuadrilla ya maneja la astilladora, la troca y el arrastre mejor que cualquier persona de fuera en equipo ajeno. El escalador se queda en el árbol, donde está la especialidad, y la tierra se mueve al paso que marca su capataz. Cotice sus trabajos con eso en mente. La tarifa por día cubre lo que pasa en la cuerda, y todo lo que toca el suelo después es la parte del trabajo para la que su compañía ya estaba hecha.',
+        ],
+      },
+    ],
+    draft: false,
     imageAlt:
       'Un escalador por contrato equipado al pie de un árbol, listo para empezar una escalada por día.',
   },
@@ -261,7 +441,37 @@ const postsES: Post[] = [
       'El escalador en un trabajo con grúa: armar cargas y cortes',
       'Acceso y montaje: qué revisar antes del día',
     ],
-    draft: true,
+    body: [
+      {
+        heading: 'Cuando la grúa se paga sola',
+        paras: [
+          'Hay talas hechas para una pluma. Madera gruesa colgando sobre un techo, un tronco demasiado podrido para confiarle una carga de aparejo, un gigante de patio donde cada rama pediría un descenso con cuerda. La grúa cambia la cuenta en esos trabajos. Cada carga sale volando entera y aterriza en la zona de acopio en vez de bajar pieza por pieza con cuerda. Horas de aparejar se vuelven minutos de pluma, y la madera nunca se balancea sobre el objetivo.',
+          'Una ponderosa muerta inclinada sobre una cochera es el caso más claro. Aparejar desde un tronco significa confiar en ese tronco, y la madera muerta o hueca no da nada en qué confiar. Con grúa el peso lo toma la pluma, no el árbol, así que el escalador nunca le pide a fibra podrida que aguante una carga de golpe. Cuando la madera es pesada, los objetivos están cerca o el tronco no soporta un aparejo, la grúa vale cada hora de su renta.',
+        ],
+      },
+      {
+        heading: 'Cuando la cuerda sale más barata',
+        paras: [
+          'Una grúa solo sirve si puede llegar al árbol. Una entrada angosta, un campo séptico blando, un patio trasero detrás de dos cercas, y la pluma se queda en el camión. Muchas talas tampoco tienen suficiente madera para justificarla. Un tronco mediano con una zona de caída decente se desarma con cuerda en una mañana, y la grúa tardaría más en montarse de lo que dura la escalada. Cuando movilizarla cuesta más que las horas que ahorra, escalar y aparejar gana por pura cuenta.',
+          'Para esos trabajos, un escalador por contrato es la respuesta completa. Él trae el aparejo, su cuadrilla maneja las cuerdas y alimenta la chipeadora, y el árbol baja por una tarifa por día que usted conocía antes de que la troca saliera del patio. Sin agenda de grúa que esperar, sin operador que reservar, sin segunda movilización si el clima se voltea. Si la madera es mediana y el acceso está apretado, la cuerda no es el plan de respaldo. Es el método más rápido y más barato.',
+        ],
+      },
+      {
+        heading: 'La grúa no sustituye al escalador',
+        paras: [
+          'Tener grúa en el sitio no deja al escalador sin trabajo. Alguien tiene que subir de todos modos. Cada carga empieza con una eslinga puesta en el punto correcto de la madera, un juicio de balance y un corte colocado para que la pieza se levante limpia en vez de rodar o rajarse. El escalador toma esa decisión desde adentro de la copa, carga tras carga, y se mantiene amarrado al árbol, no al gancho de la grúa, digan lo que digan las viejas historias de subirse a la bola.',
+          'La comunicación con el operador pesa tanto como el trabajo de motosierra. El escalador canta el peso estimado de cada carga antes del corte para que el operador sepa lo que la pluma va a recibir. Calcule de más y el levante se atora. Calcule de menos y la pluma recibe un golpe para el que no estaba puesta. Un escalador con horas bajo pluma lee bien el peso de la madera y mantiene cada carga dentro de lo que aguanta el montaje. Ese juicio en las alturas es lo que su cuadrilla está rentando por el día, con grúa o sin ella.',
+        ],
+      },
+      {
+        heading: 'Camine el sitio antes de que llegue la grúa',
+        paras: [
+          'El peor día de grúa es cuando la máquina llega y no puede trabajar. Camine el sitio primero. Revise el espacio de montaje al alcance del árbol. Revise el piso bajo los estabilizadores, porque el terreno firme le gana a un pasto blando sobre un tanque enterrado o una zanja fresca. Revise las líneas eléctricas en la ruta de giro entre el árbol y la zona de descarga. Cualquiera de esas cosas puede matar el plan cuando la movilización ya está apartada.',
+          'Después planee las cargas y el patio. Un peso aproximado de las piezas más grandes le dice si la grúa cotizada alcanza, porque la capacidad cae rápido conforme la pluma se estira. Decida dónde se acomodan los camiones y la chipeadora para que cada carga aterrice cerca del trabajo y no al otro lado de la propiedad. Un escalador por contrato que ya ha trabajado bajo pluma puede caminar ese sitio con usted y señalar los problemas cuando todavía salen baratos. El día de grúa corre sobre lo que se revisó antes.',
+        ],
+      },
+    ],
+    draft: false,
     imageAlt:
       'Una grúa levantando una sección de árbol mientras un escalador arma la siguiente carga en una tala.',
   },
@@ -280,7 +490,37 @@ const postsES: Post[] = [
       'Por qué jalar un peligro desde el suelo sale mal',
       'Sacar un escalador rápido tras una tormenta',
     ],
-    draft: true,
+    body: [
+      {
+        heading: 'Leer el inclinado antes de sacar la motosierra',
+        paras: [
+          'Un viento chinook o una nevada pesada de primavera deja árboles recargados donde nunca crecieron. Un inclinado descansando sobre otro árbol o sobre un techo ya no se sostiene de sus raíces. Es un resorte cargado. El tronco, las ramas que lo detienen y la madera donde descansa cargan fuerza en direcciones que nadie ve desde la banqueta. Corte la fibra equivocada y esa fuerza se suelta de golpe, hacia la motosierra y hacia el hombre que la trae.',
+          'Primero viene la lectura. Hacia dónde quiere moverse la carga, qué la está deteniendo, qué se suelta cuando abre el primer corte. Un escalador que trabaja madera de tormenta hace esa lectura desde una cuerda en un árbol sano de al lado, no debajo de la inclinación. Cada corte se planea para que la madera se mueva lejos de él y lejos de lo que tiene debajo. Si su cuadrilla está parada alrededor de un inclinado discutiendo por dónde empezar, esa discusión es la señal de que el trabajo es para un escalador.',
+        ],
+      },
+      {
+        heading: 'Puntas quebradas y ramas colgadas',
+        paras: [
+          'El viento quiebra una punta y no siempre cae. Se queda colgada en la copa, atorada en unas cuantas ramas, sobre la entrada, sobre la acometida eléctrica o sobre el punto donde su hombre de tierra apila la rama. Una rama colgada puede aguantar una semana o soltarse con la siguiente brisa. Desde el suelo nadie sabe cuál de las dos. Cada hora que sigue allá arriba es una carga sin aparejo encima de una zona de trabajo.',
+          'Un escalador pone el aparejo antes de que nada se mueva. Se coloca arriba o a un lado de la rama colgada, la amarra a un punto sano y solo entonces hace el corte que la libera. La pieza se columpia sobre la cuerda en vez de caer, y la cuadrilla de tierra la baja a un punto despejado a la velocidad que elija. Una punta quebrada baja igual, cortada en tramos que la cuerda aguanta. Con control desde el primer corte hasta el suelo, no soltada a ver dónde cae.',
+        ],
+      },
+      {
+        heading: 'El problema de jalar desde el suelo',
+        paras: [
+          'Jalar una rama colgada con una línea o con la troca parece la jugada segura porque nadie deja el suelo. El problema es que un jalón es una adivinanza. Nadie sabe qué está deteniendo la pieza en realidad, así que nadie sabe qué dirección toma cuando se suelta. Puede rodar de donde está atorada y caer en otro lado por completo. Puede regresarse como látigo por la línea hacia el hombre que jala. Puede sacudir toda la punta quebrada y tirarla también.',
+          'El trabajo aparejado quita la adivinanza. La pieza está amarrada antes de estar libre, así que el punto donde se suelta y la zona de caída se eligen, no se descubren. Esa es toda la diferencia. Un jalón gasta su control antes de que la madera se mueva y no le queda nada después. Una cuerda puesta desde arriba mantiene el control durante toda la bajada. Cuando la rama cuelga sobre un techo, una línea eléctrica o un punto donde su cuadrilla tiene que seguir trabajando, adivinar es la opción cara.',
+        ],
+      },
+      {
+        heading: 'Cuando todas las cuadrillas andan saturadas',
+        paras: [
+          'Después de un ventarrón el teléfono no para. Todas las compañías de árboles del pueblo están saturadas al mismo tiempo, y los trabajos que se amontonan son justo los que traen peligros en altura. Su cuadrilla puede mover rama y trozar troncos caídos todo el día, pero cada rama colgada y cada inclinado cargado detiene la agenda hasta que alguien calificado sube. Si su escalador es el cuello de botella, la semana de tormenta es cuando se nota.',
+          'Un escalador por contrato por el día rompe ese cuello de botella. Llega, se amarra en las escaladas de peligro, y su cuadrilla corre el trabajo de tierra que ya conoce mientras las piezas técnicas bajan con aparejo. Una tarifa por día plana, sin contratación nueva, sin subir a un hombre de tierra bajo presión. Los trabajos peligrosos salen de la pizarra mientras el resto de la agenda sigue avanzando. Cuando el trabajo de tormenta se amontona, la salida más rápida es un escalador que entra a la cuadrilla que usted ya tiene.',
+        ],
+      },
+    ],
+    draft: false,
     imageAlt:
       'Un líder de árbol quebrado por tormenta colgado sobre una estructura, un peligro para un escalador dedicado.',
   },

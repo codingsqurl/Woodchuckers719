@@ -19,7 +19,7 @@ database** with the **same schema**. No data migration, no ORM.
 | Migrations         | ✅ Done     | reused `db/migrations/*.sql`, baseline runner on first boot         |
 | Public pages       | ✅ Done     | `/`, `/portfolio`, `/areas`, `/links`, `/contract-climbing` — RSC   |
 | Services pages     | ✅ Done     | `/services` + 5 B2B service pages, keyword clusters, schema (EN+ES) |
-| Content hub (blog) | 🟡 Filling | `/blog` + 5 posts (EN+ES) + RSS — 1 full article, 4 stubs `draft: true` |
+| Content hub (blog) | ✅ Done     | `/blog` + 5 full articles (EN+ES) + RSS                             |
 | Intake / lead form | ✅ Done     | `/contract-climbing` form + per-page lead-capture w/ attribution    |
 | CRM pipeline       | ✅ Done     | admin lead pipeline: editable status, notes, stage filter, Source   |
 | Outbound prospects | ✅ Done     | `/admin/prospects` call list: import + phone dedup, funnel, tap-to-call |
@@ -54,7 +54,7 @@ No ORM. No Prisma. Raw prepared statements you can read in `lib/`.
 app/                      # routes (RSC pages, Server Actions, route handlers)
   page.tsx                #  /  (home)
   portfolio|areas|links/  #  public pages
-  estimate/               #  form + client calculator + submit action
+  estimate/               #  redirect → /contract-climbing (old form removed)
   admin/                  #  login, portal, dashboard + mutation actions
   auth/{google,github}/   #  SSO login + callback route handlers
   robots.ts sitemap.ts    #  SEO
@@ -136,11 +136,11 @@ fly deploy            # KING runs this at cutover
   Fonts link, so it rendered in `system-ui`. This port instead self-hosts the
   brand faces via `next/font` (Archivo + Big Shoulders Display served from
   `/_next`, no external request), which satisfies the same strict CSP.
-- **Rate-limit status:** the SSO GET routes return a real `429`. The estimate
-  and login forms are Server Actions (a page route can't also be a raw POST
+- **Rate-limit status:** the SSO GET routes return a real `429`. The lead and
+  login forms are Server Actions (a page route can't also be a raw POST
   handler in the App Router), so an over-limit hit there shows the same "too
   many requests" message inline instead of a 429 body. Same throttle, same
-  limits (login 10/min, estimate 5/min, SSO 10/min).
+  limits (login 10/min, lead form 5/min, SSO 10/min).
 - **Admin 404:** non-admins get the themed 404 (Go used a bare 404). Both are
   `404` and look identical to any public 404 — which better serves the
   "indistinguishable from a route that doesn't exist" goal.
