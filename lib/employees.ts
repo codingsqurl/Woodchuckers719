@@ -4,7 +4,6 @@
 import bcrypt from 'bcryptjs'
 import { db } from './db'
 import { formatStamp } from './format'
-import { deleteSessionsForEmployee } from './session'
 
 // DefaultCost in Go's bcrypt is 10 — match it so new hashes look the same.
 const BCRYPT_COST = 10
@@ -151,12 +150,12 @@ export function touchLogin(id: number, via: string): void {
 }
 
 // setEmployeeActive enables or disables an account (soft delete). Deactivating
-// also force-logs-out the account: without this, the disabled user keeps a valid
-// cookie until it expires (enforced only by the active=1 read filter), and
-// re-enabling inside the 7-day window would silently revive those sessions.
+// force-logs-out the account on its next request: sessions are stateless JWTs,
+// and resolveSession hydrates the employee through employeeByID, whose
+// `active = 1` filter returns null for a disabled account — so the cookie stops
+// resolving the instant this flips, with no session rows to clear.
 export function setEmployeeActive(id: number, active: boolean): void {
   setActiveStmt.run(active ? 1 : 0, id)
-  if (!active) deleteSessionsForEmployee(id)
 }
 
 // isDuplicateEmail reports whether err is a UNIQUE violation on employees.email.

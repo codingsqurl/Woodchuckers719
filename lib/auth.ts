@@ -15,7 +15,7 @@ export const currentUser = cache(async (): Promise<Employee | null> => {
   const c = await cookies()
   const token = c.get(SESSION_COOKIE)?.value
   if (!token) return null
-  return resolveSession(token)
+  return await resolveSession(token)
 })
 
 // requireAuth sends unauthenticated users to the staff login (Go used a 303;

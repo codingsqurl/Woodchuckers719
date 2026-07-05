@@ -1,88 +1,70 @@
-// session.ts — port of auth.go's session half. Server-side sessions table +
-// opaque 256-bit hex token in an HttpOnly cookie. Cookie mutation (set/clear)
-// only runs inside Server Actions or Route Handlers, where next/headers allows
-// writing cookies; resolveSession is a plain DB read usable anywhere.
-import { randomBytes } from 'node:crypto'
+// session.ts — the staff-session half of auth. Stateless: a signed JWT (HS256)
+// in an HttpOnly cookie, no server-side `sessions` table. The cookie carries
+// only the employee id (JWT `sub`); every request verifies the signature, then
+// resolveSession hydrates the employee from the DB — so employeeByID's
+// `active = 1` filter still logs out a deactivated account on its next request.
+// What statelessness costs: no per-session revoke (a leaked token is valid until
+// it expires); deactivating the employee, or rotating SESSION_SECRET, are the
+// revocation levers. The `sessions` table from migration 0001 is now unused.
+//
+// Cookie mutation (set/clear) only runs inside Server Actions or Route Handlers,
+// where next/headers allows writing cookies; resolveSession is a read usable
+// anywhere. The OAuth flow-cookie helpers (state/nonce) are unchanged.
+import { SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
-import { db } from './db'
 import { employeeByID, type Employee } from './employees'
+import { sessionSecret } from './env'
 
 export const SESSION_COOKIE = 'session'
-const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000 // 7 days
+const SESSION_TTL_S = 7 * 24 * 60 * 60 // 7 days
 
-// newToken returns a random opaque 256-bit session id (hex).
-function newToken(): string {
-  return randomBytes(32).toString('hex')
+// The HMAC key as bytes, or null when SESSION_SECRET is unset (fail closed).
+function key(): Uint8Array | null {
+  const s = sessionSecret()
+  return s ? new TextEncoder().encode(s) : null
 }
 
-// Prepared once at module load and reused — better-sqlite3 does not cache, so a
-// fresh db.prepare() per call would recompile the SQL on every request. The
-// sessions table exists from migration 0001, so eager prepare is safe here.
-const pruneStmt = db.prepare(`DELETE FROM sessions WHERE expires_at <= ?`)
-const insertStmt = db.prepare(
-  `INSERT INTO sessions (token, employee_id, expires_at) VALUES (?, ?, ?)`,
-)
-const resolveStmt = db.prepare(`SELECT employee_id FROM sessions WHERE token = ? AND expires_at > ?`)
-const deleteStmt = db.prepare(`DELETE FROM sessions WHERE token = ?`)
-const deleteByEmployeeStmt = db.prepare(`DELETE FROM sessions WHERE employee_id = ?`)
-
-// pruneExpiredSessions deletes already-expired rows so the table never grows
-// unbounded on a long-running single machine. Only removes sessions that are
-// already invalid (expires_at <= now), so it can never log anyone out. Cheap;
-// runs opportunistically at each new login. expires_at is epoch seconds.
-export function pruneExpiredSessions(): void {
-  pruneStmt.run(Math.floor(Date.now() / 1000))
+// resolveSession verifies a session JWT and resolves it to its (active)
+// employee, or null. Any bad/expired/forged/deactivated case is null — never
+// throws. Async because JWT verification is async (the old opaque-token lookup
+// was sync; callers already await currentUser()).
+export async function resolveSession(token: string): Promise<Employee | null> {
+  const k = key()
+  if (!k) return null
+  try {
+    const { payload } = await jwtVerify(token, k, { algorithms: ['HS256'] })
+    const id = Number(payload.sub)
+    if (!Number.isInteger(id) || id <= 0) return null
+    return employeeByID(id)
+  } catch {
+    return null
+  }
 }
 
-// createSessionRow persists a session row and returns its token + expiry.
-export function createSessionRow(employeeID: number): { token: string; expires: Date } {
-  pruneExpiredSessions()
-  const token = newToken()
-  const expires = new Date(Date.now() + SESSION_TTL_MS)
-  insertStmt.run(token, employeeID, Math.floor(expires.getTime() / 1000))
-  return { token, expires }
-}
-
-// resolveSession resolves a non-expired session token to its (active) employee.
-export function resolveSession(token: string): Employee | null {
-  const row = resolveStmt.get(token, Math.floor(Date.now() / 1000)) as
-    | { employee_id: number }
-    | undefined
-  if (!row) return null
-  return employeeByID(row.employee_id)
-}
-
-function deleteSession(token: string): void {
-  deleteStmt.run(token)
-}
-
-// deleteSessionsForEmployee removes every session row for an account, forcing a
-// log-out on all devices. Called when an account is deactivated so a stale
-// cookie can't ride the remaining TTL — and can't come back to life if the
-// account is re-enabled inside the 7-day window.
-export function deleteSessionsForEmployee(employeeID: number): void {
-  deleteByEmployeeStmt.run(employeeID)
-}
-
-// startSession creates the row and sets the cookie. The `Secure` flag is on in
-// production (the target is HTTPS); off in dev so the cookie works over http.
+// startSession mints the JWT and sets the cookie. `Secure` is on in production
+// (HTTPS target); off in dev so the cookie works over http.
 export async function startSession(employeeID: number): Promise<void> {
-  const { token, expires } = createSessionRow(employeeID)
+  const k = key()
+  if (!k) throw new Error('SESSION_SECRET is not set; cannot start a session')
+  const token = await new SignJWT({})
+    .setProtectedHeader({ alg: 'HS256' })
+    .setSubject(String(employeeID))
+    .setIssuedAt()
+    .setExpirationTime(`${SESSION_TTL_S}s`)
+    .sign(k)
   const c = await cookies()
   c.set(SESSION_COOKIE, token, {
     path: '/',
     httpOnly: true,
     sameSite: 'lax',
     secure: process.env.NODE_ENV === 'production',
-    expires,
+    expires: new Date(Date.now() + SESSION_TTL_S * 1000),
   })
 }
 
-// endSession destroys the current session row (if any) and clears the cookie.
+// endSession clears the cookie. Stateless: nothing to delete server-side.
 export async function endSession(): Promise<void> {
   const c = await cookies()
-  const token = c.get(SESSION_COOKIE)?.value
-  if (token) deleteSession(token)
   c.set(SESSION_COOKIE, '', {
     path: '/',
     httpOnly: true,
