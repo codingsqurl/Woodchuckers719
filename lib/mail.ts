@@ -18,11 +18,22 @@ export function mailerConfigured(): boolean {
   return !!process.env.RESEND_API_KEY
 }
 
-// sendMail posts one HTML email to Resend. Throws on a non-2xx response.
-export async function sendMail(to: string, subject: string, html: string): Promise<void> {
+// sendMail posts one HTML email to Resend. Throws on a non-2xx response. `from`
+// stays on the verified domain for DKIM/deliverability; `replyTo` (optional) is
+// where a reply actually lands — a real monitored inbox — since the `from`
+// address is send-only. Without it, replies to the auto-reply go nowhere.
+export async function sendMail(
+  to: string,
+  subject: string,
+  html: string,
+  replyTo?: string,
+): Promise<void> {
   const key = process.env.RESEND_API_KEY
   if (!key) throw new Error('mail not configured')
   const from = process.env.MAIL_FROM || 'Woodchuckers <onboarding@resend.dev>'
+
+  const payload: Record<string, unknown> = { from, to: [to], subject, html }
+  if (replyTo) payload.reply_to = replyTo
 
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -30,7 +41,7 @@ export async function sendMail(to: string, subject: string, html: string): Promi
       Authorization: `Bearer ${key}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ from, to: [to], subject, html }),
+    body: JSON.stringify(payload),
     signal: AbortSignal.timeout(10_000),
   })
   if (res.status >= 300) {

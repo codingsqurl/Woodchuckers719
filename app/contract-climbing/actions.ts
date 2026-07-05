@@ -129,6 +129,9 @@ export async function submitContract(
             low: contractClimbing.dayLow,
             high: contractClimbing.dayHigh,
           }),
+          // Reply-To the customer (when they gave a valid email) so hitting reply
+          // on the lead notification answers the lead directly.
+          validEmail ? email : undefined,
         )
       } catch (err) {
         console.error('contract email failed:', err)
@@ -141,7 +144,9 @@ export async function submitContract(
       if (validEmail && autoReplyRL.allow(email)) {
         try {
           const reply = leadReply(name, localeStr)
-          await sendMail(email, reply.subject, reply.html)
+          // Reply-To the owner's monitored inbox so a customer reply lands there
+          // directly, not on the send-only from-address (no forwarding needed).
+          await sendMail(email, reply.subject, reply.html, leadsTo)
         } catch (err) {
           console.error('lead auto-reply failed:', err)
         }
