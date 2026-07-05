@@ -1372,6 +1372,15 @@ picture {
   min-height: 52px;
   box-sizing: border-box;
 }
+/* On phones the two actions can't both fit side by side — "Verify with Google"
+   wraps to two lines and the button balloons in height. Stack them full-width so
+   each keeps a single-line label at the normal 52px. */
+@media (max-width: 34rem) {
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
 /* short "why is there a Google button" hint above the action row */
 .verify-hint {
   margin-bottom: 0.1rem;
