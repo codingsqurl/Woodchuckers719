@@ -39,6 +39,7 @@ export function LinkList({ links, locale }: { links: BioLink[]; locale: Locale }
             className="link-btn"
             href={l.href}
             {...(l.external ? { target: '_blank', rel: 'noopener' } : {})}
+            {...(l.download ? { download: '' } : {})}
           >
             <span className="link-label">{l.label}</span>
             {l.sub ? <span className="link-sub">{l.sub}</span> : null}

@@ -16,6 +16,7 @@ export type BioLink = {
   href?: string // if set, the button is a link
   external?: boolean // open in a new tab (off-site links)
   copy?: string // if set and href is empty, tapping copies this value
+  download?: boolean // if set, the anchor downloads its target (the vCard) instead of navigating
 }
 
 // A handle is still a placeholder until the real value replaces it. Launch-safe:
@@ -32,6 +33,8 @@ export function bioLinks(locale: Locale): BioLink[] {
     { label: t.website, sub: t.websiteSub, href: localePath(locale, '/') },
     { label: t.estimate, sub: t.estimateSub, href: localePath(locale, '/contract-climbing') },
     { label: t.callText, sub: '(719) 756-2597', href: 'tel:+17197562597' },
+    { label: t.saveContact, sub: t.saveContactSub, href: '/contact.vcf', download: true },
+    { label: t.tiktok, sub: t.tiktokSub, href: 'https://www.tiktok.com/@woodchuckertres', external: true },
     {
       label: t.cashapp,
       sub: '$YOUR_CASHTAG',
