@@ -105,7 +105,8 @@ export function HomeContent({ locale }: { locale: Locale }) {
 
       <main id="main">
         {/* ───── cinematic ascent hero ───── */}
-        <section className="hero" id="top">
+        <section className="hero home-hero" id="top">
+          <div className="home-hero-photo" aria-hidden="true" />
           <div className="hero-inner">
             <p className="eyebrow">{t.heroEyebrow}</p>
             <h1 className="hero-title">

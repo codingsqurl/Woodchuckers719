@@ -96,6 +96,19 @@ export function PortfolioContent({ locale }: { locale: Locale }) {
               </video>
               <figcaption>{t.videoCap}</figcaption>
             </figure>
+            <figure className="proof-video">
+              <video
+                controls
+                playsInline
+                preload="none"
+                poster="/img/treetotree-poster.jpg"
+                width={480}
+                height={672}
+              >
+                <source src="/video/treetotree.mp4" type="video/mp4" />
+              </video>
+              <figcaption>{t.videoCap2}</figcaption>
+            </figure>
           </div>
         </section>
 

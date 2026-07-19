@@ -810,6 +810,37 @@ body.site .hero {
   padding: 2rem 1.25rem clamp(2.5rem, 7vw, 4rem);
   background: transparent;
 }
+
+/* Homepage hero photo — treetotree, scoped to the home hero ONLY (.home-hero);
+   every other page keeps the shared .site-backdrop. isolation:isolate makes the
+   z-index:-1 photo sit behind .hero-inner but stay contained in the hero box. */
+.home-hero {
+  isolation: isolate;
+}
+.home-hero-photo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--green-900, #06160d) url("/img/treetotree.jpg") center / cover no-repeat;
+  background-image: -webkit-image-set(
+    url("/img/treetotree.avif") type("image/avif"),
+    url("/img/treetotree.webp") type("image/webp"),
+    url("/img/treetotree.jpg") type("image/jpeg")
+  );
+  background-image: image-set(
+    url("/img/treetotree.avif") type("image/avif"),
+    url("/img/treetotree.webp") type("image/webp"),
+    url("/img/treetotree.jpg") type("image/jpeg")
+  );
+}
+/* legibility scrim — the hero copy is white and bottom-aligned, so weight the
+   gradient toward the bottom where the text actually sits. */
+.home-hero-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(6, 16, 10, 0.28) 0%, rgba(6, 16, 10, 0.66) 100%);
+}
 /* inner pages: same cinematic glass hero + rising lines, shorter so the content
    underneath stays reachable without a full-viewport scroll. Home keeps the splash. */
 body.site:not(.home) .hero {
