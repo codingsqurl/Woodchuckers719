@@ -817,6 +817,12 @@ body.site .hero {
 .home-hero {
   isolation: isolate;
 }
+/* Homepage hero is much shorter than the old full-height splash, so the climber
+   reads as the subject instead of a sliver. Higher specificity than
+   `body.site .hero` so it wins the min-height. Tune the clamp to taste. */
+body.site .hero.home-hero {
+  min-height: clamp(16rem, 42svh, 26rem);
+}
 .home-hero-photo {
   position: absolute;
   inset: 0;
