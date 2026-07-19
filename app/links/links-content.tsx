@@ -1,4 +1,4 @@
-import { SiteHeader, SiteFooter, PageHero } from '../components/chrome'
+import { SiteFooter, PageHero } from '../components/chrome'
 import { type Locale, getDict, localePath } from '@/lib/i18n'
 import { bioLinks } from '@/lib/links'
 import { LinkList } from './link-list'
@@ -11,7 +11,6 @@ export function LinksContent({ locale }: { locale: Locale }) {
   const t = tc.links
   return (
     <>
-      <SiteHeader locale={locale} />
       <main id="main">
         <PageHero
           eyebrow={t.tagline}
