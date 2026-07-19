@@ -62,6 +62,7 @@ export function ContractForm({
           </p>
           <p className="note note-tight">{t.rateNote}</p>
           <p className="included">{t.included}</p>
+          <p className="pay-methods">{t.payWays}</p>
 
           <form className="estimate-form contract-form" id="job" action={formAction}>
             {state.status === 'error' ? (

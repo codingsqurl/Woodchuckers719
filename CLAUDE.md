@@ -95,7 +95,7 @@ Stack:
 - Auth is bcrypt (`bcryptjs`) passwords plus server-side sessions in the `sessions` table, opaque token in an HttpOnly cookie (`Secure` in prod). Google SSO (OIDC, id_token verified with `jose`) and GitHub OAuth are wired behind env vars, pre-created accounts only, disabled when unset.
 - Email via the Resend HTTP API (raw `fetch`). Security headers + per-request nonce CSP in `middleware.ts`. In-memory fixed-window rate limiter (single process — hence single Fly machine).
 - The original `static/css/style.css` ships as `app/globals.css`. Images moved to `public/img/`.
-- The public site is a committed **sitewide glass** look: one fixed `background.jpg` backdrop behind every page (mounted once in `app/layout.tsx`) + pine-tinted translucent/blurred bands and panels. This deliberately overrode the old No-Glass Rule — see `DESIGN.md` → "The Glass Rule". Don't flatten it back to solid pine thinking it's drift; form fields stay opaque white on purpose.
+- The public site is a committed **sitewide glass** look: one fixed `treetotree.jpg` backdrop behind every page (mounted once in `app/layout.tsx`) + pine-tinted translucent/blurred bands and panels. This deliberately overrode the old No-Glass Rule — see `DESIGN.md` → "The Glass Rule". Don't flatten it back to solid pine thinking it's drift; form fields stay opaque white on purpose.
 - Pricing lives in `lib/rates.ts` (the single source): homeowner `fullJob` day-rate + B2B `contractClimbing` tiers. The `/contract-climbing` page sells KING as a contract climber to other tree companies and carries the single intake form. The old homeowner `/estimate` flow is folded into it: `/estimate` and `/es/estimate` are redirect-only, the form/calculator/action code is deleted.
 
 Layout:

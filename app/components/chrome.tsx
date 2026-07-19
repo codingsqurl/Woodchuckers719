@@ -143,59 +143,43 @@ export function PageHero({
 // (moved here from the header). `path` is the clean logical path for the toggle.
 export function SiteFooter({ locale, path }: { locale: Locale; path: string }) {
   const d = getDict(locale)
+  // nav links in footer order — [href, label]
+  const links: [string, string][] = [
+    [localePath(locale, '/'), d.nav.home],
+    [localePath(locale, '/portfolio'), d.nav.work],
+    [localePath(locale, '/areas'), d.nav.areas],
+    [localePath(locale, '/services'), d.nav.services],
+    [localePath(locale, '/blog'), d.blog.crumb],
+    [localePath(locale, '/contract-climbing'), d.footPro],
+  ]
+  // every footer node in order; a "·" separator is interleaved between them below
+  const items = [
+    <span key="copy">© Woodchuckers</span>,
+    ...links.map(([href, label]) => (
+      <a key={href} className="foot-link" href={href}>
+        {label}
+      </a>
+    )),
+    <span key="es" lang="es">
+      {d.seHabla}
+    </span>,
+    <a key="vcf" className="foot-link" href="/contact.vcf" download="woodchuckers.vcf">
+      {d.saveContact}
+    </a>,
+    <LangToggle key="lang" locale={locale} path={path} />,
+  ]
   return (
     <footer className="foot">
-      <span>© Woodchuckers</span>
-      <span className="foot-sep" aria-hidden="true">
-        ·
-      </span>
-      <a className="foot-link" href={localePath(locale, '/')}>
-        {d.nav.home}
-      </a>
-      <span className="foot-sep" aria-hidden="true">
-        ·
-      </span>
-      <a className="foot-link" href={localePath(locale, '/portfolio')}>
-        {d.nav.work}
-      </a>
-      <span className="foot-sep" aria-hidden="true">
-        ·
-      </span>
-      <a className="foot-link" href={localePath(locale, '/areas')}>
-        {d.nav.areas}
-      </a>
-      <span className="foot-sep" aria-hidden="true">
-        ·
-      </span>
-      <a className="foot-link" href={localePath(locale, '/services')}>
-        {d.nav.services}
-      </a>
-      <span className="foot-sep" aria-hidden="true">
-        ·
-      </span>
-      <a className="foot-link" href={localePath(locale, '/blog')}>
-        {d.blog.crumb}
-      </a>
-      <span className="foot-sep" aria-hidden="true">
-        ·
-      </span>
-      <a className="foot-link" href={localePath(locale, '/contract-climbing')}>
-        {d.footPro}
-      </a>
-      <span className="foot-sep" aria-hidden="true">
-        ·
-      </span>
-      <span lang="es">{d.seHabla}</span>
-      <span className="foot-sep" aria-hidden="true">
-        ·
-      </span>
-      <a className="foot-link" href="/contact.vcf" download="woodchuckers.vcf">
-        {d.saveContact}
-      </a>
-      <span className="foot-sep" aria-hidden="true">
-        ·
-      </span>
-      <LangToggle locale={locale} path={path} />
+      {items.flatMap((item, i) =>
+        i === 0
+          ? item
+          : [
+              <span key={`sep-${i}`} className="foot-sep" aria-hidden="true">
+                ·
+              </span>,
+              item,
+            ],
+      )}
     </footer>
   )
 }

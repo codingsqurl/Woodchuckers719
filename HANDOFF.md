@@ -111,7 +111,7 @@ Springs, plus a gated `/admin` staff app. Stack: Next.js RSC + Server Actions, r
 - **No feature-soup.** This site deliberately rejects the cheap-local-SEO template: no
   badge soup, no review widgets, no cluttered hero, no icon-card grids. Restraint is the
   strategy. **Do not add features to "pack it out."** If a change adds a widget, stop.
-- Committed **glass system** (fixed `background.jpg` backdrop + pine-tinted blurred
+- Committed **glass system** (fixed `treetotree.jpg` backdrop + pine-tinted blurred
   bands) is intentional, not drift — don't flatten it to solid pine. Form fields stay
   opaque white on purpose.
 - Headings are Big Shoulders (condensed, uppercase); body is Archivo. Don't swap fonts.

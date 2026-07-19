@@ -532,7 +532,7 @@ body.site .section-title {
   padding-bottom: 0;
   border-bottom: none;
 }
-.svc-list h3 {
+.svc-list :is(h2, h3) {
   margin: 0 0 0.3rem;
   font-family: var(--font-display);
   font-weight: 700;
@@ -541,13 +541,22 @@ body.site .section-title {
   color: var(--accent);
 }
 /* home service cards deep-link into /services; the link reads as the heading */
-.svc-list h3 a {
+/* the title IS a link into the detail page — give it a persistent cue so it
+   never reads as a dead-end heading: thin safety-orange underline at rest,
+   full accent on hover. */
+.svc-list :is(h2, h3) a {
   color: inherit;
-  text-decoration: none;
-}
-.svc-list h3 a:hover {
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-decoration-color: rgba(242, 96, 28, 0.55);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  transition:
+    color 0.15s,
+    text-decoration-color 0.15s;
+}
+.svc-list :is(h2, h3) a:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
 }
 .svc-list p {
   margin: 0;
@@ -1099,17 +1108,17 @@ picture {
   gap: 1.25rem;
   margin-top: 2rem;
 }
-/* first shot is the lead proof image — full width and taller; second untouched */
+/* first shot now sits in ONE column like the others (was full-width) so it takes
+   less width, and is shown WHOLE via object-fit: contain so the climber reads
+   zoomed out instead of cropped tight. Any slim letterbox shows pine — on-brand. */
 @media (min-width: 40rem) {
   .gallery {
     grid-template-columns: 1fr 1fr;
   }
-  .gallery .shot:first-child {
-    grid-column: 1 / -1;
-  }
 }
 .gallery .shot:first-child img {
-  height: clamp(24rem, 60vh, 40rem);
+  height: clamp(18rem, 38vh, 26rem);
+  object-fit: contain;
 }
 .shot {
   margin: 0;
@@ -1664,6 +1673,298 @@ picture {
   margin-top: 1.75rem;
 }
 
+/* ═══════════════════════ /links — FULL-SCREEN link-in-bio ═════════════════
+   /links opts out of body.site (see bodyClass in app/layout.tsx): no topbar,
+   no glass bands, no footer. It owns the whole viewport — one fixed brand photo
+   with the buttons floating on it. This block is self-contained on body.bio. */
+body.bio {
+  min-height: 100svh;
+  margin: 0;
+  background: var(--green-900); /* fallback while the photo loads */
+  color: var(--on-dark);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+/* The full-bleed brand photo — the climber mid-transfer — fixed behind the
+   column. AVIF > WebP > JPEG via image-set; shorthand paints JPEG as the floor.
+   50% 42% keeps the climber in frame; scaled 1.06 hides the crop edges. */
+.bio-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: url("/img/treetotree.jpg") 50% 42% / cover no-repeat;
+  background-image: -webkit-image-set(
+    url("/img/treetotree.avif") type("image/avif"),
+    url("/img/treetotree.webp") type("image/webp"),
+    url("/img/treetotree.jpg") type("image/jpeg")
+  );
+  background-image: image-set(
+    url("/img/treetotree.avif") type("image/avif"),
+    url("/img/treetotree.webp") type("image/webp"),
+    url("/img/treetotree.jpg") type("image/jpeg")
+  );
+  transform: scale(1.06);
+}
+/* Scrim so the pine buttons + white type stay sun-readable over the photo:
+   lighter at the top where the brand sits, darker through the button stack. */
+.bio-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    rgba(6, 16, 10, 0.42) 0%,
+    rgba(6, 16, 10, 0.58) 45%,
+    rgba(6, 16, 10, 0.82) 100%
+  );
+}
+.bio-wrap {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(2rem, 7vh, 4.5rem) 1.25rem;
+}
+.bio-inner {
+  width: 100%;
+  max-width: 26rem;
+  text-align: center;
+}
+.bio-head {
+  margin-bottom: 1.75rem;
+}
+.bio-brand {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: clamp(2rem, 9vw, 2.75rem);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  margin: 0;
+  color: var(--on-dark);
+}
+.bio-tagline {
+  margin: 0.5rem 0 0;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--on-dark-soft);
+}
+.bio-inner .lang-toggle {
+  display: inline-block;
+  margin-top: 1.75rem;
+}
+
+/* ═══════════════════════ /pay — enter-amount checkout ════════════════════
+   /pay stays on body.site (keeps the sitewide backdrop) but skips the topbar/
+   footer for a focused, single-action card. Form fields stay opaque white per
+   the No-White-exception rule; everything else is pine + rationed orange. */
+.pay-wrap {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(2rem, 7vh, 4.5rem) 1.25rem;
+}
+.pay-card {
+  width: 100%;
+  max-width: 30rem;
+  padding: clamp(1.5rem, 5vw, 2.25rem);
+  text-align: center;
+  border-radius: 16px;
+  background: rgba(11, 42, 26, 0.66);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+}
+.pay-brand {
+  display: inline-block;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  font-size: 1.1rem;
+  color: var(--on-dark);
+  text-decoration: none;
+}
+.pay-eyebrow {
+  margin: 1.1rem 0 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--on-dark-soft);
+}
+.pay-heading {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: clamp(1.6rem, 6vw, 2.1rem);
+  line-height: 0.98;
+  letter-spacing: 0.02em;
+  margin: 0;
+  color: var(--on-dark);
+}
+.pay-sub {
+  margin: 0.6rem 0 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: var(--on-dark-soft);
+}
+.pay-error {
+  margin: 1.1rem 0 0;
+  padding: 0.7rem 0.9rem;
+  text-align: left;
+  font-size: 0.92rem;
+  color: var(--on-dark);
+  background: rgba(6, 16, 10, 0.55);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+}
+.pay-form {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  text-align: left;
+}
+.pay-presets {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.pay-field-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--on-dark-soft);
+}
+.pay-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.pay-chip {
+  flex: 1 1 4.5rem;
+  min-width: 4.5rem;
+  padding: 0.7rem 0.4rem;
+  font: inherit;
+  font-weight: 700;
+  color: #fff;
+  background: var(--green-800);
+  border: 1px solid var(--on-dark-line);
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    color 0.15s;
+}
+.pay-chip:hover {
+  border-color: var(--accent);
+}
+.pay-chip.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--ink);
+}
+.pay-field {
+  display: block;
+}
+.pay-amount-wrap {
+  position: relative;
+  display: block;
+}
+.pay-amount-sign {
+  position: absolute;
+  left: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 700;
+  color: var(--muted);
+  pointer-events: none;
+}
+.pay-input {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  font: inherit;
+  color: var(--ink);
+  background: var(--paper, #fff);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.pay-amount {
+  padding-left: 1.7rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.pay-submit {
+  display: block;
+  width: 100%;
+  min-height: 3.3rem;
+  margin-top: 0.4rem;
+  padding: 0.9rem 1.6rem;
+  font: inherit;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  color: var(--ink);
+  background: var(--accent);
+  border: 0;
+  border-radius: 11px;
+  cursor: pointer;
+  box-shadow: 0 12px 26px rgba(242, 96, 28, 0.3);
+  transition:
+    background 0.15s,
+    transform 0.08s ease,
+    box-shadow 0.15s;
+}
+.pay-submit:hover {
+  background: var(--accent-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(242, 96, 28, 0.38);
+}
+.pay-secure {
+  margin: 0.2rem 0 0;
+  font-size: 0.74rem;
+  text-align: center;
+  color: var(--on-dark-mute);
+}
+.pay-back {
+  display: inline-block;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--on-dark-soft);
+  text-decoration: none;
+}
+.pay-back:hover {
+  color: var(--on-dark);
+}
+/* success card */
+.pay-check {
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin: 1.2rem auto 0.4rem;
+  color: var(--ink);
+  background: var(--accent);
+  border-radius: 999px;
+}
+.pay-thanks-back {
+  margin-top: 1.5rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pay-submit:hover {
+    transform: none;
+  }
+}
+
 /* ───── port helpers: classes replacing inline style="" attributes ─────────
    The live site's CSP (style-src 'self') blocks inline style attrs, so these
    are real classes that render identically and stay CSP-clean. */
@@ -1710,6 +2011,18 @@ picture {
   color: var(--on-dark-soft);
   font-size: 0.98rem;
   line-height: 1.5;
+}
+/* Ways to pay — a visible, scannable line under the rate so a customer sees every
+   accepted method at the moment they're deciding to book. Separated + brighter
+   than the notes above it so it doesn't blend in. */
+.pay-methods {
+  margin: 1rem 0 0;
+  padding-top: 0.95rem;
+  border-top: 1px solid var(--on-dark-line);
+  color: var(--on-dark);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.55;
 }
 
 /* quals — ruled list, not cards */
@@ -1910,7 +2223,7 @@ picture {
    the day-rate figure. On the dark pine bands the readable "neutral" is the
    light ink, not black. Layered last so it wins by source order. */
 .eyebrow,
-.svc-list h3,
+.svc-list :is(h2, h3),
 .area-note-tag,
 .link-sub,
 .error-code,

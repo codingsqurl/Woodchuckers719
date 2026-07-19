@@ -181,7 +181,7 @@ This is a tonal-layering system, not a shadow system. Depth on the public site c
 ### Named Rules
 **The Flat-Surface Rule.** Bands, chips, cards, and panels are flat — separated by tone and hairlines. Drop shadows belong to photographs and the primary CTA, nowhere else. If a flat panel has a shadow, delete it.
 
-**The Glass Rule.** Superseding the original no-glass stance (a deliberate owner decision in the sitewide glass redesign): the public site is now a committed glass system. One fixed atmospheric backdrop (`background.jpg`, misty pine) sits behind every page, and the content bands are pine-tinted translucent panels with `backdrop-filter` blur floating over it. The discipline that remains: glass is the SYSTEM, not decoration sprinkled at random. Pine tint (rgba pine 0.5–0.66) carries the brand color through the translucency so the site never washes out; form fields stay opaque white for legibility; reduced-transparency and low-power users fall back to solid pine. Mind the cost — `backdrop-filter` repaints per band on scroll; this is the heaviest path in the system and was accepted with eyes open.
+**The Glass Rule.** Superseding the original no-glass stance (a deliberate owner decision in the sitewide glass redesign): the public site is now a committed glass system. One fixed atmospheric backdrop (`treetotree.jpg`, the climber mid-transfer) sits behind every page, and the content bands are pine-tinted translucent panels with `backdrop-filter` blur floating over it. The discipline that remains: glass is the SYSTEM, not decoration sprinkled at random. Pine tint (rgba pine 0.5–0.66) carries the brand color through the translucency so the site never washes out; form fields stay opaque white for legibility; reduced-transparency and low-power users fall back to solid pine. Mind the cost — `backdrop-filter` repaints per band on scroll; this is the heaviest path in the system and was accepted with eyes open.
 
 ## 5. Components
 
@@ -221,7 +221,7 @@ A 3px safety-orange line fixed to the left edge that fills top-to-bottom as you 
 - **Do** carry the whole public site on Pine Deep (#06160d) with Pine (#0b2a1a) for raised surfaces. Layer with tone and 1px white hairlines.
 - **Do** ration safety orange (#f2601c) to conversion and accent only — call, estimate, live total, focus, one section accent.
 - **Do** set every heading in Big Shoulders, uppercase, with `text-wrap: balance`; keep body in Archivo with `text-wrap: pretty`.
-- **Do** keep the proof photos unique — each job shot appears exactly once, in the portfolio gallery. The single exception is `background.jpg`, the shared atmospheric backdrop fixed behind every page; it is environment, not a proof photo, so it is deliberately repeated sitewide.
+- **Do** keep the proof photos unique — each job shot appears exactly once, in the portfolio gallery. The single exception is `treetotree.jpg`, the shared backdrop fixed behind every page; sitewide it functions as environment rather than a proof shot, so it is deliberately repeated. It is therefore NOT eligible for the portfolio gallery — the tree-to-tree clip in My Work is the video, not this still.
 - **Do** keep body text at On Pine (#eef2ec) or On Pine Soft (#c8d2c8) for sun-readable AA contrast; reserve On Pine Mute for fine print.
 - **Do** keep form fields white with ink text for crisp outdoor legibility.
 

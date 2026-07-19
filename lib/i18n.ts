@@ -281,6 +281,7 @@ const en = {
     rateUnit: 'per day',
     rateNote: 'A ballpark, not a fixed quote — every job is different. Call or text and I’ll give you a real number.',
     included: 'Your crew runs the ground, I do the climbing. The removal past your team, the rigging over the house, the section nobody wants. A contract climber with my own gear.',
+    payWays: 'Pay however works for you. Card, Apple Pay, Google Pay, Buy Now Pay Later, Cash App, or Zelle.',
     qualsTitle: 'What you’re getting',
     quals: [
       'Second year climbing professionally',
@@ -336,6 +337,33 @@ const en = {
     copied: (val: string) => `Copied ${val}`,
     scanToShare: 'Scan to share',
     qrAlt: 'QR code to this page',
+  },
+
+  // /pay — enter-an-amount page that hands off to Stripe Checkout
+  pay: {
+    metaTitle: 'Pay online · Woodchuckers',
+    eyebrow: 'Contract Tree Climber · Colorado Springs',
+    heading: 'Pay for your service',
+    sub: 'Enter the amount you agreed on and pay by card, Apple Pay, or Google Pay.',
+    presetLabel: 'Quick amounts',
+    amountLabel: 'Amount (USD)',
+    nameLabel: 'Your name',
+    namePlaceholder: 'So we can match your payment',
+    noteLabel: 'What’s this for?',
+    notePlaceholder: 'e.g. Oak removal — deposit',
+    submit: 'Continue to payment',
+    secure: 'Secure checkout by Stripe · Card, Apple Pay & Google Pay',
+    back: 'Back to links',
+    err: {
+      amount: 'Please enter an amount between $1 and $10,000.',
+      unconfigured:
+        'Online payment isn’t live yet — call or text (719) 756‑2597 and we’ll take it over the phone.',
+      canceled: 'Payment canceled — nothing was charged.',
+      stripe: 'Couldn’t start checkout. Try again, or call (719) 756‑2597.',
+    },
+    thanksTitle: 'Payment received',
+    thanksBody: 'Thank you — your payment went through. A receipt is on its way to your email.',
+    thanksBack: 'Back to Woodchuckers',
   },
 
   // themed 404 / 500
@@ -588,6 +616,7 @@ const es: Dict = {
     rateNote: 'Un aproximado, no un precio fijo — cada trabajo es distinto. Llame o escriba y le doy un número real.',
     included:
       'Su cuadrilla maneja el suelo, yo me encargo de la escalada. La remoción que su equipo no alcanza, el aparejo sobre la casa, la sección que nadie quiere. Escalador por contrato con mi propio equipo.',
+    payWays: 'Pague como más le convenga. Tarjeta, Apple Pay, Google Pay, compre ahora y pague después, Cash App o Zelle.',
     qualsTitle: 'Lo que recibe',
     quals: [
       'Segundo año escalando profesionalmente',
@@ -642,6 +671,33 @@ const es: Dict = {
     copied: (val: string) => `Copiado ${val}`,
     scanToShare: 'Escanee para compartir',
     qrAlt: 'Código QR de esta página',
+  },
+
+  // /pay — página de monto que pasa a Stripe Checkout
+  pay: {
+    metaTitle: 'Pagar en línea · Woodchuckers',
+    eyebrow: 'Escalador de Árboles por Contrato · Colorado Springs',
+    heading: 'Pague su servicio',
+    sub: 'Ingrese el monto acordado y pague con tarjeta, Apple Pay o Google Pay.',
+    presetLabel: 'Montos rápidos',
+    amountLabel: 'Monto (USD)',
+    nameLabel: 'Su nombre',
+    namePlaceholder: 'Para identificar su pago',
+    noteLabel: '¿Para qué es?',
+    notePlaceholder: 'ej. Remoción de roble — depósito',
+    submit: 'Continuar al pago',
+    secure: 'Pago seguro con Stripe · Tarjeta, Apple Pay y Google Pay',
+    back: 'Volver a los enlaces',
+    err: {
+      amount: 'Ingrese un monto entre $1 y $10,000.',
+      unconfigured:
+        'El pago en línea aún no está activo — llame o escriba al (719) 756‑2597 y lo tomamos por teléfono.',
+      canceled: 'Pago cancelado — no se cobró nada.',
+      stripe: 'No se pudo iniciar el pago. Intente de nuevo o llame al (719) 756‑2597.',
+    },
+    thanksTitle: 'Pago recibido',
+    thanksBody: 'Gracias — su pago se procesó. El recibo llegará a su correo.',
+    thanksBack: 'Volver a Woodchuckers',
   },
 
   errpage: {

@@ -78,7 +78,11 @@ function bodyClass(pathname: string): string {
   const p = pathname === '/es' ? '/' : pathname.startsWith('/es/') ? pathname.slice(3) : pathname
   if (p === '/') return 'site home'
   if (p.startsWith('/admin')) return '' // admin/auth: plain constrained layout
-  return 'site' // marketing, links, and themed 404/500
+  // /links is a bespoke full-screen link-in-bio: it opts OUT of the sitewide
+  // glass + fixed backdrop (owns its own full-bleed photo instead), so it gets
+  // its own body class rather than `site`. Covers /es/links via the /es strip.
+  if (p === '/links') return 'bio'
+  return 'site' // marketing, /pay, and themed 404/500
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
