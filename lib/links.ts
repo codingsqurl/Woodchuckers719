@@ -35,6 +35,10 @@ export function bioLinks(locale: Locale): BioLink[] {
     { label: t.callText, sub: '(719) 756-2597', href: 'tel:+17197562597' },
     { label: t.saveContact, sub: t.saveContactSub, href: '/contact.vcf', download: true },
     { label: t.tiktok, sub: t.tiktokSub, href: 'https://www.tiktok.com/@woodchuckertres', external: true },
+    { label: t.instagram, sub: t.instagramSub, href: 'https://www.instagram.com/woodchuckertrees/', external: true },
+    // Stripe Payment Link. Launch-safe: the placeholder href is filtered out
+    // until the real https://buy.stripe.com/... URL replaces YOUR_STRIPE_LINK.
+    { label: t.stripe, sub: t.stripeSub, href: 'https://buy.stripe.com/7sYbJ22zHbuV0w83mO18c00', external: true },
     {
       label: t.cashapp,
       sub: '$YOUR_CASHTAG',

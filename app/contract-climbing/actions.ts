@@ -3,7 +3,7 @@
 // Server Action backing the contract-climbing form (progressive enhancement —
 // works without JS). The site's only intake form now. Reuses the `estimates`
 // table with NO schema change: the lead is marked in `service`, the day rate is
-// the ballpark $175–$350 range, and everything the requester typed lands in details.
+// the ballpark $250–$500 range, and everything the requester typed lands in details.
 import { after } from 'next/server'
 import { createEstimate, type NewEstimate } from '@/lib/estimates'
 import { estimateRL, autoReplyRL, clientIP } from '@/lib/ratelimit'

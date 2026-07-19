@@ -14,8 +14,8 @@
 
 // ── Full job (homeowner) ──────────────────────────────────────────────────
 export const fullJob = {
-  dayLow: 175, // per-day floor
-  dayHigh: 350, // per-day ceiling
+  dayLow: 250, // per-day floor
+  dayHigh: 500, // per-day ceiling
   cleanup: 100, // on-site cut & pile, flat add-on
   debrisRemoval: 150, // organized full haul-off, flat add-on
 } as const
@@ -24,6 +24,6 @@ export const fullJob = {
 // Flat climber day-rate tiers: you + your gear on their job, they run the
 // ground and haul. PLACEHOLDER NUMBERS — set these to your real rates.
 export const contractClimbing = {
-  dayLow: 175, // per-day floor
-  dayHigh: 350, // per-day ceiling
+  dayLow: 250, // per-day floor
+  dayHigh: 500, // per-day ceiling
 } as const

@@ -2,7 +2,6 @@ import {
   SiteHeader,
   SiteFooter,
   MobileCTA,
-  PageHero,
   PHONE_DISPLAY,
   PHONE_HREF,
   EMAIL,
@@ -17,13 +16,9 @@ export function PortfolioContent({ locale }: { locale: Locale }) {
     <>
       <SiteHeader locale={locale} current="work" />
       <main id="main">
-        <PageHero
-          eyebrow={t.eyebrow}
-          title={t.heroTitle}
-          sub={t.lead}
-          cta={{ href: localePath(locale, '/contract-climbing'), label: tc.freeEstimate }}
-          callLabel={tc.callLabel}
-        />
+        {/* Hero removed per request — page opens straight into the work photos.
+            H1 kept sr-only so the page keeps its heading for SEO. */}
+        <h1 className="sr-only">{t.heroTitle.join(' ')}</h1>
 
         {/* proof first — the photos carry the credibility */}
         <section className="band services">

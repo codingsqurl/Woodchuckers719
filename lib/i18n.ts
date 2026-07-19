@@ -121,7 +121,7 @@ const en = {
     // objection FAQ
     faqTitle: 'Straight answers',
     faqs: [
-      { q: 'How do you charge?', a: 'A flat day rate, $175–$350 depending on the climb. Most climbs are a day, some run two. One tricky piece? I can do it per-job.' },
+      { q: 'How do you charge?', a: 'A flat day rate, $250–$500 depending on the climb. Most climbs are a day, some run two. One tricky piece? I can do it per-job.' },
       { q: 'What do you bring?', a: 'Everything I climb with. Saddle, ropes, and rigging gear, on my back. You bring the chipper and ground crew.' },
       { q: 'What about the ground and cleanup?', a: 'That’s your crew. I climb and bring the tree down; hauling, chipping, and cleanup stay with you.' },
       { q: 'What I Climb', a: 'Sectional takedowns, storm-damaged leaders, and rigging over structures. The piece past your team.' },
@@ -204,7 +204,7 @@ const en = {
     headIntro:
       'I’m a contract tree climber for tree companies. I bring my own climbing and rigging gear, climb the piece your crew can’t reach, and bring it down. You run the ground.',
     headNote1: 'I price by the day:',
-    headNotePrice: '$175–$350 a day',
+    headNotePrice: '$250–$500 a day',
     headNote2: '. Most climbs run a single day. Your crew keeps the ground, the haul, and the cleanup.',
     headNoteCleanup: '$100',
     headNote3: '. Heads up. I don’t haul debris off-site, so removal is on you or your hauler.',
@@ -325,6 +325,10 @@ const en = {
     saveContactSub: 'Add to your phone',
     tiktok: 'TikTok',
     tiktokSub: '@woodchuckertres',
+    instagram: 'Instagram',
+    instagramSub: '@woodchuckertrees',
+    stripe: 'Pay online',
+    stripeSub: 'Card or Buy Now, Pay Later',
     cashapp: 'Pay with CashApp',
     zelle: 'Pay with Zelle',
     applepay: 'Pay with Apple Pay',
@@ -428,7 +432,7 @@ const es: Dict = {
     ],
     faqTitle: 'Respuestas claras',
     faqs: [
-      { q: '¿Cómo cobra?', a: 'Una tarifa fija por día, $175–$350 según la escalada. La mayoría son de un día, algunas de dos. ¿Una sola pieza difícil? Puede ser por trabajo.' },
+      { q: '¿Cómo cobra?', a: 'Una tarifa fija por día, $250–$500 según la escalada. La mayoría son de un día, algunas de dos. ¿Una sola pieza difícil? Puede ser por trabajo.' },
       { q: '¿Qué trae?', a: 'Todo con lo que escalo. Arnés, cuerdas y equipo de aparejo, a la espalda. Usted trae la astilladora y la cuadrilla de suelo.' },
       { q: '¿Y el suelo y la limpieza?', a: 'Eso es su cuadrilla. Yo escalo y bajo el árbol; el acarreo, el astillado y la limpieza quedan con usted.' },
       { q: 'Lo que escalo', a: 'Remociones por secciones, líderes dañados por tormenta y aparejo sobre estructuras. La pieza más allá de su equipo.' },
@@ -507,7 +511,7 @@ const es: Dict = {
     headIntro:
       'Soy escalador de árboles por contrato para empresas. Traigo mi propio equipo de escalada y aparejo, escalo la pieza que su cuadrilla no alcanza y la bajo. Usted maneja el suelo.',
     headNote1: 'Cobro por día:',
-    headNotePrice: '$175 a $350 por día',
+    headNotePrice: '$250 a $500 por día',
     headNote2: '. La mayoría de las escaladas son de un día. Su cuadrilla se queda con el suelo, el acarreo y la limpieza.',
     headNoteCleanup: '$100',
     headNote3: '. Aviso. No me llevo los restos del sitio, así que el retiro es cosa suya o de su transportista.',
@@ -627,6 +631,10 @@ const es: Dict = {
     saveContactSub: 'Añadir al teléfono',
     tiktok: 'TikTok',
     tiktokSub: '@woodchuckertres',
+    instagram: 'Instagram',
+    instagramSub: '@woodchuckertrees',
+    stripe: 'Pagar en línea',
+    stripeSub: 'Tarjeta o compra ahora, paga después',
     cashapp: 'Pagar con CashApp',
     zelle: 'Pagar con Zelle',
     applepay: 'Pagar con Apple Pay',

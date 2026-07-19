@@ -2,7 +2,6 @@ import {
   SiteHeader,
   SiteFooter,
   MobileCTA,
-  PageHero,
   PHONE_DISPLAY,
   PHONE_HREF,
   EMAIL,
@@ -51,13 +50,9 @@ export function AreasContent({ locale }: { locale: Locale }) {
       />
       <SiteHeader locale={locale} current="areas" />
       <main id="main">
-        <PageHero
-          eyebrow={t.eyebrow}
-          title={t.heroTitle}
-          sub={t.lead}
-          cta={{ href: localePath(locale, '/contract-climbing'), label: tc.freeEstimate }}
-          callLabel={tc.callLabel}
-        />
+        {/* Hero removed per request — page opens straight into the map + town
+            list. H1 kept sr-only so the page keeps its heading for SEO. */}
+        <h1 className="sr-only">{t.heroTitle.join(' ')}</h1>
 
         <section className="band services">
           <div className="band-inner">

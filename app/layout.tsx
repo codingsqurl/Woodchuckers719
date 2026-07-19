@@ -89,8 +89,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang={localeOf(pathname)} className={`${archivo.variable} ${bigShoulders.variable}`}>
       <body className={cls}>
-        {/* One fixed atmospheric backdrop behind every public page; the glass
-            bands and panels float over it. Omitted on the plain admin layout. */}
+        {/* Fixed misty-pine backdrop behind every public page; the glass bands
+            scroll over it. Each hero paints its own treetotree photo on top
+            (isolation + ::before), so the hero stays its own shot. Omitted on the
+            plain admin layout. */}
         {isSite ? (
           <>
             <div className="site-backdrop" aria-hidden="true" />

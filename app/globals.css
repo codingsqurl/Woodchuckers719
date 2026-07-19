@@ -53,6 +53,20 @@ img {
   max-width: 100%;
 }
 
+/* screen-reader-only: kept in the DOM for SEO + assistive tech, invisible on
+   screen. Used where a page needs an H1 but shows no visual hero. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
 /* admin/auth pages keep the constrained, light main */
 main {
   padding: 2rem;
@@ -615,14 +629,15 @@ body.site .section-title {
   text-align: center;
 }
 
-/* ── SITEWIDE backdrop: one fixed misty-pine photo behind every public page.
-   The body's own green-900 is the fallback that shows while it loads. ── */
+/* ── SITEWIDE backdrop: a fixed misty-pine forest photo (background.*, a stock
+   pines shot) behind every public page. The glass bands scroll over it. The home
+   and inner heroes paint their OWN treetotree photo on top (isolation + ::before),
+   so each hero stays its own shot — this backdrop shows only through the content
+   bands below. body green-900 is the fallback while it loads. ── */
 body.site .site-backdrop {
   position: fixed;
   inset: 0;
   z-index: -2;
-  /* AVIF (~58KB) > WebP (~70KB) > JPEG (~208KB) backdrop. The shorthand paints
-     the JPEG + position/size; image-set upgrades to the best supported format. */
   background: url("/img/background.jpg") center / cover no-repeat;
   background-image: -webkit-image-set(
     url("/img/background.avif") type("image/avif"),
@@ -636,19 +651,20 @@ body.site .site-backdrop {
   );
   transform: scale(1.06);
 }
+/* the misty image is pale up top — darken it so white text in the glass bands
+   stays sun-readable. */
 body.site .site-backdrop-scrim {
   position: fixed;
   inset: 0;
   z-index: -1;
-  /* the misty image is pale up top — darken enough to hold white text + glass */
   background: linear-gradient(
     180deg,
-    rgba(6, 16, 10, 0.5) 0%,
+    rgba(6, 16, 10, 0.48) 0%,
     rgba(6, 16, 10, 0.66) 100%
   );
 }
 
-/* ── SITEWIDE FULL GLASS over the backdrop. Every band is translucent and
+/* ── SITEWIDE FULL GLASS. Every band is translucent and
    blurred, pine-tinted so the brand color survives, on every public page.
    This is the heaviest scroll path — backdrop-filter repaints the blur per band
    on every frame; reduced-transparency / low-power users fall back to solid
@@ -809,25 +825,26 @@ body.site .hero {
   min-height: clamp(33rem, 90svh, 52rem);
   padding: 2rem 1.25rem clamp(2.5rem, 7vw, 4rem);
   background: transparent;
+  overflow: hidden; /* clip the scaled ::before photo to the section */
+  isolation: isolate; /* stacking context so ::before/::after sit behind the panel, not the page */
 }
 
-/* Homepage hero photo — treetotree, scoped to the home hero ONLY (.home-hero);
-   every other page keeps the shared .site-backdrop. isolation:isolate makes the
-   z-index:-1 photo sit behind .hero-inner but stay contained in the hero box. */
-.home-hero {
-  isolation: isolate;
-}
-/* Homepage hero is much shorter than the old full-height splash, so the climber
-   reads as the subject instead of a sliver. Higher specificity than
-   `body.site .hero` so it wins the min-height. Tune the clamp to taste. */
+/* Home hero is taller — the splash. Inner pages get the shorter clamp below. */
 body.site .hero.home-hero {
-  min-height: clamp(16rem, 42svh, 26rem);
+  min-height: clamp(30rem, 82svh, 46rem);
+  padding-top: clamp(4rem, 12vh, 7rem);
+  padding-bottom: clamp(2.5rem, 7vw, 4rem);
 }
-.home-hero-photo {
+/* EVERY hero now carries the treetotree photo — the climber mid-transfer —
+   contained to its own section (was a fixed sitewide backdrop). Portrait shot
+   cover-cropped; AVIF > WebP > JPEG via image-set, shorthand paints JPEG +
+   position/size as the floor. 50% 48% centers the climber; scaled 1.06 hides edges. */
+body.site .hero::before {
+  content: "";
   position: absolute;
   inset: 0;
-  z-index: -1;
-  background: var(--green-900, #06160d) url("/img/treetotree.jpg") center / cover no-repeat;
+  z-index: 0;
+  background: url("/img/treetotree.jpg") 50% 48% / cover no-repeat;
   background-image: -webkit-image-set(
     url("/img/treetotree.avif") type("image/avif"),
     url("/img/treetotree.webp") type("image/webp"),
@@ -838,14 +855,63 @@ body.site .hero.home-hero {
     url("/img/treetotree.webp") type("image/webp"),
     url("/img/treetotree.jpg") type("image/jpeg")
   );
+  transform: scale(1.06);
 }
-/* legibility scrim — the hero copy is white and bottom-aligned, so weight the
-   gradient toward the bottom where the text actually sits. */
-.home-hero-photo::after {
+/* scrim: fade to solid pine at the bottom so each hero dissolves into the
+   photo-free page below. */
+body.site .hero::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(6, 16, 10, 0.28) 0%, rgba(6, 16, 10, 0.66) 100%);
+  z-index: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(6, 16, 10, 0.28) 0%,
+    rgba(6, 16, 10, 0.5) 55%,
+    rgba(6, 16, 10, 0.92) 100%
+  );
+}
+
+/* Home panel, trimmed. With the hero's own padding already cut, the glass panel
+   IS the height — and inside it the three display lines are the bulk (at the old
+   4.75rem/0.94 that's ~246px of a ~490px panel). So the title takes the deepest
+   cut, then the gaps, then the panel padding. Narrower too (34rem -> 29rem): the
+   climber sits at ~50% of the viewport width, so a wide left-aligned card is
+   covering him horizontally, not just vertically.
+   Home only — inner pages keep the full-size PageHero. Deliberately NOT touching
+   .hero-actions: those are gloved-hand tap targets outdoors, they stay 3rem. */
+/* Showcase the photo on EVERY hero: hide the glass "poster" panel (headline/title
+   + CTAs) so the treetotree shot stands alone, home and inner pages alike. Kept in
+   the DOM but visually hidden (sr-only) so each page's H1 still counts for SEO +
+   screen readers. Home's CTAs live in the hazard band + mobile bar; inner-page CTAs
+   repeat in their own body content. `.hero .hero-inner` out-specifies the glass
+   panel block below. To bring a panel back, scope an override. */
+body.site .hero .hero-inner {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  background: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+body.site.home .hero .eyebrow {
+  margin-bottom: 0.5rem;
+}
+body.site.home .hero-title {
+  margin-bottom: 0.7rem;
+  font-size: clamp(1.75rem, 6.2vw, 2.8rem);
+}
+body.site.home .hero-sub {
+  margin-bottom: 1.05rem;
+  font-size: clamp(0.95rem, 3.6vw, 1.05rem);
+  line-height: 1.45;
 }
 /* inner pages: same cinematic glass hero + rising lines, shorter so the content
    underneath stays reachable without a full-viewport scroll. Home keeps the splash. */

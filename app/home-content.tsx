@@ -30,7 +30,7 @@ function homeJsonLd(locale: Locale) {
         image: `${base}/img/og.jpg`,
         telephone: '+1-719-756-2597',
         email: EMAIL,
-        priceRange: '$175–$350/day',
+        priceRange: '$250–$500/day',
         knowsLanguage: ['en', 'es'],
         areaServed: areaList().map((a) => ({ '@type': 'City', name: `${a.name}, CO` })),
         address: {
@@ -59,8 +59,8 @@ function homeJsonLd(locale: Locale) {
           priceSpecification: {
             '@type': 'PriceSpecification',
             priceCurrency: 'USD',
-            minPrice: 175,
-            maxPrice: 350,
+            minPrice: 250,
+            maxPrice: 500,
             unitText: 'DAY',
           },
         },
@@ -106,7 +106,6 @@ export function HomeContent({ locale }: { locale: Locale }) {
       <main id="main">
         {/* ───── cinematic ascent hero ───── */}
         <section className="hero home-hero" id="top">
-          <div className="home-hero-photo" aria-hidden="true" />
           <div className="hero-inner">
             <p className="eyebrow">{t.heroEyebrow}</p>
             <h1 className="hero-title">

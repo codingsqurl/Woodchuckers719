@@ -32,8 +32,8 @@ function contractJsonLd() {
       priceSpecification: {
         '@type': 'PriceSpecification',
         priceCurrency: 'USD',
-        minPrice: 175,
-        maxPrice: 350,
+        minPrice: 250,
+        maxPrice: 500,
         unitText: 'DAY',
       },
     },

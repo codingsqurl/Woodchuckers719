@@ -4,7 +4,7 @@
 // via useActionState (works without JS). Google sign-in is OPTIONAL — a verified
 // visitor gets name/email from the signed cookie (just phone + the job left to
 // fill); everyone else types name/email plainly, with an optional "verify with
-// Google" link above the fields. Day rate is a flat $175–$350 range. Bilingual.
+// Google" link above the fields. Day rate is a flat $250–$500 range. Bilingual.
 import { useActionState } from 'react'
 import { submitContract, type ContractState } from './actions'
 import { PHONE_DISPLAY, PHONE_HREF } from '../components/chrome'

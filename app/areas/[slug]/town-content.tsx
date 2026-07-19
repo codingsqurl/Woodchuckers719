@@ -37,7 +37,7 @@ function townJsonLd(locale: Locale, town: TownPage) {
         ...(town.lat != null && town.lng != null
           ? { geo: { '@type': 'GeoCoordinates', latitude: town.lat, longitude: town.lng } }
           : {}),
-        priceRange: '$175–$350/day',
+        priceRange: '$250–$500/day',
       },
       {
         '@type': 'BreadcrumbList',
