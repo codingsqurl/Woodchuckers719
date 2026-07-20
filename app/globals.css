@@ -1965,6 +1965,86 @@ body.bio {
   }
 }
 
+/* ═══════════════════════ /reviews — curated testimonials ═════════════════
+   Ruled full-width list (never cards, per DESIGN.md). Filled stars carry the
+   rationed safety orange as a proof signal; the surface stays flat pine-glass
+   like every other band — no drop shadow. */
+.reviews-agg {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.3rem;
+}
+.reviews-agg-num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.7rem;
+  line-height: 1;
+  color: var(--on-dark);
+}
+.reviews-agg-count {
+  font-size: 0.95rem;
+  color: var(--on-dark-soft);
+}
+.stars {
+  display: inline-flex;
+  gap: 2px;
+  line-height: 0;
+}
+.star {
+  fill: currentColor;
+  color: rgba(255, 255, 255, 0.22);
+}
+.star.is-on {
+  color: var(--accent);
+}
+.review-list {
+  list-style: none;
+  margin: 1.4rem 0 2rem;
+  padding: 0;
+  display: grid;
+  gap: 1.6rem;
+}
+.review {
+  padding-bottom: 1.6rem;
+  border-bottom: 1px solid var(--on-dark-line);
+}
+.review:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+.review-text {
+  margin: 0.6rem 0 0.7rem;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--on-dark);
+}
+.review-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin: 0;
+  font-size: 0.9rem;
+}
+.review-author {
+  font-weight: 700;
+  color: var(--on-dark);
+}
+.review-date {
+  color: var(--on-dark-mute);
+}
+.reviews-cta {
+  margin-top: 0.5rem;
+}
+/* wide screens: two ruled columns so a long list stays scannable */
+@media (min-width: 48rem) {
+  .review-list {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 3rem;
+  }
+}
+
 /* ───── port helpers: classes replacing inline style="" attributes ─────────
    The live site's CSP (style-src 'self') blocks inline style attrs, so these
    are real classes that render identically and stay CSP-clean. */

@@ -366,6 +366,20 @@ const en = {
     thanksBack: 'Back to Woodchuckers',
   },
 
+  // /reviews — curated real Google reviews
+  reviews: {
+    metaTitle: 'Reviews · Woodchuckers',
+    eyebrow: 'What customers say',
+    heroTitle: ['Real work,', 'real', 'reviews.'],
+    lead: 'Homeowners and tree companies in their own words — every one a real Google review.',
+    onGoogle: 'on Google',
+    count: (n: number) => `${n} review${n === 1 ? '' : 's'}`,
+    starsAlt: (n: number) => `${n} out of 5 stars`,
+    googleCta: 'See us on Google',
+    empty: 'The first reviews are coming in. In the meantime, find us on Google.',
+    crumb: 'Reviews',
+  },
+
   // themed 404 / 500
   errpage: {
     notFoundTitle: "That branch doesn't exist",
@@ -698,6 +712,20 @@ const es: Dict = {
     thanksTitle: 'Pago recibido',
     thanksBody: 'Gracias — su pago se procesó. El recibo llegará a su correo.',
     thanksBack: 'Volver a Woodchuckers',
+  },
+
+  // /reviews — reseñas reales de Google
+  reviews: {
+    metaTitle: 'Reseñas · Woodchuckers',
+    eyebrow: 'Lo que dicen los clientes',
+    heroTitle: ['Trabajo real,', 'reseñas', 'reales.'],
+    lead: 'Dueños de casa y empresas de árboles en sus propias palabras — cada una una reseña real de Google.',
+    onGoogle: 'en Google',
+    count: (n: number) => `${n} reseña${n === 1 ? '' : 's'}`,
+    starsAlt: (n: number) => `${n} de 5 estrellas`,
+    googleCta: 'Vernos en Google',
+    empty: 'Las primeras reseñas están llegando. Mientras tanto, encuéntrenos en Google.',
+    crumb: 'Reseñas',
   },
 
   errpage: {

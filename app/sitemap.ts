@@ -25,6 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/services', priority: 0.8 },
     { path: '/portfolio', priority: 0.8 },
     { path: '/areas', priority: 0.8 },
+    { path: '/reviews', priority: 0.7 },
     { path: '/blog', priority: 0.6 },
   ]
   const townPaths = serviceAreas.map((name) => ({

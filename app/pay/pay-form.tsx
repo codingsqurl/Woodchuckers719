@@ -7,7 +7,7 @@
 import { useState } from 'react'
 import { type Locale, getDict } from '@/lib/i18n'
 
-const PRESETS = [150, 300, 500, 1000] as const
+const PRESETS = [250, 350, 500] as const
 const usd = (n: number) =>
   new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n)
 

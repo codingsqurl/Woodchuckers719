@@ -12,7 +12,16 @@ import { runMigrations } from './migrate'
 const DEFAULT_DSN = 'woodchuckers.db'
 
 function open(): Database.Database {
-  const dsn = process.env.DATABASE_URL || DEFAULT_DSN
+  // `next build` imports these modules during page-data collection, and the
+  // lib/* files prepare statements at module scope — better-sqlite3 compiles
+  // that SQL against the live schema, so the DB must exist to import them. In
+  // the build phase we point at a throwaway in-memory DB: each build worker
+  // migrates its own private copy, the prepared statements compile, but there's
+  // no file to create and no cross-process race (turbopack collects page data
+  // in parallel workers, which is what threw "table employees already exists").
+  // Nothing is persisted. Runtime — one Fly process — opens the real file below.
+  const buildPhase = process.env.NEXT_PHASE === 'phase-production-build'
+  const dsn = buildPhase ? ':memory:' : process.env.DATABASE_URL || DEFAULT_DSN
   const db = new Database(dsn)
   // WAL for concurrent reads, enforce FKs, wait out brief write locks.
   db.pragma('journal_mode = WAL')

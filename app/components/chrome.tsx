@@ -149,6 +149,7 @@ export function SiteFooter({ locale, path }: { locale: Locale; path: string }) {
     [localePath(locale, '/portfolio'), d.nav.work],
     [localePath(locale, '/areas'), d.nav.areas],
     [localePath(locale, '/services'), d.nav.services],
+    [localePath(locale, '/reviews'), d.reviews.crumb],
     [localePath(locale, '/blog'), d.blog.crumb],
     [localePath(locale, '/contract-climbing'), d.footPro],
   ]
