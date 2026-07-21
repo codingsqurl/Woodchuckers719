@@ -1,5 +1,5 @@
 import { headers } from 'next/headers'
-import { SiteHeader, SiteFooter, MobileCTA, PageHero } from '../components/chrome'
+import { SiteHeader, SiteFooter, MobileCTA } from '../components/chrome'
 import { type Locale, getDict } from '@/lib/i18n'
 import { appBaseURL } from '@/lib/env'
 import { areaList } from '@/lib/areas'
@@ -65,13 +65,9 @@ export async function ContractContent({
       />
       <SiteHeader locale={locale} current="estimate" />
       <main id="main">
-        <PageHero
-          eyebrow={t.kicker}
-          title={t.heroTitle}
-          sub={t.headLede}
-          cta={{ href: '#job', label: tc.freeEstimate }}
-          callLabel={tc.callLabel}
-        />
+        {/* Hero removed per request — page opens straight into the intake form.
+            H1 kept sr-only so the page keeps its heading for SEO. */}
+        <h1 className="sr-only">{t.heroTitle.join(' ')}</h1>
         <ContractForm
           locale={locale}
           identity={identity}

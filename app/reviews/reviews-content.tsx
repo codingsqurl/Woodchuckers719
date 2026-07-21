@@ -1,5 +1,5 @@
-import { SiteHeader, SiteFooter, MobileCTA, PageHero } from '../components/chrome'
-import { type Locale, getDict, localePath } from '@/lib/i18n'
+import { SiteHeader, SiteFooter, MobileCTA } from '../components/chrome'
+import { type Locale, getDict } from '@/lib/i18n'
 import { reviews, reviewStats, googleReviewsUrl } from '@/lib/reviews'
 
 // Five stars, filled up to `n`. Pure SVG, no client JS. Filled stars carry the
@@ -42,12 +42,9 @@ export function ReviewsContent({ locale }: { locale: Locale }) {
     <>
       <SiteHeader locale={locale} />
       <main id="main">
-        <PageHero
-          eyebrow={t.eyebrow}
-          title={t.heroTitle}
-          cta={{ href: localePath(locale, '/contract-climbing'), label: tc.freeEstimate }}
-          callLabel={tc.callLabel}
-        />
+        {/* Hero removed per request — page opens straight into the reviews.
+            H1 kept sr-only so the page keeps its heading for SEO. */}
+        <h1 className="sr-only">{t.heroTitle.join(' ')}</h1>
         <section className="band services">
           <div className="band-inner">
             {list.length > 0 ? (

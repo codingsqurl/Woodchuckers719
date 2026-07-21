@@ -82,21 +82,13 @@ export function TownContent({ locale, town }: { locale: Locale; town: TownPage }
       </nav>
 
       <main id="main">
+        {/* Banner removed per request — page opens straight into the town intro.
+            H1 kept sr-only so the page keeps its heading for SEO. */}
+        <h1 className="sr-only">{t.titleFor(town.name)}</h1>
         {/* intro */}
         <section className="band services">
           <div className="band-inner">
-            <p className="eyebrow">{t.serviceArea}</p>
-            <h1 className="section-title">{t.titleFor(town.name)}</h1>
             <p className="band-lead">{town.intro}</p>
-            <div className="hero-actions">
-              <a className="cta cta-primary" href={localePath(locale, '/contract-climbing')}>
-                {tc.home.ctaEstimate}
-              </a>
-              <a className="cta cta-ghost cta-ghost-dark" href={PHONE_HREF}>
-                <span className="call-verb">{tc.callLabel} </span>
-                {PHONE_DISPLAY}
-              </a>
-            </div>
           </div>
         </section>
 

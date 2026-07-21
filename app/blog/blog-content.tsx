@@ -33,10 +33,11 @@ export function BlogContent({ locale }: { locale: Locale }) {
       />
       <SiteHeader locale={locale} />
       <main id="main">
+        {/* Banner removed per request — page opens straight into the posts.
+            H1 kept sr-only so the page keeps its heading for SEO. */}
+        <h1 className="sr-only">{tb.indexTitle}</h1>
         <section className="band services">
           <div className="band-inner">
-            <p className="eyebrow">{tb.eyebrow}</p>
-            <h1 className="section-title">{tb.indexTitle}</h1>
             <p className="band-lead">{tb.indexLead}</p>
             <ul className="svc-list">
               {posts.map((p) => (

@@ -2,7 +2,6 @@ import {
   SiteHeader,
   SiteFooter,
   MobileCTA,
-  PageHero,
   PHONE_DISPLAY,
   PHONE_HREF,
   EMAIL,
@@ -86,14 +85,9 @@ export function ServiceContent({ locale, service }: { locale: Locale; service: S
       <SiteHeader locale={locale} current="services" />
 
       <main id="main">
-        {/* Above the fold: 3-line hero, day-rate CTA, and the click-to-call ghost. */}
-        <PageHero
-          eyebrow={service.eyebrow}
-          title={service.heroTitle}
-          sub={service.lede}
-          cta={{ href: contractHref, label: tc.freeEstimate }}
-          callLabel={tc.callLabel}
-        />
+        {/* Hero removed per request — page opens straight into the lead form.
+            H1 kept sr-only so the page keeps its heading for SEO. */}
+        <h1 className="sr-only">{service.heroTitle.join(' ')}</h1>
 
         {/* lead capture, first band under the hero: posts to the DB via the shared
             submitContract action — the real endpoint, no third-party service */}
