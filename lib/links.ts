@@ -34,7 +34,7 @@ export function bioLinks(locale: Locale): BioLink[] {
     { label: t.estimate, sub: t.estimateSub, href: localePath(locale, '/contract-climbing') },
     { label: t.callText, sub: '(719) 756-2597', href: 'tel:+17197562597' },
     { label: t.saveContact, sub: t.saveContactSub, href: '/contact.vcf', download: true },
-    { label: t.tiktok, sub: t.tiktokSub, href: 'https://www.tiktok.com/@woodchuckertres', external: true },
+    { label: t.tiktok, sub: t.tiktokSub, href: 'https://www.tiktok.com/@woodchuckertrees', external: true },
     { label: t.instagram, sub: t.instagramSub, href: 'https://www.instagram.com/woodchuckertrees/', external: true },
     {
       label: t.cashapp,
