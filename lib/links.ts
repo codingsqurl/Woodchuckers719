@@ -36,10 +36,6 @@ export function bioLinks(locale: Locale): BioLink[] {
     { label: t.saveContact, sub: t.saveContactSub, href: '/contact.vcf', download: true },
     { label: t.tiktok, sub: t.tiktokSub, href: 'https://www.tiktok.com/@woodchuckertres', external: true },
     { label: t.instagram, sub: t.instagramSub, href: 'https://www.instagram.com/woodchuckertrees/', external: true },
-    // Pay online → the on-site /pay page: customer enters the amount, then we
-    // mint a Stripe Checkout Session server-side. Internal link (not external),
-    // so it inherits the locale and opens in the same tab like the other nav.
-    { label: t.stripe, sub: t.stripeSub, href: localePath(locale, '/pay') },
     {
       label: t.cashapp,
       sub: '$YOUR_CASHTAG',

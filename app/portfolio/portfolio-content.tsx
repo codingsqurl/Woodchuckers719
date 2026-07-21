@@ -21,39 +21,9 @@ export function PortfolioContent({ locale }: { locale: Locale }) {
         <h1 className="sr-only">{t.heroTitle.join(' ')}</h1>
 
         {/* proof first — the photos carry the credibility */}
-        <section className="band services">
+        <section className="band services gallery-band">
           <div className="band-inner">
             <div className="gallery">
-              <figure className="shot">
-                <picture>
-                  <source srcSet="/img/layingback.avif" type="image/avif" />
-                  <source srcSet="/img/layingback.webp" type="image/webp" />
-                  <img
-                    src="/img/layingback.jpg"
-                    width={900}
-                    height={1199}
-                    loading="lazy"
-                    decoding="async"
-                    alt="Climber roped into a leafy cottonwood, running a chainsaw mid-canopy for a controlled trim"
-                  />
-                </picture>
-                <figcaption>{t.cap1}</figcaption>
-              </figure>
-              <figure className="shot">
-                <picture>
-                  <source srcSet="/img/uphigh.avif" type="image/avif" />
-                  <source srcSet="/img/uphigh.webp" type="image/webp" />
-                  <img
-                    src="/img/uphigh.jpg"
-                    width={900}
-                    height={1199}
-                    loading="lazy"
-                    decoding="async"
-                    alt="Towering pines rising over a Colorado Springs home, a climber barely visible in the crown, rigged and lowered by hand"
-                  />
-                </picture>
-                <figcaption>{t.cap2}</figcaption>
-              </figure>
               <figure className="shot">
                 <picture>
                   <source srcSet="/img/powerline.avif" type="image/avif" />
@@ -68,6 +38,21 @@ export function PortfolioContent({ locale }: { locale: Locale }) {
                   />
                 </picture>
                 <figcaption>{t.cap3}</figcaption>
+              </figure>
+              <figure className="shot">
+                <picture>
+                  <source srcSet="/img/treetotree.avif" type="image/avif" />
+                  <source srcSet="/img/treetotree.webp" type="image/webp" />
+                  <img
+                    src="/img/treetotree.jpg"
+                    width={1174}
+                    height={1648}
+                    loading="lazy"
+                    decoding="async"
+                    alt="Climber high in the pines, swinging tree to tree on rope over a Colorado Springs canopy"
+                  />
+                </picture>
+                <figcaption>{t.cap4}</figcaption>
               </figure>
             </div>
           </div>

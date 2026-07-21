@@ -2,7 +2,6 @@ import {
   SiteHeader,
   SiteFooter,
   MobileCTA,
-  PageHero,
   PHONE_DISPLAY,
   PHONE_HREF,
   EMAIL,
@@ -42,13 +41,9 @@ export function ServicesContent({ locale }: { locale: Locale }) {
       />
       <SiteHeader locale={locale} current="services" />
       <main id="main">
-        <PageHero
-          eyebrow={ts.eyebrow}
-          title={ts.heroTitle}
-          sub={ts.heroSub}
-          cta={{ href: contractHref, label: tc.freeEstimate }}
-          callLabel={tc.callLabel}
-        />
+        {/* Hero removed per request — page opens straight into the lead form.
+            H1 kept sr-only so the page keeps its heading for SEO. */}
+        <h1 className="sr-only">{ts.heroTitle.join(' ')}</h1>
 
         <LeadForm locale={locale} source="services" />
 

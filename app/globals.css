@@ -838,9 +838,10 @@ body.site .hero {
   isolation: isolate; /* stacking context so ::before/::after sit behind the panel, not the page */
 }
 
-/* Home hero is taller — the splash. Inner pages get the shorter clamp below. */
+/* Home hero is a banner, not a takeover. Middle value (svh) is the mobile knob:
+   lower = shorter. ~34svh ≈ a third of the phone; desktop caps at the 24rem strip. */
 body.site .hero.home-hero {
-  min-height: clamp(30rem, 82svh, 46rem);
+  min-height: clamp(14rem, 34svh, 24rem);
   padding-top: clamp(4rem, 12vh, 7rem);
   padding-bottom: clamp(2.5rem, 7vw, 4rem);
 }
@@ -1108,17 +1109,22 @@ picture {
   gap: 1.25rem;
   margin-top: 2rem;
 }
-/* first shot now sits in ONE column like the others (was full-width) so it takes
-   less width, and is shown WHOLE via object-fit: contain so the climber reads
-   zoomed out instead of cropped tight. Any slim letterbox shows pine — on-brand. */
+/* My Work opens straight into the photos (hero was removed), so pull the first
+   band up tight under the nav instead of running the full band gap. Scoped to
+   this page only — the global .band / .band.services spacing is untouched. */
+.gallery-band {
+  padding-top: clamp(1rem, 3vw, 1.75rem);
+}
+.gallery-band .gallery {
+  margin-top: 0;
+}
+/* all shots share one uniform box — equal columns, equal height, cover-cropped
+   (see .shot img below). No per-image overrides, so every photo renders the
+   same size across the gallery. */
 @media (min-width: 40rem) {
   .gallery {
     grid-template-columns: 1fr 1fr;
   }
-}
-.gallery .shot:first-child img {
-  height: clamp(18rem, 38vh, 26rem);
-  object-fit: contain;
 }
 .shot {
   margin: 0;
@@ -1755,6 +1761,135 @@ body.bio {
 .bio-inner .lang-toggle {
   display: inline-block;
   margin-top: 1.75rem;
+}
+.bio-brand {
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.45);
+}
+/* Buttons need to clip the hover sheen + press a touch on tap. Base (motion-safe
+   OR reduced-motion) — these are plain interaction states, not autoplay motion. */
+body.bio .link-btn {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.12s ease,
+    background 0.15s,
+    border-color 0.15s,
+    box-shadow 0.2s ease;
+}
+body.bio .link-btn:hover {
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(242, 96, 28, 0.35);
+}
+body.bio .link-btn:active {
+  transform: translateY(-1px) scale(0.99);
+}
+
+/* ─── The excitement, gated so reduced-motion users get the calm static page ─── */
+@media (prefers-reduced-motion: no-preference) {
+  /* the photo slowly breathes — a living backdrop, not a still */
+  .bio-bg {
+    animation: bioDrift 34s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  /* brand + language link: a gentle rise so the buttons stay the star. Uses
+     fill-mode backwards (NOT both) so a finished animation doesn't lock the
+     transform and override the hover/active lifts below. */
+  body.bio .bio-head,
+  body.bio .lang-toggle {
+    animation: bioRise 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+  body.bio .bio-head {
+    animation-delay: 0.05s;
+  }
+
+  /* the buttons POP in one at a time — scale up from small with a little
+     overshoot. Delays spaced ~0.13s so the cascade is clearly sequential. */
+  body.bio .link-list > * {
+    animation: bioPop 0.5s ease-out backwards;
+  }
+  body.bio .link-list > *:nth-child(1) {
+    animation-delay: 0.25s;
+  }
+  body.bio .link-list > *:nth-child(2) {
+    animation-delay: 0.38s;
+  }
+  body.bio .link-list > *:nth-child(3) {
+    animation-delay: 0.51s;
+  }
+  body.bio .link-list > *:nth-child(4) {
+    animation-delay: 0.64s;
+  }
+  body.bio .link-list > *:nth-child(5) {
+    animation-delay: 0.77s;
+  }
+  body.bio .link-list > *:nth-child(6) {
+    animation-delay: 0.9s;
+  }
+  body.bio .link-list > *:nth-child(7) {
+    animation-delay: 1.03s;
+  }
+  body.bio .link-list > *:nth-child(8) {
+    animation-delay: 1.16s;
+  }
+  body.bio .lang-toggle {
+    animation-delay: 1.32s;
+  }
+
+  /* a light sheen sweeps across a button on hover — resets instantly on leave */
+  body.bio .link-btn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      100deg,
+      transparent,
+      rgba(255, 255, 255, 0.22),
+      transparent
+    );
+    transform: skewX(-18deg);
+    pointer-events: none;
+  }
+  body.bio .link-btn:hover::after {
+    left: 140%;
+    transition: left 0.7s ease;
+  }
+}
+@keyframes bioRise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes bioPop {
+  0% {
+    opacity: 0;
+    transform: translateY(22px) scale(0.8);
+  }
+  55% {
+    opacity: 1;
+    transform: translateY(-5px) scale(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes bioDrift {
+  from {
+    transform: scale(1.06);
+  }
+  to {
+    transform: scale(1.12) translate(1.5%, -1.2%);
+  }
 }
 
 /* ═══════════════════════ /pay — enter-amount checkout ════════════════════
