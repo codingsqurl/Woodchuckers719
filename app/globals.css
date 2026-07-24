@@ -197,9 +197,29 @@ body.site .topbar {
   text-decoration: none;
 }
 .brand {
+  position: relative;
   font-size: 1.4rem;
   letter-spacing: 0.04em;
   color: #fff;
+}
+/* wordmark shares the nav's accent underline, sweeping in from the left so the
+   whole bar reads as one hover language. */
+.brand::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.2rem;
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.brand:hover::after,
+.brand:focus-visible::after {
+  transform: scaleX(1);
 }
 .topnav {
   display: flex;
@@ -207,13 +227,39 @@ body.site .topbar {
   gap: 1.5rem;
 }
 .topnav > a {
+  position: relative;
+  z-index: 0;
   font-weight: 600;
   font-size: 0.95rem;
   color: #cfe0d3;
-  transition: color 0.15s;
+  transition: color 0.16s ease;
 }
-.topnav > a:hover {
+/* accent pill fills in behind the link on hover/focus — fades up and scales
+   from small to full. Negative inset so it pads the text without changing the
+   nav's layout. The scale is the only motion; it's dropped for reduced-motion
+   users below (the pill still fades in, it just doesn't grow). */
+.topnav > a::before {
+  content: "";
+  position: absolute;
+  inset: -0.35rem -0.7rem;
+  z-index: -1;
+  border-radius: 999px;
+  background: rgba(242, 96, 28, 0.16);
+  border: 1px solid rgba(242, 96, 28, 0.38);
+  opacity: 0;
+  transform: scale(0.8);
+  transition:
+    opacity 0.18s ease,
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.topnav > a:hover,
+.topnav > a:focus-visible {
   color: #fff;
+}
+.topnav > a:hover::before,
+.topnav > a:focus-visible::before {
+  opacity: 1;
+  transform: scale(1);
 }
 
 /* language toggle — small pill in the nav */
@@ -253,13 +299,17 @@ body.site .topbar {
   white-space: nowrap;
   transition:
     background 0.15s,
-    transform 0.05s;
+    transform 0.12s ease,
+    box-shadow 0.2s ease;
 }
 .call-btn:hover {
   background: var(--accent-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(242, 96, 28, 0.35);
 }
 .call-btn:active {
   transform: translateY(1px);
+  box-shadow: none;
 }
 
 /* mobile header — the single row can't hold brand + 4 links + lang + call on a
@@ -1181,35 +1231,103 @@ picture {
   grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
   gap: 0.75rem;
 }
+/* Town buttons are a carbon copy of the /links bio buttons: same pill, same
+   glow-ring hover, same press-scale, same sheen sweep + pop-in (below). Kept in
+   the responsive grid so 9 towns still fit; only the button itself is cloned. */
 .area-grid a {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-  padding: 0.85rem 1.1rem;
+  position: relative;
+  overflow: hidden;
+  display: block;
+  text-align: center;
+  padding: 1rem 1.2rem;
   background: var(--green-800);
   border: 1px solid var(--on-dark-line);
-  border-radius: 10px;
+  border-radius: 12px;
   color: #fff;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 700;
   transition:
+    transform 0.12s ease,
     background 0.15s,
     border-color 0.15s,
-    transform 0.05s;
+    box-shadow 0.2s ease;
 }
-.area-grid a::after {
-  content: "›";
-  color: var(--accent);
-  /* 700, not 800 — Archivo ships 400/600/700; 800 renders as faux-bold */
-  font-weight: 700;
-}
-.area-grid a:hover {
+.area-grid a:hover,
+.area-grid a:focus-visible {
   background: var(--green-700);
   border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(242, 96, 28, 0.35);
 }
 .area-grid a:active {
-  transform: translateY(1px);
+  transform: translateY(-1px) scale(0.99);
+}
+/* the excitement — sheen sweep on hover + a staggered pop-in on load. Reuses the
+   bio page's bioPop keyframes so the motion is genuinely identical. Gated so
+   reduced-motion users get the calm, static grid. */
+@media (prefers-reduced-motion: no-preference) {
+  .area-grid > a::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      100deg,
+      transparent,
+      rgba(255, 255, 255, 0.22),
+      transparent
+    );
+    transform: skewX(-18deg);
+    pointer-events: none;
+  }
+  .area-grid > a:hover::after,
+  .area-grid > a:focus-visible::after {
+    left: 140%;
+    transition: left 0.7s ease;
+  }
+  .area-grid > a {
+    animation: bioPop 0.5s ease-out backwards;
+  }
+  .area-grid > a:nth-child(1) {
+    animation-delay: 0.08s;
+  }
+  .area-grid > a:nth-child(2) {
+    animation-delay: 0.16s;
+  }
+  .area-grid > a:nth-child(3) {
+    animation-delay: 0.24s;
+  }
+  .area-grid > a:nth-child(4) {
+    animation-delay: 0.32s;
+  }
+  .area-grid > a:nth-child(5) {
+    animation-delay: 0.4s;
+  }
+  .area-grid > a:nth-child(6) {
+    animation-delay: 0.48s;
+  }
+  .area-grid > a:nth-child(7) {
+    animation-delay: 0.56s;
+  }
+  .area-grid > a:nth-child(8) {
+    animation-delay: 0.64s;
+  }
+  .area-grid > a:nth-child(9) {
+    animation-delay: 0.72s;
+  }
+  .area-grid > a:nth-child(10) {
+    animation-delay: 0.8s;
+  }
+  .area-grid > a:nth-child(11) {
+    animation-delay: 0.88s;
+  }
+  .area-grid > a:nth-child(12) {
+    animation-delay: 0.96s;
+  }
 }
 .area-note {
   margin-top: 2.5rem;
@@ -1436,6 +1554,82 @@ picture {
 .form-error {
   max-width: 40rem;
   margin: 0 auto 1.25rem;
+}
+
+/* ── review form: star-rating radio group ──
+   A real radio group (keyboard-operable, submits without JS). input + label are
+   flat siblings; the row renders high→low and flips to 1→5 with row-reverse, so
+   `input:checked ~ label` and `label:hover ~ label` fill the chosen/hovered star
+   and every lower one. No default star is checked (see review-form.tsx), which
+   keeps the hover-fill unambiguous. */
+.star-rating {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+.star-rating legend {
+  padding: 0;
+  margin-bottom: 0.45rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--on-dark-soft);
+}
+.star-picker {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: 0.25rem;
+}
+/* radios stay in the accessibility tree + focusable — visually hidden, not
+   display:none (which would drop them from keyboard/AT). */
+.star-picker input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.star-picker label {
+  display: inline-flex;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.26);
+  line-height: 0;
+  transition:
+    color 0.12s ease,
+    transform 0.12s ease;
+}
+.star-picker label svg {
+  display: block;
+  fill: currentColor;
+}
+/* filled: the checked star + all lower (following siblings), and the hover mirror */
+.star-picker input:checked ~ label,
+.star-picker label:hover,
+.star-picker label:hover ~ label {
+  color: var(--accent);
+}
+/* keyboard focus ring on the star its radio maps to */
+.star-picker input:focus-visible + label {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .star-picker label:hover {
+    transform: scale(1.06);
+  }
+}
+
+/* admin review moderation: approve/reject sit side by side in the last cell */
+.review-mod {
+  display: flex;
+  gap: 0.4rem;
+  white-space: nowrap;
 }
 
 /* ── optional Google sign-in on the contract/lead form ──
@@ -2454,7 +2648,6 @@ body.bio .link-btn:active {
 .area-grid a:hover {
   color: var(--on-dark);
 }
-.area-grid a::after,
 .qual-list li::before,
 .faq-item summary::after {
   color: var(--on-dark-soft);
@@ -2521,8 +2714,15 @@ html {
   }
   .link-btn:hover,
   .call-btn:active,
+  .call-btn:hover,
+  .area-grid a:hover,
   .area-grid a:active {
     transform: none;
+  }
+  /* nav pill + brand underline still appear on hover, they just don't animate in */
+  .topnav > a::before,
+  .brand::after {
+    transition: none;
   }
   .scroll-rope {
     display: none;
@@ -2772,9 +2972,30 @@ button {
 }
 
 /* ── portfolio proof video: a portrait phone clip, click-to-play ── */
+/* two clips sit side by side once there's room, and stack on phones. The grid
+   owns the spacing, so the figures inside drop their own auto margins. */
+.proof-videos {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  margin-top: 2rem;
+  justify-items: center;
+}
+/* two columns at 40rem — the SAME breakpoint the photo gallery uses, so the two
+   sections flip to side-by-side together and the page reads as one piece. */
+@media (min-width: 40rem) {
+  .proof-videos {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
 .proof-video {
   margin: 2rem auto 0;
   max-width: 22rem;
+}
+.proof-videos .proof-video {
+  margin: 0;
+  width: 100%;
 }
 .proof-video video {
   width: 100%;

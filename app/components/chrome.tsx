@@ -3,7 +3,23 @@
 // components — no client JS. Every link is locale-aware: English at root,
 // Spanish under /es, wired through localePath().
 import type { ReactNode } from 'react'
+import ReactDOM from 'react-dom'
 import { type Locale, getDict, localePath } from '@/lib/i18n'
+
+// Every `.hero` paints the treetotree climber shot as a CSS background (see
+// globals.css body.site .hero::before), which the browser can't find until the
+// stylesheet parses — and on a hero page that photo is the LCP. Preload the AVIF
+// (type-gated exactly like the backdrop in layout.tsx, so non-AVIF browsers skip
+// it and lose nothing) at high priority so the largest paint starts immediately.
+// Called by both the shared PageHero and the home page's inline hero; React
+// dedupes the preload, so hitting it from two places emits a single <link>.
+export function preloadHeroPhoto(): void {
+  ReactDOM.preload('/img/treetotree.avif', {
+    as: 'image',
+    type: 'image/avif',
+    fetchPriority: 'high',
+  })
+}
 
 // (719)&nbsp;756&#8209;2597 — nbsp + non-breaking hyphen, like the templates.
 export const PHONE_DISPLAY = '(719) 756‑2597'
@@ -109,6 +125,7 @@ export function PageHero({
   cta: { href: string; label: string }
   callLabel: string
 }) {
+  preloadHeroPhoto()
   return (
     <section className="hero" id="top">
       <div className="hero-inner">

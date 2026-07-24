@@ -6,6 +6,7 @@ import {
   PHONE_HREF,
   EMAIL,
   smsHref,
+  preloadHeroPhoto,
 } from './components/chrome'
 import { type Locale, getDict, localePath, SE_HABLA } from '@/lib/i18n'
 import { appBaseURL } from '@/lib/env'
@@ -92,6 +93,10 @@ export function HomeContent({ locale }: { locale: Locale }) {
   const estimateHref = localePath(locale, '/contract-climbing')
   const workHref = localePath(locale, '/portfolio')
   const sms = smsHref(t.smsBody)
+
+  // The home hero is the treetotree photo — this page's LCP. Preload it (both
+  // locales route through here) so it doesn't wait on the stylesheet.
+  preloadHeroPhoto()
 
   return (
     <>

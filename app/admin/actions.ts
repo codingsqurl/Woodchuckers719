@@ -12,6 +12,7 @@ import { endSession } from '@/lib/session'
 import { createEmployee, isDuplicateEmail, setEmployeeActive } from '@/lib/employees'
 import { addRanking, deleteRanking } from '@/lib/rankings'
 import { setEstimateStatus, setEstimateNotes } from '@/lib/estimates'
+import { setReviewStatus } from '@/lib/review-submissions'
 import { sendMail, inviteEmailHTML, mailerConfigured } from '@/lib/mail'
 import { appBaseURL } from '@/lib/env'
 
@@ -139,4 +140,18 @@ export async function updateLeadNotesAction(formData: FormData) {
   if (Number.isInteger(id)) setEstimateNotes(id, notes)
   revalidatePath('/admin')
   redirect(backTo(formData))
+}
+
+// POST /admin/reviews/moderate — approve or reject a customer review. Admin only.
+// Revalidates the public /reviews pages too, so an approval shows up there right
+// away (when REVIEWS_PUBLIC is on) without waiting for a cache TTL.
+export async function moderateReviewAction(formData: FormData) {
+  await requireAdminAction()
+  const id = Number(formData.get('id'))
+  const status = formData.get('status')?.toString() ?? ''
+  if (Number.isInteger(id)) setReviewStatus(id, status)
+  revalidatePath('/admin')
+  revalidatePath('/reviews')
+  revalidatePath('/es/reviews')
+  redirect('/admin')
 }

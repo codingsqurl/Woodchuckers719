@@ -63,32 +63,34 @@ export function PortfolioContent({ locale }: { locale: Locale }) {
         <section className="band hazard">
           <div className="band-inner">
             <h2 className="section-title">{t.videoTitle}</h2>
-            <figure className="proof-video">
-              <video
-                controls
-                playsInline
-                preload="none"
-                poster="/img/climb-poster.jpg"
-                width={360}
-                height={480}
-              >
-                <source src="/video/climb.mp4" type="video/mp4" />
-              </video>
-              <figcaption>{t.videoCap}</figcaption>
-            </figure>
-            <figure className="proof-video">
-              <video
-                controls
-                playsInline
-                preload="none"
-                poster="/img/treetotree-poster.jpg"
-                width={480}
-                height={672}
-              >
-                <source src="/video/treetotree.mp4" type="video/mp4" />
-              </video>
-              <figcaption>{t.videoCap2}</figcaption>
-            </figure>
+            <div className="proof-videos">
+              <figure className="proof-video">
+                <video
+                  controls
+                  playsInline
+                  preload="none"
+                  poster="/img/climb-poster.jpg"
+                  width={360}
+                  height={480}
+                >
+                  <source src="/video/climb.mp4" type="video/mp4" />
+                </video>
+                <figcaption>{t.videoCap}</figcaption>
+              </figure>
+              <figure className="proof-video">
+                <video
+                  controls
+                  playsInline
+                  preload="none"
+                  poster="/img/treetotree-poster.jpg"
+                  width={480}
+                  height={672}
+                >
+                  <source src="/video/treetotree.mp4" type="video/mp4" />
+                </video>
+                <figcaption>{t.videoCap2}</figcaption>
+              </figure>
+            </div>
           </div>
         </section>
 

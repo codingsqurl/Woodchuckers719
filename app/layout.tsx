@@ -1,4 +1,5 @@
 import './globals.css'
+import ReactDOM from 'react-dom'
 import type { Metadata, Viewport } from 'next'
 import { Archivo, Big_Shoulders } from 'next/font/google'
 import { headers } from 'next/headers'
@@ -90,6 +91,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const pathname = h.get('x-pathname') ?? ''
   const cls = bodyClass(pathname)
   const isSite = cls.startsWith('site')
+  // The misty-pine backdrop is a CSS background-image (site-backdrop), so the
+  // browser can't discover it until globals.css downloads and parses — it paints
+  // late. Preload it during HTML parse to close that gap. Only the AVIF variant,
+  // gated by type="image/avif": browsers without AVIF simply skip this hint and
+  // fetch webp/jpeg through the CSS image-set exactly as before, while
+  // AVIF-capable browsers (whose image-set also resolves to AVIF) get the head
+  // start — so the preload never costs a wasted byte. React hoists it into <head>.
+  if (isSite) {
+    ReactDOM.preload('/img/background.avif', { as: 'image', type: 'image/avif' })
+  }
   return (
     <html lang={localeOf(pathname)} className={`${archivo.variable} ${bigShoulders.variable}`}>
       <body className={cls}>

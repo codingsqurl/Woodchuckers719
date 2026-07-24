@@ -58,10 +58,16 @@ export function googleReviewsUrl(): string | null {
   return isPlaceholder(GOOGLE_REVIEWS_URL) ? null : GOOGLE_REVIEWS_URL
 }
 
-// Aggregate for the header, e.g. { count: 12, avg: 4.9 }. avg to one decimal.
-export function reviewStats(): { count: number; avg: number } {
-  const list = reviews()
+// statsFor aggregates any review list, e.g. { count: 12, avg: 4.9 }. avg to one
+// decimal. Shared so the curated-only header and the merged (curated + approved
+// on-site) header compute the average the same way.
+export function statsFor(list: Review[]): { count: number; avg: number } {
   if (list.length === 0) return { count: 0, avg: 0 }
   const sum = list.reduce((s, r) => s + r.rating, 0)
   return { count: list.length, avg: Math.round((sum / list.length) * 10) / 10 }
+}
+
+// Aggregate for the header over the curated reviews.
+export function reviewStats(): { count: number; avg: number } {
+  return statsFor(reviews())
 }

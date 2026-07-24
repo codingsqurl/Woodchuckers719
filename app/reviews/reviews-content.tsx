@@ -1,6 +1,7 @@
 import { SiteHeader, SiteFooter, MobileCTA } from '../components/chrome'
-import { type Locale, getDict } from '@/lib/i18n'
-import { reviews, reviewStats, googleReviewsUrl } from '@/lib/reviews'
+import { type Locale, getDict, localePath } from '@/lib/i18n'
+import { reviews, statsFor, googleReviewsUrl } from '@/lib/reviews'
+import { approvedReviews } from '@/lib/review-submissions'
 
 // Five stars, filled up to `n`. Pure SVG, no client JS. Filled stars carry the
 // rationed safety orange (a proof signal); empty stars sit faint over the pine.
@@ -34,9 +35,17 @@ function monthYear(iso: string, locale: Locale): string {
 export function ReviewsContent({ locale }: { locale: Locale }) {
   const tc = getDict(locale)
   const t = tc.reviews
-  const list = reviews()
-  const stats = reviewStats()
+  // Curated Google reviews (lib/reviews.ts) + approved on-site submissions
+  // (empty unless REVIEWS_PUBLIC is on), newest first. The aggregate counts both.
+  const curated = reviews()
+  const onsite = approvedReviews()
+  const list = [...curated, ...onsite].sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))
+  const stats = statsFor(list)
   const gurl = googleReviewsUrl()
+  // "on Google" is only accurate when every shown review is a curated Google one;
+  // drop the suffix once an on-site review is mixed in (honest labelling).
+  const allGoogle = onsite.length === 0
+  const newHref = localePath(locale, '/reviews/new')
 
   return (
     <>
@@ -53,7 +62,8 @@ export function ReviewsContent({ locale }: { locale: Locale }) {
                   <Stars n={Math.round(stats.avg)} label={t.starsAlt(Math.round(stats.avg))} />
                   <span className="reviews-agg-num">{stats.avg.toFixed(1)}</span>
                   <span className="reviews-agg-count">
-                    {t.count(stats.count)} {t.onGoogle}
+                    {t.count(stats.count)}
+                    {allGoogle ? ` ${t.onGoogle}` : ''}
                   </span>
                 </div>
                 <p className="band-lead">{t.lead}</p>
@@ -73,13 +83,23 @@ export function ReviewsContent({ locale }: { locale: Locale }) {
             ) : (
               <p className="band-lead">{t.empty}</p>
             )}
-            {gurl ? (
-              <div className="reviews-cta">
-                <a className="cta cta-primary" href={gurl} target="_blank" rel="noopener noreferrer">
+            <div className="reviews-cta">
+              {/* Primary: the on-site review form. Secondary (when the Google
+                  link is configured): leave one on Google instead. */}
+              <a className="cta cta-primary" href={newHref}>
+                {t.leaveCta}
+              </a>
+              {gurl ? (
+                <a
+                  className="cta cta-ghost cta-ghost-dark"
+                  href={gurl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {t.googleCta}
                 </a>
-              </div>
-            ) : null}
+              ) : null}
+            </div>
           </div>
         </section>
       </main>

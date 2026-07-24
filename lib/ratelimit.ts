@@ -41,12 +41,17 @@ const g = globalThis as unknown as {
   __estimateRL?: RateLimiter
   __ssoRL?: RateLimiter
   __autoReplyRL?: RateLimiter
+  __reviewRL?: RateLimiter
 }
 
 // Brute-force throttle on auth attempts; spam throttle on the estimate form.
 export const loginRL: RateLimiter = (g.__loginRL ??= new RateLimiter(10, 60_000))
 export const estimateRL: RateLimiter = (g.__estimateRL ??= new RateLimiter(5, 60_000))
 export const ssoRL: RateLimiter = (g.__ssoRL ??= new RateLimiter(10, 60_000))
+// Spam throttle on the public review form — its own budget so a burst of review
+// posts can't exhaust the estimate limiter (and vice-versa). 3/min/IP is plenty
+// for an honest reviewer typing one review.
+export const reviewRL: RateLimiter = (g.__reviewRL ??= new RateLimiter(3, 60_000))
 // Per-recipient cap on the lead auto-reply (keyed on the lowercased email, not
 // IP) so the public form can't be turned into a mailer aimed at a third party.
 export const autoReplyRL: RateLimiter = (g.__autoReplyRL ??= new RateLimiter(1, 3_600_000))

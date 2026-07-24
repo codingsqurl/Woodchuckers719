@@ -5,6 +5,7 @@ import { listEstimates, submitted, contact, LEAD_STATUSES } from '@/lib/estimate
 import { emailsForEstimate } from '@/lib/email-log'
 import { formatStamp } from '@/lib/format'
 import { listRankings, groupByKeyword, checked } from '@/lib/rankings'
+import { listReviewSubmissions, reviewsPublic } from '@/lib/review-submissions'
 import {
   logout,
   createEmployeeAction,
@@ -14,6 +15,7 @@ import {
   deleteRankingAction,
   updateLeadStatusAction,
   updateLeadNotesAction,
+  moderateReviewAction,
 } from './actions'
 
 // LeadEmails shows the send/receive history for one lead (email_log, migration
@@ -80,6 +82,8 @@ export default async function AdminPage({
   const employees = listEmployees()
   const estimates = listEstimates(50, statusFilter || undefined)
   const rankings = groupByKeyword(listRankings())
+  const pendingReviews = listReviewSubmissions(50, 'pending')
+  const reviewsArePublic = reviewsPublic()
 
   return (
     <>
@@ -195,6 +199,58 @@ export default async function AdminPage({
           <p className="muted">
             {statusFilter ? `No leads in “${statusFilter}”.` : 'No leads yet.'}
           </p>
+        )}
+
+        <h2>Reviews</h2>
+        <p className="muted">
+          Customer-submitted reviews awaiting approval.{' '}
+          {reviewsArePublic
+            ? 'REVIEWS_PUBLIC is ON — approving publishes to /reviews right away.'
+            : 'REVIEWS_PUBLIC is OFF — approving just clears the queue; nothing shows publicly until you turn it on (or paste the review into lib/reviews.ts).'}
+        </p>
+        {pendingReviews.length > 0 ? (
+          <div className="table-scroll">
+            <table className="grid">
+              <thead>
+                <tr>
+                  <th>When</th>
+                  <th>Name</th>
+                  <th>Rating</th>
+                  <th>Review</th>
+                  <th>Town</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {pendingReviews.map((r) => (
+                  <tr key={r.id}>
+                    <td>{formatStamp(r.createdAt)}</td>
+                    <td>{r.author}</td>
+                    <td aria-label={`${r.rating} out of 5 stars`}>
+                      {'★'.repeat(r.rating)}
+                      {'☆'.repeat(5 - r.rating)}
+                    </td>
+                    <td>{r.body}</td>
+                    <td>{r.town || '—'}</td>
+                    <td className="review-mod">
+                      <form action={moderateReviewAction} className="inline-form">
+                        <input type="hidden" name="id" value={r.id} />
+                        <input type="hidden" name="status" value="approved" />
+                        <button type="submit">Approve</button>
+                      </form>
+                      <form action={moderateReviewAction} className="inline-form">
+                        <input type="hidden" name="id" value={r.id} />
+                        <input type="hidden" name="status" value="rejected" />
+                        <button type="submit">Reject</button>
+                      </form>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="muted">No reviews waiting.</p>
         )}
 
         <h2>Search rankings</h2>

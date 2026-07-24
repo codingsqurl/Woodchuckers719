@@ -61,6 +61,30 @@ export function mailFrom(): string {
   return process.env.MAIL_FROM || 'Woodchuckers <onboarding@resend.dev>'
 }
 
+// reviewNotifyHTML builds the owner notification for a new customer review
+// awaiting moderation. Plain, table-free — it's an internal heads-up, not a
+// customer-facing send — but every user value is escaped just like the lead
+// mail. The review is NOT public yet; the mail points KING at the admin queue.
+export function reviewNotifyHTML(o: {
+  author: string
+  rating: number
+  town: string
+  body: string
+  adminURL: string
+}): string {
+  const filled = Math.max(0, Math.min(5, Math.round(o.rating)))
+  const stars = '★'.repeat(filled) + '☆'.repeat(5 - filled)
+  const town = o.town ? ` &middot; ${escapeHtml(o.town)}` : ''
+  return `<div style="font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#0e1411;max-width:34rem">
+  <h2 style="margin:0 0 .25rem;font-size:1.15rem">New review — pending approval</h2>
+  <p style="margin:0 0 .75rem;color:#5e6b60;font-size:.95rem">Nothing is public until you approve it.</p>
+  <p style="margin:0 0 .25rem"><strong>${escapeHtml(o.author)}</strong>${town}</p>
+  <p style="margin:0 0 .75rem;color:#f2601c;font-size:1.1rem;letter-spacing:2px">${stars} <span style="color:#5e6b60;font-size:.9rem">(${filled}/5)</span></p>
+  <blockquote style="margin:0 0 1rem;padding:.6rem .9rem;border-left:3px solid #f2601c;background:#f6f7f5">${escapeHtml(o.body)}</blockquote>
+  <p style="margin:0"><a href="${escapeHtml(o.adminURL)}" style="color:#0b804b;font-weight:600">Review it in the dashboard →</a></p>
+</div>`
+}
+
 // contractEmailHTML builds the owner notification for a new website lead from the
 // contract form. Designed as a real HTML email: table layout + inline styles (the
 // only thing Gmail/Apple Mail render reliably — no flexbox, grid, or <style>),
